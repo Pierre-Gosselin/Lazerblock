@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-primary">
+        <a class="navbar-brand" href="#"><img src="{{ asset("images/logo.png") }}" alt="Logo de LazerBlock"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"><i class="fas fa-bars text-light"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                {% if app.user %}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropdownLink">
+                        {{ app.user.fullname }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-key mr-2"></i>
+                            Modification de mot de passe
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i>
+                            Mon compte
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-gift mr-2"></i>
+                            Boutique
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-arrow-circle-left mr-2"></i>
+                            Déconnexion
+                        </a>
+                    </div>
+                </li>
+                {% else %}     
+                <li class="nav-item mr-2">
+                    <a href="#" class="nav-link btn btn-outline-light btn-lg">Inscription</a>
+                </li>       
+                <li class="nav-item">
+                    <a href="#" class="nav-link btn btn-outline-light btn-lg" data-toggle="modal" data-target="#login">Connexion</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Modal de connexion -->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Connexion à votre compte</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Formulaire de connexion -->
+                <div class="modal-body">
+                    <form method="post" action="">
+                        <div class="md-form">
+                            <i class="fas fa-user prefix"></i>
+                            <input type="text" value="" name="username" id="inputUsername" class="form-control" required autofocus>
+                            <label for="inputUsername">E-mail
+                            </label>
+                        </div>
+                        <div class="md-form">
+                            <i class="fas fa-lock prefix"></i>
+                            <input type="password" name="password" id="inputPassword" class="form-control" required>
+                            <label for="inputPassword">Mot de passe</label>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="form-group form-check">
+                            <p class="mdp_forget">
+                                <a href="#">Mot de passe oublié</a>
+                            </p>
+                        </div>
+                        <button class="btn btn-outline-success btn-sm"  data-toggle="modal" data-target="#login">Se connecter</button>                   
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    {% for label, messages in  app.flashes  %}
+        <div class="container">
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}" role="alert">
+                {{ message | raw }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col">
+                <div class="row border-top border-light mt-3 pt-3">
+                    <div class="col-4">
+                        <ul class="list-group text-center" style="list-style:none;">
+                            <li><a href="#" style=" color:white">Nos tarifs</a></li>
+                            <li><a href="#" style=" color:white">FAQ</a></li>
+                            <li><a href="#" style=" color:white">Lien 1</a></li>
+                            <li><a href="#" style=" color:white">Lien 1</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-4">
+                        <ul class="list-group text-center" style="list-style:none;">
+                            <li><a href="#" style=" color:white">Mentions légales</a></li>
+                            <li><a href="#" style=" color:white">Lien 1</a></li>
+                            <li><a href="#" style=" color:white">Lien 1</a></li>
+                            <li><a href="#" style=" color:white">Lien 1</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-4">
+                        <ul class="list-group text-center" style="list-style:none;">
+                            <li><a href="#" style=" color:white"><i class="fas fa-envelope mr-2"></i>Nous contacter</a></li>
+                            <li><a href="#" style=" color:white"><i class="fab fa-facebook"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-light mt-3">Copyright {{ "now"|date('Y')}} LazerBlock - Tous droits réservés</p>
+    </div>
+</footer>
+{% endblock %}
