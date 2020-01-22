@@ -75,4 +75,14 @@ class MailerService{
         $this->mailer->send( $message );
     }
 
+
+    public function giftgenerate($email, $gift)
+    {
+        //text for free places
+        $text = 'Bravo tu as reçu '.$gift.' à utiliser dans votre laser wars !!!';
+        
+        //send mail
+        $this->send( $email, "un nouveau cadeau pour vous.", $text);
+    }
+
 }
