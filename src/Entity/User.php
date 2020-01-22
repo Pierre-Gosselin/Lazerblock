@@ -91,6 +91,11 @@ class User implements UserInterface
      */
     private $side;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Card", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $card;
+
     public function getFullname()
     {
         return $this->firstname . " " . strtoupper($this->lastname[0]);
@@ -293,6 +298,18 @@ class User implements UserInterface
     public function setSide(bool $side): self
     {
         $this->side = $side;
+
+        return $this;
+    }
+
+    public function getCard(): ?Card
+    {
+        return $this->card;
+    }
+
+    public function setCard(Card $card): self
+    {
+        $this->card = $card;
 
         return $this;
     }

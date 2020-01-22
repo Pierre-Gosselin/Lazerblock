@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CardRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Card
 {
@@ -24,7 +25,7 @@ class Card
     /**
      * @ORM\Column(type="integer")
      */
-    private $credits;
+    private $credits = 0;
 
     /**
      * @ORM\Column(type="datetime")
@@ -71,9 +72,13 @@ class Card
         return $this->expireCreditsAt;
     }
 
-    public function setExpireCreditsAt(\DateTimeInterface $expireCreditsAt): self
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setExpireCreditsAt(): self
     {
-        $this->expireCreditsAt = $expireCreditsAt;
+        $this->expireCreditsAt = new \DateTime('6 months');
 
         return $this;
     }
@@ -89,4 +94,6 @@ class Card
 
         return $this;
     }
+
+
 }
