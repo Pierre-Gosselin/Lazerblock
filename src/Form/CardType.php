@@ -14,7 +14,7 @@ class CardType extends AbstractType
     {
         $builder
             ->add('serial', TextType::class, [
-                'label' => "Saisissez votre numéro de carte de fidélité",
+                'label' => "Saisissez votre numéro de carte de fidélité délivrée dans nos locaux.",
                 'attr' => [
                     'class' => "form-control mb-3",
                 ],

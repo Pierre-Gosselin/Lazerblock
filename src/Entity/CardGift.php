@@ -32,7 +32,7 @@ class CardGift
     private $expiredAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CardGift")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Card")
      * @ORM\JoinColumn(nullable=false)
      */
     private $cards;
@@ -84,12 +84,12 @@ class CardGift
         return $this;
     }
 
-    public function getCards(): ?self
+    public function getCards(): ?Card
     {
         return $this->cards;
     }
 
-    public function setCards(?self $cards): self
+    public function setCards(?Card $cards): self
     {
         $this->cards = $cards;
 
