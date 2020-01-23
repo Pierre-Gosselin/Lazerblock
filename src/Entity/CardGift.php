@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,16 +34,16 @@ class CardGift
     private $expiredAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Card")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $cards;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Gift", inversedBy="cardGifts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $gifts;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Card", inversedBy="giftCards")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $cards;
 
     public function getId(): ?int
     {
@@ -84,6 +86,18 @@ class CardGift
         return $this;
     }
 
+    public function getGifts(): ?Gift
+    {
+        return $this->gifts;
+    }
+
+    public function setGifts(?Gift $gifts): self
+    {
+        $this->gifts = $gifts;
+
+        return $this;
+    }
+
     public function getCards(): ?Card
     {
         return $this->cards;
@@ -96,15 +110,4 @@ class CardGift
         return $this;
     }
 
-    public function getGifts(): ?Gift
-    {
-        return $this->gifts;
-    }
-
-    public function setGifts(?Gift $gifts): self
-    {
-        $this->gifts = $gifts;
-
-        return $this;
-    }
 }

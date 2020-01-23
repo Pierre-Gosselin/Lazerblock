@@ -1,0 +1,138 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {# {{ encore_entry_link_tags('dashboard') }} #}
+{% endblock %}
+
+{% block title %}Account{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3 class="mb-3 mt-3">Vos informations personnelles :</h3>
+
+            <div class="row text-center mb-3">
+                <div class="col-6">
+                    <div class="card" style="background-color:rgba(0,0,0,0.5);">
+                        <div class="card-body">
+                        <h5 class="card-title text-light">Nom</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.lastname}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card" style="background-color:rgba(0,0,0,0.5);">
+                        <div class="card-body">
+                        <h5 class="card-title text-light">Membre depuis</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.createdAt|date('d/m/Y')}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row text-center mb-3">
+                <div class="col-6">
+                    <div class="card" style="background-color:rgba(0,0,0,0.5);">
+                        <div class="card-body">
+                        <h5 class="card-title text-light">Prénom</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.firstname}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card" style="background-color:rgba(0,0,0,0.5);">
+                        <div class="card-body">
+                        <h5 class="card-title text-light">De quel coté êtes vous?</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.side ? "jedi" : "sith" }}</h6>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row text-center mb-3">
+                <div class="col-6">
+                    <div class="card" style="background-color:rgba(0,0,0,0.5);">
+                        <div class="card-body">
+                        <h5 class="card-title text-light">Email</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.email}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card" style="background-color:rgba(0,0,0,0.5);">
+                        <div class="card-body">
+                        <h5 class="card-title text-light">Nombre de crédit</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.card ? app.user.card.credits: "Vous n'avez pas de carte de fidélité pour le moment." }}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% if app.user.card %}
+
+            <h3 class="mt-3 mb-3">Votre carte de fidélité :</h3>
+
+
+            <h3 class="mt-3 mb-3">Historique des cadeaux :</h3>
+            
+            {% if app.user.card.giftCards|length > 0 %}
+            <table class="table alert alert-light mb-4">
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="text-primary">#</span></th>
+                        <th scope="col"><span class="text-primary">Cadeau</span></th>
+                        <th scope="col"><span class="text-primary">Serial</span></th>
+                        <th scope="col"><span class="text-primary">Utilisé</span></th>
+                        <th scope="col"><span class="text-primary">Date d'expiration</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for gift in app.user.card.giftCards %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ gift.gifts.title }}</td>
+                        <td>{{ gift.serial }}</td>
+                        <td>{{ gift.used ? "OUI" : "NON"}}</td>
+                        <td>{{ gift.expiredAt|date('d/m/Y') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table> 
+            {% else %}
+            <p>
+                Vous n'avez pas de cadeaux pour le moment.
+            </p>
+            {% endif %}
+        {% else %}
+
+        <h3 class="mb-3 mt-5">Vous n'avez pas de carte de fidélité :</h3>
+        <div class="row justify-content-around">
+            <div class="col-4 ">
+                <p>Vous souhaitez ajouter votre carte fidélité</p>
+                <a href="{{ path('card_add') }}" class="btn btn-outline-light">Ajouter</a>.
+            </div>
+            <div class="col-4 ">
+                    <p>Vous souhaitez créer une carte de fidélité</p>
+                    <a href="{{ path('card_create') }}" class="btn btn-outline-light ">Créer</a>       
+            </div>
+        </div>
+      
+{#             
+            <div class="row">
+            <div class="col-6">
+                
+                    <a href="{{ path('card_create')}}" class="btn btn-outline-light btn-lg btn-block">cliquez-ici</a>
+                </div>
+            </div>
+        </div>
+        <p>
+            Vous n'avez pas de carte de fidélité<br>
+            Si vous souhaitez créer une carte <br>
+        </p> #}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {# {{ encore_entry_script_tags('dashboard') }} #}
+{% endblock %}
