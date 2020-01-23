@@ -26,7 +26,7 @@ class CardController extends AbstractController
         {
             $this->addFlash('warning', "Vous avez déjà une carte de fidélité rattacher à votre compte.");
             
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('account');
         }
 
         $card = new Card;
@@ -43,7 +43,7 @@ class CardController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', "Votre carte de fidélité a bien été ajoutée à votre compte, vous la trouverez dans votre profil.");
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('account');
         }
         
         return $this->render('card/create.html.twig', [
@@ -66,7 +66,7 @@ class CardController extends AbstractController
         {
             $this->addFlash('warning', "Vous avez déjà une carte de fidélité rattacher à votre compte.");
             
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('account');
         }
 
         $manager = $this->getDoctrine()->getManager();
@@ -78,6 +78,6 @@ class CardController extends AbstractController
         $manager->flush();
 
         $this->addFlash('success', "Votre carte de fidélité a bien été créée, vous la trouverez dans votre profil.");
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('account');
     }
 }

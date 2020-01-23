@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CardRepository")
@@ -37,6 +39,16 @@ class Card
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CardGift", mappedBy="cards")
+     */
+    private $giftCards;
+
+    public function __construct()
+    {
+        $this->giftCards = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,5 +107,34 @@ class Card
         return $this;
     }
 
+    /**
+     * @return Collection|CardGift[]
+     */
+    public function getGiftCards(): Collection
+    {
+        return $this->giftCards;
+    }
 
+    public function addGiftCard(CardGift $giftCard): self
+    {
+        if (!$this->giftCards->contains($giftCard)) {
+            $this->giftCards[] = $giftCard;
+            $giftCard->setCards($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGiftCard(CardGift $giftCard): self
+    {
+        if ($this->giftCards->contains($giftCard)) {
+            $this->giftCards->removeElement($giftCard);
+            // set the owning side to null (unless already changed)
+            if ($giftCard->getCards() === $this) {
+                $giftCard->setCards(null);
+            }
+        }
+
+        return $this;
+    }
 }
