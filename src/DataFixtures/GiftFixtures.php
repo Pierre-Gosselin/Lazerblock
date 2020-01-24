@@ -20,6 +20,7 @@ class GiftFixtures extends Fixture
                  ->setPicture($picture[$i])
                  ->setPrice($price[$i])
                  ->setEnabled(true);
+            $this->addReference("gift".$i, $gift);
 
             $manager->persist($gift);
         }

@@ -1,6 +1,28 @@
+
+@font-face {
+	font-family: "LogoFont";
+	src: url('Starjedi.ttf');
+}
+
 body{
     min-height: 100vh;
     background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+}
+
+#siteTitle, .title-home
+{
+    font-family: "LogoFont", Helvetica, Arial, sans-serif;
+
+}
+#siteTitle
+{
+    font-size: 3em;
+    padding:0;
+    margin:0;
+}
+#accountDropdownLink
+{
+    font-size: 1.5em;
 }
 
 a, p, h1, h2, h3, h4, label
@@ -10,5 +32,15 @@ a, p, h1, h2, h3, h4, label
 
 #login label
 {
-    color:black;
+    color:white;
+    
+
+}
+
+nav{
+    background-color:rgba(0,0,0,0.4);
+}
+
+main{
+    margin-top: 100px;
 }

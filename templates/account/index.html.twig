@@ -71,6 +71,36 @@
         {% if app.user.card %}
 
             <h3 class="mt-3 mb-3">Votre carte de fidélité :</h3>
+            <div class="row">
+                <div class="col ">
+                    <div class="card container-fluid text-center" style="height:250px;width:400px;border-color:gray;border-radius:30px; background-image:url({{ asset("images/card.jpg") }});background-size:cover;">
+                        <div style="position: absolute; top:0; bottom:0; left:0; right:0; background-color: rgba(0,0,0,0.3 );border-radius:30px; ">
+                            <div class="row">
+                                <div class="col">
+                                    <p style="font-size:1.2em;" class="m-0 p-0 mt-2 text-center font-weight-bold">Carte de fidélité</p>
+                                    <p class="m-0 p-0 mb-4">Laser Wars</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <img src="{{ asset("images/puce.png") }}" alt="Image de la puce" style="width: 50px;float:left;margin-left:10px;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p style="color:gold;font-size:1.8em" class="mt-3 text-center font-weight-bold text-monospace">{{ app.user.card.serial }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="font-weight-bold">{{ app.user.card.expireCreditsAt|date('d/m/Y')}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
             <h3 class="mt-3 mb-3">Historique des cadeaux :</h3>
@@ -105,30 +135,17 @@
             {% endif %}
         {% else %}
 
-        <h3 class="mb-3 mt-5">Vous n'avez pas de carte de fidélité :</h3>
+        <h3 class="mb-3 mt-5">Vous n'avez pas de carte de fidélité ?</h3>
         <div class="row justify-content-around">
-            <div class="col-4 ">
+            <div class="col-4 container-fluid text-center">
                 <p>Vous souhaitez ajouter votre carte fidélité</p>
                 <a href="{{ path('card_add') }}" class="btn btn-outline-light">Ajouter</a>.
             </div>
-            <div class="col-4 ">
-                    <p>Vous souhaitez créer une carte de fidélité</p>
-                    <a href="{{ path('card_create') }}" class="btn btn-outline-light ">Créer</a>       
+            <div class="col-4 container-fluid text-center">
+                <p>Vous souhaitez créer une carte de fidélité</p>
+                <a href="{{ path('card_create') }}" class="btn btn-outline-light ">Créer</a>       
             </div>
         </div>
-      
-{#             
-            <div class="row">
-            <div class="col-6">
-                
-                    <a href="{{ path('card_create')}}" class="btn btn-outline-light btn-lg btn-block">cliquez-ici</a>
-                </div>
-            </div>
-        </div>
-        <p>
-            Vous n'avez pas de carte de fidélité<br>
-            Si vous souhaitez créer une carte <br>
-        </p> #}
         {% endif %}
     </div>
 {% endblock %}

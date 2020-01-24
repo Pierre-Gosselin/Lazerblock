@@ -35,9 +35,10 @@ class GiftController extends AbstractController
             $user = $this->getUser();
             $card = $user->getCard();
 
-            // On vérifie que l'utilisateur dispose bien des crédits suffisants
+            // Si le cadeau est disponnible
             if ($gift->getEnabled())
             {
+                // On vérifie que l'utilisateur dispose bien des crédits suffisants
                 if ($card->getCredits() >= $gift->getPrice())
                 {
                     $manager = $this->getDoctrine()->getManager();
@@ -46,9 +47,7 @@ class GiftController extends AbstractController
     
                     $cardgift = new CardGift;
                     $cardgift->setSerial(str_replace(' ','',$user->getFullname()).uniqid());
-                    $cardgift->setExpiredAt(new \DateTime('6 months'));
                     $cardgift->setCards($card);
-                    $cardgift->setUsed(false);
                     $cardgift->setGifts($gift);
                     $manager->persist($cardgift);
                     

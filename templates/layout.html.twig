@@ -3,8 +3,8 @@
 {% block body %}
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-primary">
-        <a class="navbar-brand" href="#"><img src="{{ asset("images/logo.png") }}" alt="Logo de LazerBlock"></a>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-primary" style="padding-top:0;padding-bottom:0; margin:0;">
+        <a class="navbar-brand" href="{{ path('home') }}" style="padding:0; margin:0; padding-bottom:10px;"><h1 id="siteTitle" class="pl-3">Laserwars</h1></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"><i class="fas fa-bars text-light"></i></span>
         </button>
@@ -24,6 +24,14 @@
                         <a href="{{path('account')}}" class="dropdown-item">
                             <i class="fas fa-user mr-2"></i>
                             Mon compte
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-history mr-2"></i>
+                            Mes réservations
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-ticket-alt mr-2"></i>
+                            Mes tickets
                         </a>
                         <a href="{{path('boutique')}}" class="dropdown-item">
                             <i class="fas fa-gift mr-2"></i>
@@ -51,26 +59,33 @@
     <!-- Modal de connexion -->
     <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content" style="background-color:rgba(0,0,0,0.8);">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Connexion à votre compte</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Connexion à votre compte</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true" class="text-white">&times;</span>
                     </button>
                 </div>
                 <!-- Formulaire de connexion -->
                 <div class="modal-body">
                     <form method="post" action="{{ path('login') }}">
                         <div class="md-form">
-                            <i class="fas fa-user prefix"></i>
-                            <input type="text" value="" name="email" id="inputEmail" class="form-control" required autofocus>
-                            <label for="inputEmail">E-mail
-                            </label>
+                            <label for="inputEmail">E-mail</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-user"></i></div>
+                                </div>
+                                <input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
+                            </div>
                         </div>
-                        <div class="md-form">
-                            <i class="fas fa-lock prefix"></i>
-                            <input type="password" name="password" id="inputPassword" class="form-control" required>
+                        <div class="md-form mt-3">
                             <label for="inputPassword">Mot de passe</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                                </div>
+                                <input type="password" name="password" id="inputPassword" class="form-control" required>
+                            </div>
                         </div>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
@@ -79,13 +94,14 @@
                                 <input type="checkbox" name="_remember_me"> Remember me
                             </label>
                         </div>
-
-                        <div class="form-group form-check">
-                            <p class="mdp_forget">
-                                <a href="#">Mot de passe oublié</a>
-                            </p>
+                        <div class="row">
+                            <div class="col mx-3">
+                                <button class="btn btn-outline-light btn-block" data-target="#login">Se connecter</button>
+                            </div>
+                            <div class="col mx-3">
+                                <a href="{{ path('forget_password') }}" class="btn btn-outline-light btn-block">Mot de passe oublié</a> 
+                            </div>
                         </div>
-                        <button class="btn btn-outline-success btn-sm"  data-toggle="modal" data-target="#login">Se connecter</button>                   
                     </form>
                 </div>
             </div>
@@ -107,7 +123,8 @@
         </div>
     {% endfor %}
 
-    {% block content %}{% endblock %}
+    {% block content %}
+    {% endblock %}
 </main>
 
 <footer>
@@ -140,7 +157,8 @@
                 </div>
             </div>
         </div>
-        <p class="text-center text-light mt-3">Copyright {{ "now"|date('Y')}} LazerBlock - Tous droits réservés</p>
+        <p class="text-center text-light mt-3" style="padding:0;margin-bottom:0;font-size: 0.8em;">Copyright {{ "now"|date('Y')}} LazerBlock - Tous droits réservés</p>
+        <p class="text-center text-light" style="padding:0;margin:0;font-size: 0.8em;">Fait avec <i class="fas fa-heart" style="color:red"></i> par Shamsia et Pierre</p>
     </div>
 </footer>
 {% endblock %}
