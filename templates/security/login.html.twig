@@ -10,22 +10,28 @@
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
-
-                {% if app.user %}
-                    <div class="mb-3">
-                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                <h3 class="h3 mb-3">Connexion à votre compte</h3>
+                
+                <div class="md-form">
+                    <label for="inputEmail">Email</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-user"></i></div>
+                        </div>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
                     </div>
-                {% endif %}
+                </div>
 
-                <h3 class="h3 mb-3 font-weight-normal">Please sign in</h3>
-                <label for="inputEmail">Email</label>
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-3" required autofocus>
-                <label for="inputPassword">Password</label>
-                <input type="password" name="password" id="inputPassword" class="form-control mb-3" required>
-
-                <input type="hidden" name="_csrf_token"
-                    value="{{ csrf_token('authenticate') }}"
-                >
+                <div class="md-form mt-3">
+                    <label for="inputPassword">Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                        </div>
+                        <input type="password" name="password" id="inputPassword" class="form-control" required>
+                    </div>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                 {#
                     Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -36,10 +42,14 @@
                         <input type="checkbox" name="_remember_me"> Remember me
                     </label>
                 </div>
-                
-                <button class="btn btn-block btn-outline-light" type="submit">
-                    Se connecter
-                </button>
+                <div class="row">
+                    <div class="col mx-3">
+                        <button class="btn btn-outline-light btn-block" type="submit">Se connecter</button>
+                    </div>
+                    <div class="col mx-3">
+                        <a href="{{ path('forget_password') }}" class="btn btn-outline-light btn-block">Mot de passe oublié</a> 
+                    </div>
+                </div>
             </form>
         </div>
     </div>

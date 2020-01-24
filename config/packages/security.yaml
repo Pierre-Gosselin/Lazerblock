@@ -37,5 +37,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/renewpassword, roles: ROLE_USER }
+        - { path: ^/newpassword, roles: ROLE_USER }
         - { path: ^/card, roles: ROLE_USER }
+        - { path: ^/boutique, roles: ROLE_USER }
+        - { path: ^/account, roles: ROLE_USER }

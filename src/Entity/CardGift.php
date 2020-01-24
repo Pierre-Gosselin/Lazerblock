@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CardGiftRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class CardGift
 {
@@ -26,7 +27,7 @@ class CardGift
     /**
      * @ORM\Column(type="boolean")
      */
-    private $used;
+    private $used = false;
 
     /**
      * @ORM\Column(type="datetime")
@@ -79,9 +80,12 @@ class CardGift
         return $this->expiredAt;
     }
 
-    public function setExpiredAt(\DateTimeInterface $expiredAt): self
+    /**
+     * @ORM\PrePersist
+     */
+    public function setExpiredAt(): self
     {
-        $this->expiredAt = $expiredAt;
+        $this->expiredAt = new \DateTime('6 months');
 
         return $this;
     }
