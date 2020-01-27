@@ -5,4 +5,5 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import '@fortawesome/fontawesome-free/js/all.min';
 
-import $ from 'jquery';
+const $ = require('jquery');
+global.$ = global.jQuery = $;

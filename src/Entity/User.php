@@ -77,11 +77,6 @@ class User implements UserInterface
     private $expiredToken;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $avatar;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $newsletter;
@@ -95,6 +90,11 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity="App\Entity\Card", mappedBy="user", cascade={"persist", "remove"})
      */
     private $card;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Avatar")
+     */
+    private $avatar;
 
     public function getFullname()
     {
@@ -266,18 +266,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAvatar(): ?string
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(?string $avatar): self
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
     public function getNewsletter(): ?bool
     {
         return $this->newsletter;
@@ -310,6 +298,18 @@ class User implements UserInterface
     public function setCard(Card $card): self
     {
         $this->card = $card;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?Avatar
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?Avatar $avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

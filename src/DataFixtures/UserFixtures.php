@@ -6,9 +6,12 @@ use App\Entity\User;
 use Faker\Factory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserFixtures extends Fixture
+
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     private $encoder;
 
@@ -45,7 +48,9 @@ class UserFixtures extends Fixture
             ->setSide(1)
             ->setRoles(["ROLE_CASHIER"])
             ->setBirthdate(new \Datetime('now'))
-            ->setNewsletter(true);
+            ->setNewsletter(true)
+            ->setAvatar($this->getReference("Avatar1"));
+
         $this->addReference("hote@laserwars.com" , $cashier);
 
         $manager->persist($cashier);
@@ -64,12 +69,20 @@ class UserFixtures extends Fixture
                 ->setEnabled(rand(0,1))
                 ->setSide(rand(0,1))
                 ->setBirthdate(new \Datetime('now'))
-                ->setNewsletter(true);
+                ->setNewsletter(true)
+                ->setAvatar($this->getReference("Avatar".rand(0,9)));
             $this->addReference("User".$i , $user);    
 
             $manager->persist($user);
         }
     
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return array(
+            AvatarFixtures::class,
+        );
     }
 }

@@ -28,11 +28,13 @@ class CardGiftFixtures extends Fixture implements DependentFixtureInterface
 
         for($i=0; $i<100; $i++)
         {
+            $randUser = rand(0,49);
+
             $cardGift = new CardGift;
-            $cardGift->setCards($this->getReference("cardUser".rand(0,49)));
+            $cardGift->setCards($this->getReference("cardUser".$randUser));
             $cardGift->setGifts($this->getReference("gift".rand(0,11)));
             $cardGift->setExpiredAt(new \Datetime());
-            $cardGift->setSerial(str_replace(' ','',$this->getReference("admin@laserwars.com")->getFullname()).uniqid());
+            $cardGift->setSerial(str_replace(' ','',$this->getReference("User".$randUser)->getFullname()).uniqid());
             
             $manager->persist($cardGift);
         }
