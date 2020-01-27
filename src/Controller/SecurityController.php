@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login", name="login")
+     * @Route("/me-connecter", name="login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -48,7 +48,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="logout")
+     * @Route("/me-deconnecter", name="logout")
      */
     public function logout()
     {
@@ -59,7 +59,7 @@ class SecurityController extends AbstractController
     /**
      * Permet à l'utilisateur de s'enregistrer
      * 
-     * @Route("/register", name="register")
+     * @Route("/rejoindre-la-force", name="register")
      */
     public function register( Request $request ): Response
     {
@@ -95,7 +95,7 @@ class SecurityController extends AbstractController
             $this->mailerService->sendActivationMail( $user );
 
             $this->addFlash( 'info', 'Votre compte à bien été créé, activez le pour pouvoir vous connecter' );
-            //return $this->redirectToRoute( 'login' );
+            return $this->redirectToRoute( 'login' );
         }
 
         return $this->render('security/register.html.twig', [
@@ -107,7 +107,7 @@ class SecurityController extends AbstractController
     /**
      * Permet à l'utilisateur d'activer son compte
      *
-     * @Route("/activate/{token}", name="activate")
+     * @Route("/activation/{token}", name="activate")
      * 
      */
     public function activate( User $user ): Response
@@ -140,7 +140,7 @@ class SecurityController extends AbstractController
     /**
      * Permet l'envoi d'un nouveau mail d'activation
      *
-     * @Route("sendactivatetoken/{id}", name="sendActivateToken")
+     * @Route("/reactivation/{id}", name="sendActivateToken")
      * 
      */
     public function sendActivaTetoken (User $user): Response
@@ -196,7 +196,7 @@ class SecurityController extends AbstractController
     /**
      * Permet de réintialiser le mot de passe
      *
-     * @Route("/reset_password/{token}", name="reset_password")
+     * @Route("/reinitialisation-mot-de-passe/{token}", name="reset_password")
      *
      * @param string $token
      * @param Request $request
@@ -242,7 +242,7 @@ class SecurityController extends AbstractController
     /**
      * Permet de changer de mot de passe
      * 
-     * @Route("/newpassword", name="new_password", methods={"GET", "POST"})
+     * @Route("/nouveau-mot-de-passe", name="new_password", methods={"GET", "POST"})
      * 
      * @param Request $request
      * @return RedirectResponse|Response

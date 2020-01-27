@@ -9,11 +9,14 @@ use App\Service\MailerService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @Route("/boutique", name="shop")
+ */
 class GiftController extends AbstractController
 {
     /**
      * 
-     * @Route("/boutique", name="boutique")
+     * @Route("/", name="_show")
      */
     public function index(GiftRepository $giftRepository)
     {
@@ -26,49 +29,45 @@ class GiftController extends AbstractController
 
     /**
      * 
-     * @Route("/buy/{id}", name="buy")
+     * @Route("/acheter/{id}", name="_buy")
      */
     public function buy(Gift $gift, MailerService $mailer)
     {
-        if ($this->getUser())
-        {
-            $user = $this->getUser();
-            $card = $user->getCard();
+        $user = $this->getUser();
+        $card = $user->getCard();
 
-            // Si le cadeau est disponnible
-            if ($gift->getEnabled())
+        // Si le cadeau est disponnible
+        if ($gift->getEnabled())
+        {
+            // On vérifie que l'utilisateur dispose bien des crédits suffisants
+            if ($card->getCredits() >= $gift->getPrice())
             {
-                // On vérifie que l'utilisateur dispose bien des crédits suffisants
-                if ($card->getCredits() >= $gift->getPrice())
-                {
-                    $manager = $this->getDoctrine()->getManager();
-    
-                    $card->setCredits($card->getCredits() - $gift->getPrice());
-    
-                    $cardgift = new CardGift;
-                    $cardgift->setSerial(str_replace(' ','',$user->getFullname()).uniqid());
-                    $cardgift->setCards($card);
-                    $cardgift->setGifts($gift);
-                    $manager->persist($cardgift);
-                    
-                    $manager->flush();
-    
-                    $this->addFlash('success', 'Vous avez bien reçu votre cadeau, un mail de confirmation vous a été envoyé.');
-    
-                    $mailer->giftgenerate($user->getEmail(), $gift->getTitle());
-                }
-                else
-                {
-                    $this->addFlash('danger', 'Attention, vos crédits ne sont pas suffisant !');
-                }
+                $manager = $this->getDoctrine()->getManager();
+
+                $card->setCredits($card->getCredits() - $gift->getPrice());
+
+                $cardgift = new CardGift;
+                $cardgift->setSerial(str_replace(' ','',$user->getFullname()).uniqid());
+                $cardgift->setCards($card);
+                $cardgift->setGifts($gift);
+                $manager->persist($cardgift);
+                
+                $manager->flush();
+
+                $this->addFlash('success', 'Vous avez bien reçu votre cadeau, un mail de confirmation vous a été envoyé.');
+
+                $mailer->giftgenerate($user->getEmail(), $gift->getTitle());
             }
             else
             {
-                $this->addFlash('warning', 'Ce cadeau n\'est pas disponnible, veuillez en choisir un autre.');
+                $this->addFlash('danger', 'Attention, vos crédits ne sont pas suffisant !');
             }
-
-            return $this->redirectToRoute('boutique');
         }
-        return $this->redirectToRoute('home');
+        else
+        {
+            $this->addFlash('warning', 'Ce cadeau n\'est pas disponnible, veuillez en choisir un autre.');
+        }
+
+        return $this->redirectToRoute('shop_show');
     }
 }

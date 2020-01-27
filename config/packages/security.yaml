@@ -40,4 +40,5 @@ security:
         - { path: ^/newpassword, roles: ROLE_USER }
         - { path: ^/card, roles: ROLE_USER }
         - { path: ^/boutique, roles: ROLE_USER }
-        - { path: ^/account, roles: ROLE_USER }
+        - { path: ^/moncompte, roles: ROLE_USER }
+        - { path: ^/buy, roles: ROLE_USER }

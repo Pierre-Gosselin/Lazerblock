@@ -6,7 +6,7 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col">
+        <div class="col-10 offset-1">
             <div class="row">
                 <img src="{{ asset("images/7 sabre.png") }}"  style="width: 25%;" class="mx-auto" alt="">
             </div>
@@ -24,13 +24,12 @@
                 
                 <div class="row">
                     <div class="col">
-                        {{ form_row(form.birthdate)}}
+                        {{ form_row(form.email)}}
                     </div>
                     <div class="col">
-                        {{ form_row(form.side) }}
+                        {{ form_row(form.birthdate) }}
                     </div>
                 </div>
-                {{ form_row(form.email)}}
                 <div class="row">
                     <div class="col">                
                         {{ form_row(form.password.first) }}
@@ -41,17 +40,20 @@
                 </div>
                 <div class="row">
                     <div class="col">
+                         {{ form_row(form.side) }}
+                    </div>
+                    <div class="col">
                         <div class="row">
+                            <div class="col">{{ form_label(form.newsletter) }}</div>
+                        </div>
+                        <div class="row align-items-center">
                             <div class="col">
-                                {{ form_label(form.newsletter) }}
+                                <p style="font-size: 0.8em;">Je souhaite recevoir un mail d'actualité chaque semaine.</p>
                             </div>
-                            <div class="col">
+                            <div class="col-2">
                                 {{ form_widget(form.newsletter) }}
                             </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <p>Captcha</p>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-4">

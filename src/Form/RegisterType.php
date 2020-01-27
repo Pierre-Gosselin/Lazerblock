@@ -34,14 +34,14 @@ class RegisterType extends AbstractType
                 'label' => false,
                 'type' => PasswordType::class,
                 'first_options'  => [
-                    'label' => "Nouveau mot de passe",
+                    'label' => "Mot de passe",
                     'required' => true,
                     'constraints' => [
                         new NotNull([
-                            'message' => "Saisir votre nouveau mot de passe",
+                            'message' => "Saisir votre mot de passe",
                         ]),
                         new NotBlank([
-                            'message' => "Saisir votre nouveau mot de passe",
+                            'message' => "Saisir votre mot de passe",
                         ]),
                         new Length([
                             'min' => "8",
@@ -53,19 +53,19 @@ class RegisterType extends AbstractType
                         ]),
                     ],
                     'attr' => [
-                        'placeholder' => "Tapez votre nouveau mot de passe ...",
+                        'placeholder' => "Tapez votre mot de passe ...",
                         'class' => "form-control mb-3",
                     ],
                 ],
                 'second_options' => [
-                    'label' => "Confirmer votre nouveau mot de passe",
+                    'label' => "Confirmer votre mot de passe",
                     'constraints' => [
                         new NotBlank([
                             'message' => "Repéter le mot de passe",
                         ]),
                     ],
                     'attr' => [
-                        'placeholder' => "Confirmer votre nouveau mot de passe ...",
+                        'placeholder' => "Confirmer votre mot de passe ...",
                         'class' => "form-control mb-3",
                     ],
                 ],
@@ -93,7 +93,7 @@ class RegisterType extends AbstractType
                 'years' => $this->getYears(),
             ])
             ->add('side', ChoiceType::class, [
-                'label' => "Choisis ton camps",
+                'label' => "De quel côté de la Force êtes-vous ?",
                 'attr' => [
                     'class' => "form-control mb-3",
                 ],
