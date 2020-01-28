@@ -60,7 +60,7 @@ class GiftController extends AbstractController
             }
             else
             {
-                $this->addFlash('danger', 'Attention, vos crédits ne sont pas suffisant !');
+                $this->addFlash('danger', 'Attention, vos crédits ne sont pas suffisants !');
             }
         }
         else

@@ -68,11 +68,11 @@
             <div class="col-6">
                 <div class="card" style="background-color:rgba(0,0,0,0.5);">
                     <div class="card-body">
-                    <h5 class="card-title text-light">Nombre de crédit</h5>
+                    <h5 class="card-title text-light">Nombre de crédits</h5>
                     <h6 class="card-subtitle mb-2 text-muted">
                         {% if app.user.card %}
                             {{ app.user.card.credits }}<i class="pl-1 fa-1x fab fa-galactic-republic"></i>
-                            {% if (app.user.card.credits!=0) %}
+                            {% if (app.user.card.credits != 0) %}
                             expire le {{ app.user.card.expireCreditsAt|date('d/m/Y') }}
                             <span data-toggle="tooltip" data-placement="bottom" title="La date de validité de vos crédits se renouvellent après chaque achat de ticket. ">
                                 <i class="fas fa-info-circle" ></i>

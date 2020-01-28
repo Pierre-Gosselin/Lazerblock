@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Entity\Ticket;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -78,11 +79,16 @@ class MailerService{
 
     public function giftgenerate($email, $gift)
     {
-        //text for free places
         $text = 'Bravo tu as reçu '.$gift.' à utiliser dans votre laser wars !!!';
         
         //send mail
         $this->send( $email, "un nouveau cadeau pour vous.", $text);
     }
 
+    public function offerTicket($email, Ticket $ticket)
+    {
+        $text = "Votre amis vous a envoyé un ticket à utiliser dans nos locaux ".$ticket->getSerial() ;
+        
+        $this->send($email, "Un nouveau ticket de votre amis.", $text);
+    }
 }
