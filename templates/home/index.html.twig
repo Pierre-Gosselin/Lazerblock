@@ -92,36 +92,34 @@
 
         <div class="row mt-5">
             <div class="col">
-            <h3 class="text-center text-light title-home">Wall of frame</h3>
-                <div class="row mt-2">
-                    <div class="col">
+                <h3 class="text-center text-light title-home">Wall of frame</h3>
+
+                <div class="row mt-2">   
+                    <div class="col-6">
                         <div class="card" style="background-color: rgba(0,0,0,0.5);color:white">
-                            <div class="card-header text-center">
-                                <h4>Score solo</h4>
-                            </div>
-                            <div class="card-body">
-                                <img src="{{ asset('images/podium.png') }}" alt="Podium" width="512px" height="300px">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card" style="background-color: rgba(0,0,0,0.5);color:white">
-                            <div class="card-header text-center">
-                                <h4>Score group</h4>
-                            </div>
-                            <div class="card-body">
-                                <ol>
-                                    <li>Groupe 1</li>
-                                    <li>Groupe 2</li>
-                                    <li>Groupe 3</li>
-                                </ol>
-                            </div>
+                            <img class="card-img" src="{{ asset('images/podium.png') }}" alt="Podium" width="512px" height="300px">
+                        <div class="card-img-overlay">
+                            <h4 class="card-title text-center">Solo score</h4>
+                        <div class="card-text"></div>
                         </div>
                     </div>
                 </div>
+
+            <div class="col-6">
+            <div class="card" style="background-color: rgba(0,0,0,0.5);color:white">
+            <img class="card-img" src="{{ asset('images/podium.png') }}" alt="Podium" width="512px" height="300px">
+            <div class="card-img-overlay">
+                <h4 class="card-title text-center">Score groupe</h4>
+                <div class="card-text">
+                    <ol id="list">
+                        <li>Groupe 1</li>
+                        <li>Groupe 2</li>
+                        <li>Groupe 3</li>
+                     </ol>
+                
+                </div>
             </div>
-        </div>
-
-
+            </div>
+            </div>
     </div>
 {% endblock %}

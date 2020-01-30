@@ -82,3 +82,11 @@ main{
     text-decoration:none;
     outline:0;
 }
+
+.card-img{
+    opacity: 0.2;
+}
+
+#list{
+    list-style-type: none;
+}
