@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
@@ -14,6 +15,7 @@ class PaginationService extends AbstractController
     private $twig;
     private $route;
     private $templatePath;
+    private $user;
 
     public function __construct(Environment $twig, RequestStack $request, $templatePath)
     {
@@ -55,6 +57,18 @@ class PaginationService extends AbstractController
         ]);
     }
 
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
     public function getPages()
     {
         if (empty($this->entityClass))
@@ -63,8 +77,9 @@ class PaginationService extends AbstractController
         }
 
         // 1. Connaitre le total des enregistrements de la table
-        $repo = $this->getDoctrine()->getManager()->getRepository($this->entityClass);
-        $total = $repo->count([]);
+        $repo = $this->getDoctrine()->getManager()->getRepository($this->entityClass)->findByUser($this->getUser());
+
+        $total = count($repo);
 
         // 2. Faire la division, l'arrondi et le renvoyer
         $pages = ceil($total / $this->limit);
@@ -84,11 +99,10 @@ class PaginationService extends AbstractController
 
         // 2. Demander au repository de trouver les éléments
         $repo = $this->getDoctrine()->getManager()->getRepository($this->entityClass);
-        $data = $repo->findBy([],[],$this->limit,$offset);
+        $data = $repo->findByUser([$this->getUser()],['id' => 'desc'],$this->limit,$offset);
 
         // 3. Renvoyer les élements en question
-        return $data;
-        
+        return $data; 
     }
 
     public function setEntityClass($entityClass)

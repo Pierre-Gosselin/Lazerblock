@@ -25,7 +25,8 @@ class TicketController extends AbstractController
     public function index($page, PaginationService $pagination)
     {
         $pagination->setEntityClass(Ticket::class)
-                   ->setCurrentPage($page);
+                   ->setCurrentPage($page)
+                   ->setUser($this->getUser());
 
         return $this->render('ticket/index.html.twig', [
             'pagination' => $pagination,
@@ -41,6 +42,12 @@ class TicketController extends AbstractController
      */
     public function give(Ticket $ticket, Request $request, MailerService $mailerService)
     {
+        if ($ticket->getUsed())
+        {
+            $this->addFlash('warning', "Le ticket a déjà été utilisé, veuillez en choisir un autre.");
+            return $this->redirectToRoute('ticket_show');    
+        }
+
         if ($ticket->getUser() == $this->getUser())
         {
             if ($request->isMethod('POST'))

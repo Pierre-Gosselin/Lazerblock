@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Hello TicketController!{% endblock %}
+{% block title %}Mes tickets{% endblock %}
 
 {% block content %}
 
@@ -29,8 +29,10 @@
                         <td>{{ ticket.used ? "OUI" : "NON"}}</td>
                         <td>{{ ticket.buyAt|date('d/m/Y') }}</td>
                         <td>
-                            <button class="btn btn-outline-light btn-sm">Réserver</button>
+                            {% if ticket.used == false %}
                             <a href="{{ path('ticket_give', {'serial': ticket.serial }) }}" class="btn btn-outline-light btn-sm">Offrir à un amis</a>
+                                    
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

@@ -1,0 +1,71 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Confirmation de réservation{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form method="POST" action="{{ path('booking_save') }}"></form>
+    <div class="row">
+        <div class="col">
+            <h3>Résumé de votre réservation</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="background-color: rgba(0,0,0,0.5);">
+            <p>Vous réservez pour le {{ reservedAt }} à {{ time|date('H') }}h00 pour {{ bookings }} personne{{ bookings>1?"s":"" }}.</p>
+            {% set somme = (15 - ( bookings - 1)) * bookings %}
+            <p>Total à régler : {{ somme }}&euro; ttc</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-4">
+            <h3 class="">Choisissez votre mode de réglement</h3>
+        </div>
+    <div class="row">
+        <div class="col-4" style="background-color: rgba(0,0,0,0.5);">
+            <h4 class="h6">Je souhaite utiliser mes tickets.</h4>
+            <p>Vous avez {{ticketsToUse|length}} ticket(s) à utiliser.</p>
+            {% if ticketsToUse|length >= bookings %}
+                <a href="{{ path('booking_use_ticket') }}" class="btn btn-outline-light">Utiliser mes tickets</a>
+            {% else %}
+                <p>Vous ne disposez pas assez de ticket pour faire cette réservation.</p>
+                <p>Vous pouvez soit en acheter, soit payer par carte bancaire.</p>
+            {% endif %}
+        </div>
+        <div class="col-4 mx-1" style="background-color: rgba(0,0,0,0.5);">
+            <h4 class="h6">Je souhaite payer par carte bleue.</h4>
+            <button class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModalCenter">Payer par carte bleue</button>
+        </div>
+        <div class="col-4" style="background-color: rgba(0,0,0,0.5);">
+            <h4 class="h6">Je souhaite payer mes réservations une fois sur place.</h4>
+            {% if app.user.bookings|length>0 %}
+                <a href="{{ path('booking_save') }}" class="btn btn-outline-light">Payer sur place</a>
+            {% else %}
+                <p>La première réservation doit être payer obligatoirement par carte bancaire.</p>   
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal de paiement par carte bancaire -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" style="background-color:rgba(0,0,0,0.8);">
+        <div class="modal-header">
+          <h5 class="modal-title color-black" id="exampleModalCenterTitle">Paiement</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Payer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
