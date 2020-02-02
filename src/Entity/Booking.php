@@ -17,7 +17,7 @@ class Booking
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $reservationAt;
 
@@ -37,9 +37,14 @@ class Booking
     private $serial;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Ticket", inversedBy="booking", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="bookings")
      */
-    private $ticket;
+    private $user;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $timeSlot;
 
     public function getId(): ?int
     {
@@ -94,15 +99,28 @@ class Booking
         return $this;
     }
 
-    public function getTicket(): ?Ticket
+    public function getUser(): ?User
     {
-        return $this->ticket;
+        return $this->user;
     }
 
-    public function setTicket(?Ticket $ticket): self
+    public function setUser(?User $user): self
     {
-        $this->ticket = $ticket;
+        $this->user = $user;
 
         return $this;
     }
+
+    public function getTimeSlot(): ?\DateTimeInterface
+    {
+        return $this->timeSlot;
+    }
+
+    public function setTimeSlot(\DateTimeInterface $timeSlot): self
+    {
+        $this->timeSlot = $timeSlot;
+
+        return $this;
+    }
+
 }

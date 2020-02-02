@@ -38,10 +38,6 @@ class Ticket
      */
     private $user;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Booking", mappedBy="ticket", cascade={"persist", "remove"})
-     */
-    private $booking;
 
     public function getId(): ?int
     {
@@ -99,21 +95,4 @@ class Ticket
         return $this;
     }
 
-    public function getBooking(): ?Booking
-    {
-        return $this->booking;
-    }
-
-    public function setBooking(?Booking $booking): self
-    {
-        $this->booking = $booking;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newTicket = null === $booking ? null : $this;
-        if ($booking->getTicket() !== $newTicket) {
-            $booking->setTicket($newTicket);
-        }
-
-        return $this;
-    }
 }

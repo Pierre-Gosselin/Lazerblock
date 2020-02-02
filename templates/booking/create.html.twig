@@ -1,0 +1,153 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Réserver ma partie{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
+
+    <style>
+        .datepicker.datepicker-inline, .datepicker-days, .table-condensed{
+            width: 100%;
+        }
+        .datepicker td, .datepicker th {
+
+            font-size: 1.4rem;
+            padding:5px;
+        }
+        .selected{
+            background-color:white;
+            color:black;
+        }
+        .next:hover, .prev:hover, .datepicker-switch:hover
+        {
+            background-color: rgba(0,0,0,0.5) !important;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h3 class="mb-3">Réserver ma partie</h3>
+                <form method="POST" action="{{ path('booking_confirm') }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mr-2 p-2" style="background-color: rgba(0,0,0,0.5);">
+                <h5 class="text-center mb-3">Choisissez une date</h5>
+                
+                <div id="datepicker" class="d-flex justify-content-center" style="color:white;"></div>
+
+                <p class="font-italic text-muted text-center">Votre réservation est le :</p>
+                <h4 id="pickedDate" class="font-weight-bold mb-3 text-center"></h4>
+                <input type="hidden" id="hiddenDate" name="hiddenDate">
+            </div>
+            <div class="col ml-2 p-2" style="background-color: rgba(0,0,0,0.5);">
+                <div class="row">
+                    <div class="col justify-content-center text-center ">
+                        <h5 class="mb-3">Choisissez un créneau horraire</h5>
+
+                        <div id="timeSlot" style="color:white"></div>
+
+                        <p class="font-italic text-muted">Votre réservation est à :</p>
+                        <h4 id="pickedTime" class="font-weight-bold mb-3"></h4>
+                        <input type="hidden" id="hiddenTime" name="hiddenTime">
+                        <p class="text-muted" id="availables"></p>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8 offset-2">
+                        <h5 class="text-center mb-3">Choisissez le nombre de personnes (5 maximun)</h5>
+                        <select class="form-control" name="bookings" id="bookings">
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <button type="submit" id="submit" class="d-none btn btn-outline-light btn-lg mt-3" >Confirmer ma réservation</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('datepicker') }}
+    
+    <script>
+        $(document).ready(function(){
+            $('#datepicker').datepicker({
+                language: 'fr',
+                format: 'dd/mm/yyyy',
+                maxViewMode: 1,
+                daysOfWeekDisabled : [0,1],
+                datesDisabled: [
+                    {% for day in notAvailable %}
+                        "{{ day.format('d/m/Y') }}",
+                    {% endfor %}
+                ],
+                startDate: '+1d',
+                endDate:'+32d',
+            });
+
+            // On clic sur l'heure choisie
+            $('#timeSlot').on("click", ".choose_date", function(){
+                $('.selected').removeClass("selected");
+                $(this).addClass("selected");
+                $('#pickedTime').html($(this).attr("data-value"));
+                $('#hiddenTime').val($(this).attr("data-value"));
+                $('#availables').html("Il reste " + $(this).attr("data-number") + " place(s) disponible(s).");
+                $('#submit').removeClass("d-none");
+
+                var option = "";
+                var maxTicket = ($(this).attr("data-number") > 5)? 5 : $(this).attr("data-number");
+                for (let index = 1; index <= maxTicket; index++) {
+                    option += "<option value=\""+index+"\">"+index+"</option>";
+                    
+                }
+                $('#bookings').html(option);
+
+            });
+
+        });
+        
+        // on clic sur la date choisie
+        $('#datepicker').on('changeDate', function() {
+            
+            var bookingAt = $('#datepicker').datepicker('getFormattedDate');
+
+            $('#pickedDate').html(bookingAt);
+            $('#hiddenDate').val(bookingAt);
+            $('#timeSlot').html("<i class=\"fas fa-spinner fa-spin\"></i>");
+            $('#availables').html("");
+            $('#pickedTime').html("");
+            $('#bookings').html("");
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ path('booking_check') }}",
+                data: {bookingAt: bookingAt},
+            }).done(function (message)
+            {
+                $('#timeSlot').html("");
+                var text = "";
+                myObj = JSON.parse(message);
+                for (x in myObj)
+                {
+                    if (myObj[x]['dispo'] > 0)
+                    {
+                        text += "<button class=\"btn btn-outline-light mx-2 mb-3 choose_date\" data-number=\"" + myObj[x]['dispo'] + "\" data-value=\"" +  myObj[x]['time'] + "\">" + myObj[x]['time'] + "</button>";
+                    }
+                }
+                
+                $('#timeSlot').html(text);
+            });
+        });
+
+    </script>
+{% endblock %}

@@ -42,3 +42,4 @@ security:
         - { path: ^/boutique, roles: ROLE_USER }
         - { path: ^/moncompte, roles: ROLE_USER }
         - { path: ^/ticket, roles: ROLE_USER }
+        - { path: ^/reservation, roles: ROLE_USER }

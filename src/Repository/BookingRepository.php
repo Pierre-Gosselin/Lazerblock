@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use DateTime;
 use App\Entity\Booking;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Booking|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,29 +23,43 @@ class BookingRepository extends ServiceEntityRepository
     // /**
     //  * @return Booking[] Returns an array of Booking objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function findByReservationAt()
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+            ->groupBy('b.reservationAt')
+            ->select('COUNT(DISTINCT b) as nbReservation')
+            ->addSelect('b.reservationAt')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Booking
+    public function findByBookingAt($bookingAt)
     {
+        $date = DateTime::createFromFormat('d/m/Y', $bookingAt);
+
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
+            ->groupBy('b.timeSlot')
+            ->where('b.reservationAt = :reservationAt')
+            ->setParameter('reservationAt', $date->format('Y-m-d'))
+            ->select('COUNT(DISTINCT b) as nbSlot')
+            ->addSelect('b.timeSlot')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+
+    public function findByDate($user)
+    {
+        $date = new \Datetime();
+        $queryBuilder = $this->createQueryBuilder('b')
+            ->andWhere('b.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('b.reservationAt > :reservationAt')
+            ->setParameter('reservationAt', $date->format('Y-m-d'))
+            ->select('COUNT(b.user)')
+            ->getQuery();
+        return $queryBuilder->getSingleScalarResult();
+    }
 }

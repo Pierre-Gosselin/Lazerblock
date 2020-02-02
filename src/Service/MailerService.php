@@ -20,6 +20,24 @@ class MailerService{
     }
 
     /**
+     * Permet l'envoi de mail
+     *
+     * @param string $email
+     * @param string $subject
+     * @param string $text
+     * @return void
+     */
+    private function send(string $email, string $subject, string $text ){
+        $message = (new Email())
+            ->from('no-reply@laserwars.com')
+            ->to($email)
+            ->subject($subject)
+            ->text($text);
+
+        $this->mailer->send( $message );
+    }
+
+    /**
      * Permet l'envoi d'un mail d'activation
      *
      * @param User $user
@@ -48,7 +66,7 @@ class MailerService{
             'token' => $user->getToken(),
         ), UrlGenerator::ABSOLUTE_URL);
 
-        $text = "Bienvenue sur Lazer Wars !!!,
+        $text = "Bienvenue sur Laser Wars !!!,
         Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci dessous
         ou copier/coller dans votre navigateur internet.
         ". $url ."
@@ -58,30 +76,10 @@ class MailerService{
         $this->send( $user->getEmail(), "Renouvellement de mot de passe", $text);
     }
 
-    /**
-     * Permet l'envoi de mail
-     *
-     * @param string $email
-     * @param string $subject
-     * @param string $text
-     * @return void
-     */
-    private function send(string $email, string $subject, string $text ){
-        $message = new Email();
-        $message->from( 'no-reply@lazerwars.com' );
-        $message->to( $email );
-        $message->subject($subject);
-        $message->text( $text );
-
-        $this->mailer->send( $message );
-    }
-
-
     public function giftgenerate($email, $gift)
     {
         $text = 'Bravo tu as reçu '.$gift.' à utiliser dans votre laser wars !!!';
         
-        //send mail
         $this->send( $email, "un nouveau cadeau pour vous.", $text);
     }
 
@@ -90,5 +88,14 @@ class MailerService{
         $text = "Votre amis vous a envoyé un ticket à utiliser dans nos locaux ".$ticket->getSerial() ;
         
         $this->send($email, "Un nouveau ticket de votre amis.", $text);
+    }
+
+    public function sendBooking($email, $bookings, $date, $timeSlot)
+    {
+        $bookingService = new BookingService;
+        
+        $text = "Votre réservation pour le ".$bookingService->dateToFr($date). " à ".$timeSlot." pour ". $bookings ." personne(s) a bien été enregistrée.";
+
+        $this->send($email, "Confirmation de réservation.", $text);
     }
 }
