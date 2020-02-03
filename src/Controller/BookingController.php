@@ -182,7 +182,7 @@ class BookingController extends AbstractController
                 $manager->flush();
             }
     
-            $mailerService->sendBooking($this->getUser()->getEmail(), $bookings, $reservedAt ,$this->session->get('time'));
+            $mailerService->sendBooking($this->getUser(), $bookings, $reservedAt ,$this->session->get('time'));
                 
             $this->session->remove('bookings');
             $this->session->remove('reservedAt');

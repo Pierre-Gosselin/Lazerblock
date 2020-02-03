@@ -1,19 +1,22 @@
 <?php
 namespace App\Service;
 
-use App\Entity\Ticket;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use App\Entity\User;
+use App\Entity\Ticket;
+use App\Service\BookingService;
 
-class MailerService{
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+class MailerService
+{
     private $urlGenerator;
     private $mailer;
 
-    public function __construct( UrlGeneratorInterface $urlGenerator, MailerInterface $mailer )
+    public function __construct(UrlGeneratorInterface $urlGenerator, MailerInterface $mailer)
     {
         $this->urlGenerator = $urlGenerator;
         $this->mailer = $mailer;
@@ -27,14 +30,17 @@ class MailerService{
      * @param string $text
      * @return void
      */
-    private function send(string $email, string $subject, string $text ){
-        $message = (new Email())
-            ->from('no-reply@laserwars.com')
-            ->to($email)
-            ->subject($subject)
-            ->text($text);
+    private function send(string $adresse, string $subject, $template, $context)
+    {
+        $email = (new TemplatedEmail())
+            ->from('laserwars@gosselin.info')
+            ->to(new Address($adresse))
+            ->subject("Laser Wars - ".$subject)
+            ->htmlTemplate("emails/".$template)
+            ->context($context)
+        ;
 
-        $this->mailer->send( $message );
+        $this->mailer->send($email);
     }
 
     /**
@@ -43,15 +49,16 @@ class MailerService{
      * @param User $user
      * @return void
      */
-    public function sendActivationMail( User $user )
+    public function sendActivationMail(User $user)
     {
         $url = $this->urlGenerator->generate( 'activate', array(
             'token' => $user->getToken(),
         ), UrlGenerator::ABSOLUTE_URL);
 
-        $text = 'Bonjour, veuillez activer votre compte : ' . $url;
-
-        $this->send( $user->getEmail(), "Activation de compte", $text );
+        $this->send($user->getEmail(), "Activation de compte", "activate.html.twig", [
+            'user' => $user,
+            'url' => $url,
+        ]);
     }
 
     /**
@@ -60,42 +67,44 @@ class MailerService{
      * @param User $user
      * @return void
      */
-    public function sendResetPassword( User $user)
+    public function sendResetPassword(User $user)
     {
         $url = $this->urlGenerator->generate('reset_password', array(
             'token' => $user->getToken(),
         ), UrlGenerator::ABSOLUTE_URL);
-
-        $text = "Bienvenue sur Laser Wars !!!,
-        Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci dessous
-        ou copier/coller dans votre navigateur internet.
-        ". $url ."
-        ---------------
-        Ceci est un mail automatique, Merci de ne pas y répondre.";
         
-        $this->send( $user->getEmail(), "Renouvellement de mot de passe", $text);
+        $this->send($user->getEmail(), "Renouvellement de mot de passe", "resetPassword.html.twig", [
+            'user' => $user,
+            'url' => $url,
+        ]);
     }
 
-    public function giftgenerate($email, $gift)
+    public function giftgenerate(User $user, $giftSerial, $giftTitle)
     {
-        $text = 'Bravo tu as reçu '.$gift.' à utiliser dans votre laser wars !!!';
-        
-        $this->send( $email, "un nouveau cadeau pour vous.", $text);
+        $this->send($user->getEmail(), "Un nouveau cadeau pour vous.", "giftGenerate.html.twig", [
+            'user' => $user,
+            'serial' => $giftSerial,
+            'title' => $giftTitle,
+        ]);
     }
 
-    public function offerTicket($email, Ticket $ticket)
+    public function offerTicket(User $user, $email, Ticket $ticket)
     {
-        $text = "Votre amis vous a envoyé un ticket à utiliser dans nos locaux ".$ticket->getSerial() ;
-        
-        $this->send($email, "Un nouveau ticket de votre amis.", $text);
+        $this->send($email, "Un nouveau ticket de votre amis.", "offerTicket.html.twig", [
+            'user' => $user,
+            'serial' => $ticket->getSerial(),
+        ]);
     }
 
-    public function sendBooking($email, $bookings, $date, $timeSlot)
+    public function sendBooking(User $user, $bookings, $date, $timeSlot)
     {
         $bookingService = new BookingService;
-        
-        $text = "Votre réservation pour le ".$bookingService->dateToFr($date). " à ".$timeSlot." pour ". $bookings ." personne(s) a bien été enregistrée.";
 
-        $this->send($email, "Confirmation de réservation.", $text);
+        $this->send($user->getEmail(), "Confirmation de réservation.", "booking.html.twig", [
+            'user' => $user,
+            'date' => $bookingService->dateToFr($date),
+            'timeSlot' => $timeSlot,
+            'bookings' => $bookings,
+        ]);
     }
 }

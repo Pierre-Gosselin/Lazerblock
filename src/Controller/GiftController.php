@@ -56,7 +56,7 @@ class GiftController extends AbstractController
 
                 $this->addFlash('success', 'Vous avez bien reçu votre cadeau, un mail de confirmation vous a été envoyé.');
 
-                $mailer->giftgenerate($user->getEmail(), $gift->getTitle());
+                $mailer->giftgenerate($user, $cardgift->getSerial(), $gift->getTitle());
             }
             else
             {

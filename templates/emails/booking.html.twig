@@ -1,0 +1,19 @@
+<h1>
+    Bonjour {{ user.firstname|capitalize }} !
+</h1>
+<br>
+
+<p>
+    Votre réservation pour le {{ date }} à {{ timeSlot|date('H') }}h00 pour {{ bookings }} personne{{ bookings>1? "s": "" }} a bien été enregistrée.
+</p>
+<br>
+
+<p>
+    Vous retrouverez votre réservation sur votre espace client dans la rubrique "Mes réservations".
+</p>
+<br>
+
+<p>
+    ---------------<br>
+    Ceci est un mail automatique, Merci de ne pas y répondre.
+</p>

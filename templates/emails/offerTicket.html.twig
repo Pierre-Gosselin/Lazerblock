@@ -1,0 +1,24 @@
+<h1>
+    Bonjour !
+</h1>
+<br>
+
+<p>
+    Vous venez de recevoir une partie gratuite de la part de {{ user.firstname|capitalize }} {{ user.lastname|upper}}.
+</p>
+<br>
+
+<p>
+    Le code <strong><code>{{ serial }}</code></strong> est à communiquer à l'hote de caisse lors de votre prochaine visite.
+</p>
+<br>
+
+<p>
+    N'hésitez pas à le remercier en lui envoyant un message à l'adresse <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+</p>
+<br>
+
+<p>
+    ---------------<br>
+    Ceci est un mail automatique, Merci de ne pas y répondre.
+</p>
