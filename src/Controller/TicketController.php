@@ -56,9 +56,9 @@ class TicketController extends AbstractController
     
                 if (filter_var($email, FILTER_VALIDATE_EMAIL))
                 {
-                    $mailerService->offerTicket($email, $ticket);
+                    $mailerService->offerTicket($this->getUser(), $email, $ticket);
     
-                    $this->addFlash('info', 'Un mail a été envoyé à votre amis avec le ticket offert.');
+                    $this->addFlash('info', 'Un mail a été envoyé à votre ami avec le ticket offert.');
                     return $this->redirectToRoute('ticket_show');
                 }
                 $this->addFlash('warning', "L'adresse email saisie n'est pas valide, veuillez en saisir une autre.");     

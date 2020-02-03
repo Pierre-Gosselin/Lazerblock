@@ -33,7 +33,8 @@ class BookingService extends AbstractController
 
     public function notReservableDate($bookingAt)
     {
-        if ($bookingAt < new \Datetime("1 days") || $bookingAt > new \Datetime("32 days"))
+        $tomorrow = new \Datetime("1 days");
+        if ($bookingAt->format('Ymd') < $tomorrow->format('Ymd') || $bookingAt > new \Datetime("32 days"))
         {
             return true;
         }
