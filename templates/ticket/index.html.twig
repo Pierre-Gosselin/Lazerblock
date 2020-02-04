@@ -3,46 +3,49 @@
 {% block title %}Mes tickets{% endblock %}
 
 {% block content %}
-
-<div class="container">
-    <div class="row">
-        <div class="col-10 offset-1">
-            <h3>Historique de mes tickets</h3>
-            <p class="mb-3">Vous trouverez ici tous vos tickets à réserver, à offrir ou déjà utilisés.</p>
-
-            {% if app.user.tickets|length >0 %}
-            <table class="table table-borderless mb-4 text-center" style="background-color: rgba(0, 0, 0, 0.5);color:white" >
-                <thead>
-                    <tr class="text-center" style="font-size:1.2REM;border-bottom:1px solid white;">
-                        <th scope="col"><span class="text-primary">#</span></th>
-                        <th scope="col"><span class="text-primary">Serial</span></th>
-                        <th scope="col"><span class="text-primary">Utilisé</span></th>
-                        <th scope="col"><span class="text-primary">Date d'achat</span></th>
-                        <th scope="col"><span class="text-primary">Action</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for ticket in pagination.data %}
-                    <tr class="text-center">
-                        <th scope="row">{{ (pagination.currentPage -1) * pagination.limit + loop.index }}</th>
-                        <td>{{ ticket.serial }}</td>
-                        <td>{{ ticket.used ? "OUI" : "NON"}}</td>
-                        <td>{{ ticket.buyAt|date('d/m/Y') }}</td>
-                        <td>
-                            {% if ticket.used == false %}
-                            <a href="{{ path('ticket_give', {'serial': ticket.serial }) }}" class="btn btn-outline-light btn-sm">Offrir à un amis</a>
-                                    
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {{ pagination.display() }}
-                
-            {% endif %}
+    <div class="container">
+        <div class="row mb-3 align-items-center">
+            <div class="col mt-3">
+                <h3 class="font">Historique de mes tickets</h3>
+                <p>Vous trouverez ici tous vos tickets à réserver, à offrir ou déjà utilisés.</p>
+            </div>
+            <div class="col text-right">
+                <a href="#" class="btn btn-outline-light btn-lg">Acheter des tickets</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table table-borderless mb-4 text-center rounded" style="background-color: rgba(0, 0, 0, 0.5);color:white">
+                    <thead>
+                        <tr class="text-center" style="font-size:1.2REM;border-bottom:1px solid white;">
+                            <th scope="col"><span class="text-light">#</span></th>
+                            <th scope="col"><span class="text-light">Serial</span></th>
+                            <th scope="col"><span class="text-light">Utilisé</span></th>
+                            <th scope="col"><span class="text-light">Date d'achat</span></th>
+                            <th scope="col"><span class="text-light">Action</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for ticket in pagination.data %}
+                        <tr class="text-center">
+                            <th scope="row">{{ (pagination.currentPage -1) * pagination.limit + loop.index }}</th>
+                            <td>{{ ticket.serial }}</td>
+                            <td>{{ ticket.used ? "OUI" : "NON"}}</td>
+                            <td>{{ ticket.buyAt|date('d/m/Y') }}</td>
+                            <td>
+                                {% if ticket.used == false %}
+                                <a href="{{ path('ticket_give', {'serial': ticket.serial }) }}" class="btn btn-outline-light btn-sm">Offrir à un amis</a>
+                                        
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% if pagination.data|length > 10 %}
+                    {{ pagination.display() }}     
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
-
 {% endblock %}

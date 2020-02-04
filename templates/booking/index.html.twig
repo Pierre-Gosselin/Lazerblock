@@ -4,10 +4,10 @@
 
 {% block content %}
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col">
-                <h3>Consulter mes réservations</h3>
-                <p class="mb-3">Vous trouverez ici tous vos réservations passées ou en cours.</p>
+        <div class="row mb-3 align-items-center">
+            <div class="col mt-3">
+                <h3 class="font">Consulter mes réservations</h3>
+                <p>Vous trouverez ici tous vos réservations passées ou en cours.</p>
             </div>
             <div class="col text-right">
                 <a href="{{ path('booking_create') }}" class="btn btn-outline-light btn-lg">Réserver une partie</a>
@@ -18,11 +18,11 @@
                 <table class="table table-borderless mb-4 text-center" style="background-color: rgba(0, 0, 0, 0.5);color:white" >
                     <thead>
                         <tr class="text-center" style="font-size:1.2REM;border-bottom:1px solid white;">
-                            <th scope="col"><span class="text-primary">#</span></th>
-                            <th scope="col"><span class="text-primary">Date de réservation</span></th>
-                            <th scope="col"><span class="text-primary">Créneau horaire</span></th>
-                            <th scope="col"><span class="text-primary">Pseudo</span></th>
-                            <th scope="col"><span class="text-primary">Score</span></th>
+                            <th scope="col"><span class="text-light">#</span></th>
+                            <th scope="col"><span class="text-light">Date de réservation</span></th>
+                            <th scope="col"><span class="text-light">Créneau horaire</span></th>
+                            <th scope="col"><span class="text-light">Pseudo</span></th>
+                            <th scope="col"><span class="text-light">Score</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +37,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                {{ pagination.display() }}
+                {% if pagination.data|length > 10 %}
+                    {{ pagination.display() }}     
+                {% endif %}
             </div>
         </div>  
     </div>
