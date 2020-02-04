@@ -9,78 +9,77 @@
 {% block content %}
     <div class="container">
         <div class="row mb-3 align-items-center">
-            <div class="col">
-                <h3>Vos informations personnelles :</h3>
+            <div class="col-12 col-lg-8 mt-3">
+                <h3 class="font">Mes informations personnelles :</h3>
             </div>
-            <div class="col text-right">
-                <a href="{{ path('account_edit') }}" class="btn btn-outline-light btn-sm">Modifier mon profil</a>
-            </div>
-        </div>
-
-        <div class="row text-center mb-3">
-            <div class="col-6">
-                <div class="card" style="background-color:rgba(0,0,0,0.5);">
-                    <div class="card-body">
-                    <h5 class="card-title text-light">Nom</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{app.user.lastname}}</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="card" style="background-color:rgba(0,0,0,0.5);">
-                    <div class="card-body">
-                    <h5 class="card-title text-light">Membre depuis</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{app.user.createdAt|date('d/m/Y')}}</h6>
-                    </div>
-                </div>
+            <div class="col-12 col-lg-4 text-center text-lg-right">
+                <a href="{{ path('account_edit') }}" class="btn btn-outline-light btn-lg">Modifier mon profil</a>
             </div>
         </div>
 
-        <div class="row text-center mb-3">
-            <div class="col-6">
+        <div class="row text-center">
+            <div class="col-12 col-lg-6 mb-3">
                 <div class="card" style="background-color:rgba(0,0,0,0.5);">
                     <div class="card-body">
-                    <h5 class="card-title text-light">Prénom</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{app.user.firstname}}</h6>
+                        <h5 class="card-title text-light">Nom</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.lastname}}</h6>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-lg-6 mb-3">
                 <div class="card" style="background-color:rgba(0,0,0,0.5);">
                     <div class="card-body">
-                    <h5 class="card-title text-light">De quel côté de la Force êtes-vous ?</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{app.user.side ? "Jedi" : "Sith" }}</h6>
+                        <h5 class="card-title text-light">Membre depuis</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.createdAt|date('d/m/Y')}}</h6>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <div class="row text-center mb-3">
-            <div class="col-6">
+        <div class="row text-center">
+            <div class="col-12 col-lg-6 mb-3">
                 <div class="card" style="background-color:rgba(0,0,0,0.5);">
                     <div class="card-body">
-                    <h5 class="card-title text-light">Email</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{app.user.email}}</h6>
+                        <h5 class="card-title text-light">Prénom</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.firstname}}</h6>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-lg-6 mb-3">
                 <div class="card" style="background-color:rgba(0,0,0,0.5);">
                     <div class="card-body">
-                    <h5 class="card-title text-light">Nombre de crédits</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        {% if app.user.card %}
-                            {{ app.user.card.credits }}<i class="pl-1 fa-1x fab fa-galactic-republic"></i>
-                            {% if (app.user.card.credits != 0) %}
-                            expire le {{ app.user.card.expireCreditsAt|date('d/m/Y') }}
-                            <span data-toggle="tooltip" data-placement="bottom" title="La date de validité de vos crédits se renouvellent après chaque achat de ticket. ">
-                                <i class="fas fa-info-circle" ></i>
-                            </span>
-                            {% endif %}                            
-                        {% else %}
-                            Vous n'avez pas de carte de fidélité pour le moment.
-                        {% endif %}
+                        <h5 class="card-title text-light">De quel côté de la Force êtes-vous ?</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.side ? "Jedi" : "Sith" }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <div class="col-12 col-lg-6 mb-3">
+                <div class="card" style="background-color:rgba(0,0,0,0.5);">
+                    <div class="card-body">
+                        <h5 class="card-title text-light">Email</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{app.user.email}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 mb-3">
+                <div class="card" style="background-color:rgba(0,0,0,0.5);">
+                    <div class="card-body">
+                        <h5 class="card-title text-light">Nombre de crédits</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {% if app.user.card %}
+                                {{ app.user.card.credits }}<i class="pl-1 fa-1x fab fa-galactic-republic"></i>
+                                {% if (app.user.card.credits != 0) %}
+                                expire le {{ app.user.card.expireCreditsAt|date('d/m/Y') }}
+                                <span data-toggle="tooltip" data-placement="bottom" title="La date de validité de vos crédits se renouvellent après chaque achat de ticket. ">
+                                    <i class="fas fa-info-circle" ></i>
+                                </span>
+                                {% endif %}                            
+                            {% else %}
+                                Vous n'avez pas de carte de fidélité pour le moment.
+                            {% endif %}
                         </h6>
                     </div>
                 </div>
@@ -88,8 +87,7 @@
         </div>
 
         {% if app.user.card %}
-
-            <h3 class="mt-3 mb-3">Votre carte de fidélité :</h3>
+            <h3 class="font mt-5 mb-3">Ma carte de fidélité :</h3>
             <div class="row">
                 <div class="col">
                     <div class="card container-fluid text-center" style="height:250px;width:400px;border-color:gray;border-radius:30px; background-image:url({{ asset("images/card.jpg") }});background-size:cover;">
@@ -115,17 +113,16 @@
                 </div>
             </div>
 
-            <h3 class="mt-3 mb-3">Historique des cadeaux :</h3>
-            
+            <h3 class="font mt-5 mb-3">Historique de mes cadeaux :</h3>
             {% if app.user.card.giftCards|length > 0 %}
-                <table class="table alert alert-light mb-4">
+                <table class="table table-borderless mb-4 text-center rounded" style="background-color: rgba(0, 0, 0, 0.5);color:white">
                     <thead>
                         <tr>
-                            <th scope="col"><span class="text-primary">#</span></th>
-                            <th scope="col"><span class="text-primary">Cadeau</span></th>
-                            <th scope="col"><span class="text-primary">Serial</span></th>
-                            <th scope="col"><span class="text-primary">Utilisé</span></th>
-                            <th scope="col"><span class="text-primary">Date d'expiration</span></th>
+                            <th scope="col"><span class="text-light">#</span></th>
+                            <th scope="col"><span class="text-light">Cadeau</span></th>
+                            <th scope="col"><span class="text-light">Serial</span></th>
+                            <th scope="col"><span class="text-light">Utilisé</span></th>
+                            <th scope="col"><span class="text-light">Date d'expiration</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,12 +138,11 @@
                     </tbody>
                 </table> 
             {% else %}
-            <p>
-                Vous n'avez pas de cadeaux pour le moment.
-            </p>
+                <p>
+                    Vous n'avez pas de cadeaux pour le moment, n'hésitez pas à aller faire un tour dans la <a class="border-bottom" href="{{ path('shop_show') }}">boutique</a>.
+                </p>
             {% endif %}
         {% else %}
-
             <h3 class="mb-3 mt-5">Vous n'avez pas de carte de fidélité ?</h3>
             <div class="row justify-content-around">
                 <div class="col-4 container-fluid text-center">

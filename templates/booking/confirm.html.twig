@@ -5,45 +5,55 @@
 {% block content %}
 
 <div class="container">
-    <form method="POST" action="{{ path('booking_save') }}"></form>
-    <div class="row">
+    <div class="row mb-3">
+        <div class="col mt-3">
+            <h3 class="font">Résumé de votre réservation</h3>
+        </div>
+    </div>
+    <div class="row mb-3">
         <div class="col">
-            <h3>Résumé de votre réservation</h3>
+            <div class="card p-3" style="background-color: rgba(0,0,0,0.5);">
+                <p>Vous réservez pour le {{ reservedAt }} à {{ time|date('H') }}h00 pour {{ bookings }} personne{{ bookings>1?"s":"" }}.</p>
+                {% set somme = (15 - ( bookings - 1)) * bookings %}
+                <p>Total à régler : {{ somme }}<span class="font">€</span> ttc</p>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3 mt-4">
+        <div class="col">
+            <h3 class="font">Choisissez votre mode de réglement</h3>
         </div>
     </div>
     <div class="row">
-        <div class="col" style="background-color: rgba(0,0,0,0.5);">
-            <p>Vous réservez pour le {{ reservedAt }} à {{ time|date('H') }}h00 pour {{ bookings }} personne{{ bookings>1?"s":"" }}.</p>
-            {% set somme = (15 - ( bookings - 1)) * bookings %}
-            <p>Total à régler : {{ somme }}&euro; ttc</p>
+        <div class="col-12 col-lg-4 mb-3">
+            <div class="card p-3" style="background-color: rgba(0,0,0,0.5);height: 250px;">
+                <h4 class="h5 mb-3 pb-2 border-bottom">Je souhaite utiliser les tickets en ma possession.</h4>
+                {% if ticketsToUse|length >0 %}
+                    <p>Vous avez {{ticketsToUse|length}} ticket(s) à utiliser.</p>
+                {% endif %}
+                {% if ticketsToUse|length >= bookings %}
+                    <a href="{{ path('booking_use_ticket') }}" class="btn btn-outline-light">Utiliser mes tickets</a>
+                {% else %}
+                    <p>Vous ne disposez pas assez de ticket pour faire cette réservation.</p>
+                    <p>Vous pouvez soit en acheter, soit effectuer un réglement par carte bancaire.</p>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col mt-4">
-            <h3 class="">Choisissez votre mode de réglement</h3>
+        <div class="col-12 col-lg-4 mb-3">
+            <div class="card p-3" style="background-color: rgba(0,0,0,0.5);height: 250px;">
+                <h4 class="h5 mb-3 pb-2 border-bottom">Je souhaite effectuer le réglement par carte bleue.</h4>
+                <button class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModalCenter">Payer par carte bleue</button>
+            </div>
         </div>
-    <div class="row">
-        <div class="col-4" style="background-color: rgba(0,0,0,0.5);">
-            <h4 class="h6">Je souhaite utiliser mes tickets.</h4>
-            <p>Vous avez {{ticketsToUse|length}} ticket(s) à utiliser.</p>
-            {% if ticketsToUse|length >= bookings %}
-                <a href="{{ path('booking_use_ticket') }}" class="btn btn-outline-light">Utiliser mes tickets</a>
-            {% else %}
-                <p>Vous ne disposez pas assez de ticket pour faire cette réservation.</p>
-                <p>Vous pouvez soit en acheter, soit payer par carte bancaire.</p>
-            {% endif %}
-        </div>
-        <div class="col-4 mx-1" style="background-color: rgba(0,0,0,0.5);">
-            <h4 class="h6">Je souhaite payer par carte bleue.</h4>
-            <button class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModalCenter">Payer par carte bleue</button>
-        </div>
-        <div class="col-4" style="background-color: rgba(0,0,0,0.5);">
-            <h4 class="h6">Je souhaite payer mes réservations une fois sur place.</h4>
-            {% if app.user.bookings|length>0 %}
-                <a href="{{ path('booking_save') }}" class="btn btn-outline-light">Payer sur place</a>
-            {% else %}
-                <p>La première réservation doit être payer obligatoirement par carte bancaire.</p>   
-            {% endif %}
+        <div class="col-12 col-lg-4 mb-3">
+            <div class="card p-3" style="background-color: rgba(0,0,0,0.5);height: 250px;">
+                <h4 class="h5 mb-3 pb-2 border-bottom">Je souhaite payer mes réservations une fois sur place.</h4>
+                {% if app.user.bookings|length>0 %}
+                    <a href="{{ path('booking_save') }}" class="btn btn-outline-light">Payer sur place</a>
+                {% else %}
+                    <p>La première réservation doit être payer obligatoirement par carte bancaire.</p>   
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
