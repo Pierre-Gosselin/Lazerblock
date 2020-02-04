@@ -53,7 +53,7 @@ class User implements UserInterface
     private $firstname;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      * @Assert\Date
      */
     private $birthdate;
@@ -226,7 +226,7 @@ class User implements UserInterface
         return $this->birthdate;
     }
 
-    public function setBirthdate(\DateTimeInterface $birthdate): self
+    public function setBirthdate(?\DateTimeInterface $birthdate): self
     {
         $this->birthdate = $birthdate;
 
@@ -393,4 +393,10 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->email;
+    }
+   
 }

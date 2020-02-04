@@ -1,0 +1,330 @@
+easy_admin:
+    formats:
+        date: 'd/m/Y'
+        time: 'H:i'
+        datetime: 'd/m/Y H:i:s'
+    entities:
+   
+        User:
+            class: App\Entity\User
+            label: Utilisateur  
+            list:
+                fields:
+                    - property: email
+                      label: Email 
+                    - property: lastName
+                      label: Nom
+                    - property: firstName
+                      label: Prénom  
+                    - property: side
+                      label: side                 
+                    - property: birthdate
+                      label: Date de naissance
+                      type: date
+                    - property: enabled
+                      label: Compte activé
+                    - property: createdAt
+                      type: datetime
+                      label: Date de création
+                      type_options:
+                        disabled: true
+                        widget: single_text
+                    - property: roles
+                      label: Rôles
+                
+                      
+            form:
+                label: Utilisateur
+                form_options: { validation_groups: [] }
+
+                fields:
+                    - property: email
+                      label: Email
+                    - property: lastName
+                      label: Nom
+                      type: text
+                    - property: firstName
+                      label: Prénom
+                      type: text
+                    - property: side
+                      label: Side
+                      type: choice
+                      type_options:   
+                          choices: { 'Jedi': 'Jedi', 'Sith': 'Sith' } 
+                    - property: birthdate
+                      type: date
+                      label: Date de naissance
+                      type_options:
+                        widget: single_text
+                        input: datetime
+                    - property: enabled
+                      label: Compte activé
+                    - property: createdAt
+                      type: datetime
+                      label: Date de création
+                      type_options:
+                        disabled: true
+                        widget: single_text
+                    - property: 'roles' 
+                      type: 'choice'
+                      type_options:
+                          mapped: true
+                          expanded: true
+                          multiple: true
+                          choices: { 'Caissière': 'ROLE_CASHIER', 'Client': 'ROLE_USER', 'Administeur': 'ROLE_ADMIN' }
+                    
+            edit:
+                item_permission: 'ROLE_ADMIN'
+            new:
+                fields:
+                    - property: password
+                      type: text
+                item_permission: 'ROLE_ADMIN'
+            delete:
+                item_permission: 'ROLE_ADMIN'
+
+
+        Ticket:
+            class: App\Entity\Ticket
+            label: Billet
+            list:
+                fields:
+                    - property: used
+                      label: Utilisée
+                      type: boolean
+                    - property: buyAt
+                      label: Date d'achat
+                      type_options:
+                        widget: single_text
+                        input: datetime
+                        disabled: true
+
+                    - property: serial
+                      label: Numéro de série
+                    - property: user
+                      label: Utilisateur
+                      
+            form:
+                label: Billet
+                form_options: { validation_groups: [] }
+                fields:
+
+                    - property: user
+                      label: utilisateur
+                    - property: serial
+                      label: Numéro de série        
+                    - property: buyAt
+                      label: Date d'achat
+                      type_options:
+                        widget: single_text
+                        input: datetime
+                        disabled: true
+                  
+            edit:
+                item_permission: 'ROLE_ADMIN'
+                fields: 
+                    - property: used
+                      label: Utilisée
+            new:
+                item_permission: 'ROLE_ADMIN'
+                fields: 
+                    - property: used
+                      label: Utilisée
+                      type_options:
+                          disabled: true                    
+            delete:
+                item_permission: 'ROLE_ADMIN'
+
+        Gift:
+            class: App\Entity\Gift
+            label: Cadeau
+            list:
+                fields:
+                    - property: title
+                      label: Titre
+                    - property: price
+                      label: Prix
+                    - property: picture
+                      label: Image
+                      type: image
+                      base_path: '/gifts/'
+            form:
+                item_permission: 'ROLE_ADMIN'
+                label: Cadeau
+                form_options: { validation_groups: [] }
+                fields:
+                    - property: title
+                      label: Titre
+                    - property: price
+                      label: prix
+                    - property: picture
+                      label: Image
+                      type: file_upload
+                      type_options:
+                          upload_dir: public/images/gifts
+                    - property: enabled
+                      label: Activé
+                    
+            edit:
+                item_permission: 'ROLE_ADMIN'
+            new:
+                item_permission: 'ROLE_ADMIN'
+            delete:
+                item_permission: 'ROLE_ADMIN'
+
+        Card:
+            class: App\Entity\Card
+            label: Carte
+            list:
+                fields:
+                    - property: serial
+                      label: Numéro de série
+                    - property: credits
+                      label: Crédits
+                    - property: expireCreditsAt
+                      label: Date de expiration de crédit
+                      type: date
+                    - property: user
+                      label: Utilisateur
+                    
+            form:
+                item_permission: 'ROLE_ADMIN'
+                label: carte
+                form_options: { validation_groups: [] }
+                fields:
+                     - property: user
+                       label: Utilisateur
+                     - property: credits
+                       label: Crédits
+                     - property: serial
+                       label: Numéro de série
+                     
+            edit:
+                item_permission: 'ROLE_ADMIN'
+            new:
+                item_permission: 'ROLE_ADMIN'
+            delete:
+                item_permission: 'ROLE_ADMIN'
+
+
+        Booking:
+            class: App\Entity\Booking
+            label: Réservation
+            list:
+                fields:
+                    - property: reservationAt
+                      label:  Date de réservation
+                      type: date
+                    - property: Score
+                      label: Score
+                      type: text
+                    - property: pseudo
+                      label: pseudo 
+                    - property: serial
+                      label: Numéro de série                 
+                    - property: user
+                      label: Utilisateur
+                    - property: timeSlot
+                      label: Créneau horaire
+                      type: time
+                     
+
+            form:
+                label: Réservation
+                form_options: { validation_groups: [] }
+
+                fields:
+                    - property: reservationAt
+                      label:  Date de réservation
+                      type: date
+                    - property: Score
+                      label: Score
+                      type: text
+                    - property: pseudo
+                      label: Pseudo 
+                    - property: serial
+                      label: Numéro de série                 
+                    - property: user
+                      label: utilisateur
+                    - property: timeSlot
+                      label: Créneau horaire
+                      type: time
+            edit:
+                item_permission: 'ROLE_ADMIN'
+            new:
+                item_permission: 'ROLE_ADMIN'
+            delete:
+                item_permission: 'ROLE_ADMIN'
+
+
+        Avatar:
+            class: App\Entity\Avatar
+            label: Avatar
+            edit:
+                item_permission: 'ROLE_ADMIN'
+            new:
+                item_permission: 'ROLE_ADMIN'
+            delete:
+                item_permission: 'ROLE_ADMIN'
+
+
+        
+        CardGift:
+           class: App\Entity\CardGift
+           label: CarteGift
+           list:
+               fields:
+                   - property: serial
+                     label: Numéro de série
+                   - property: credits
+                     label: Crédit
+                   - property: user
+                     label: Utilisateur
+                   - property: gifts
+                     label: Cadeaux
+                   - property: cards
+                     label: Cartes
+           form:
+               item_permission: 'ROLE_ADMIN'
+               label: CardGift
+               form_options: { validation_groups: [] }
+               fields:
+
+                    - property: gifts
+                      label: Cadeaux
+                    - property: serial
+                      label: Numéro de série
+                    - property: used
+                      label: Utilisée
+                    - property: gifts
+                      label: Cadeaux
+                    - property: cards
+                      label: Cartes
+                     
+                       
+           edit:
+              item_permission: 'ROLE_ADMIN'
+           new:
+              item_permission: 'ROLE_ADMIN'
+              fields:
+                    - property: used
+                      type_options:
+                        mapped: false
+                        disabled: true 
+
+           delete:
+              item_permission: 'ROLE_ADMIN'
+
+
+    site_name: 'LaserWars'
+   
+
+    design:
+        menu:
+          - { entity: 'User', icon: 'user' }
+          - { entity: 'Ticket', icon: 'ticket' }
+          - { entity: 'Gift', icon: 'gift' }
+          - { entity: 'CardGift', icon: 'gift' }
+          - { entity: 'Card', icon: 'credit-card' }
+          - { entity: 'Booking', icon: 'id-card' }
+          - { entity: 'Avatar', icon: 'user-circle' }
