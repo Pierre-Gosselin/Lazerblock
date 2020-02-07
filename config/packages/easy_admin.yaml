@@ -17,7 +17,7 @@ easy_admin:
                     - property: firstName
                       label: Prénom  
                     - property: side
-                      label: side                 
+                      label: side               
                     - property: birthdate
                       label: Date de naissance
                       type: date
@@ -30,9 +30,7 @@ easy_admin:
                         disabled: true
                         widget: single_text
                     - property: roles
-                      label: Rôles
-                
-                      
+                      label: Rôles                                      
             form:
                 label: Utilisateur
                 form_options: { validation_groups: [] }
@@ -46,11 +44,12 @@ easy_admin:
                     - property: firstName
                       label: Prénom
                       type: text
-                    - property: side
+                    - property: Side
                       label: Side
-                      type: choice
-                      type_options:   
-                          choices: { 'Jedi': 'Jedi', 'Sith': 'Sith' } 
+                      type: 'choice'
+                      type_options:
+                          mapped: true
+                          choices: { 'Jedi': 1, 'Sith': 0 }  
                     - property: birthdate
                       type: date
                       label: Date de naissance
@@ -59,22 +58,15 @@ easy_admin:
                         input: datetime
                     - property: enabled
                       label: Compte activé
-                    - property: createdAt
-                      type: datetime
-                      label: Date de création
-                      type_options:
-                        disabled: true
-                        widget: single_text
                     - property: 'roles' 
                       type: 'choice'
                       type_options:
                           mapped: true
                           expanded: true
                           multiple: true
-                          choices: { 'Caissière': 'ROLE_CASHIER', 'Client': 'ROLE_USER', 'Administeur': 'ROLE_ADMIN' }
-                    
+                          choices: { 'Caissière': 'ROLE_CASHIER', 'Client': 'ROLE_USER', 'Administeur': 'ROLE_ADMIN' }                    
             edit:
-                item_permission: 'ROLE_ADMIN'
+                item_permission: 'ROLE_ADMIN'        
             new:
                 fields:
                     - property: password
@@ -88,38 +80,26 @@ easy_admin:
             class: App\Entity\Ticket
             label: Billet
             list:
-                fields:
-                    - property: used
-                      label: Utilisée
-                      type: boolean
+                fields:                    
+                    - property: user
+                      label: Utilisateur
+                    - property: serial
+                      label: Numéro de série                    
                     - property: buyAt
                       label: Date d'achat
                       type_options:
                         widget: single_text
                         input: datetime
                         disabled: true
-
-                    - property: serial
-                      label: Numéro de série
-                    - property: user
-                      label: Utilisateur
-                      
+                    - property: used
+                      label: Utilisée
+                      type: boolean                      
             form:
                 label: Billet
                 form_options: { validation_groups: [] }
                 fields:
-
                     - property: user
-                      label: utilisateur
-                    - property: serial
-                      label: Numéro de série        
-                    - property: buyAt
-                      label: Date d'achat
-                      type_options:
-                        widget: single_text
-                        input: datetime
-                        disabled: true
-                  
+                      label: Utilisateur    
             edit:
                 item_permission: 'ROLE_ADMIN'
                 fields: 
@@ -127,11 +107,6 @@ easy_admin:
                       label: Utilisée
             new:
                 item_permission: 'ROLE_ADMIN'
-                fields: 
-                    - property: used
-                      label: Utilisée
-                      type_options:
-                          disabled: true                    
             delete:
                 item_permission: 'ROLE_ADMIN'
 
@@ -147,9 +122,8 @@ easy_admin:
                     - property: picture
                       label: Image
                       type: image
-                      base_path: '/gifts/'
+                      base_path: '/images/gifts/'
             form:
-                item_permission: 'ROLE_ADMIN'
                 label: Cadeau
                 form_options: { validation_groups: [] }
                 fields:
@@ -157,14 +131,11 @@ easy_admin:
                       label: Titre
                     - property: price
                       label: prix
-                    - property: picture
+                    - property: pictureFile
                       label: Image
-                      type: file_upload
-                      type_options:
-                          upload_dir: public/images/gifts
+                      type: file
                     - property: enabled
-                      label: Activé
-                    
+                      label: activé                                                         
             edit:
                 item_permission: 'ROLE_ADMIN'
             new:
@@ -177,28 +148,23 @@ easy_admin:
             label: Carte
             list:
                 fields:
+                    - property: user
+                      label: Utilisateur  
                     - property: serial
                       label: Numéro de série
                     - property: credits
                       label: Crédits
                     - property: expireCreditsAt
                       label: Date de expiration de crédit
-                      type: date
-                    - property: user
-                      label: Utilisateur
-                    
+                      type: date                                      
             form:
-                item_permission: 'ROLE_ADMIN'
                 label: carte
                 form_options: { validation_groups: [] }
                 fields:
                      - property: user
                        label: Utilisateur
                      - property: credits
-                       label: Crédits
-                     - property: serial
-                       label: Numéro de série
-                     
+                       label: Crédits                  
             edit:
                 item_permission: 'ROLE_ADMIN'
             new:
@@ -206,49 +172,46 @@ easy_admin:
             delete:
                 item_permission: 'ROLE_ADMIN'
 
-
         Booking:
             class: App\Entity\Booking
             label: Réservation
             list:
                 fields:
-                    - property: reservationAt
-                      label:  Date de réservation
-                      type: date
-                    - property: Score
-                      label: Score
-                      type: text
-                    - property: pseudo
-                      label: pseudo 
-                    - property: serial
-                      label: Numéro de série                 
                     - property: user
                       label: Utilisateur
+                    - property: serial
+                      label: Numéro de série  
+                    - property: Pseudo
+                      label: Pseudo 
+                      type: text
+                    - property: Score
+                      label: Score
+                      type: text                    
                     - property: timeSlot
                       label: Créneau horaire
                       type: time
-                     
-
+                    - property: reservationAt
+                      label:  Date de réservation
+                      type: date                           
             form:
                 label: Réservation
                 form_options: { validation_groups: [] }
 
                 fields:
-                    - property: reservationAt
-                      label:  Date de réservation
-                      type: date
+                    - property: user
+                      label: Utilisateur
+                    - property: Pseudo
+                      label: Pseudo
+                      type: text
                     - property: Score
                       label: Score
                       type: text
-                    - property: pseudo
-                      label: Pseudo 
-                    - property: serial
-                      label: Numéro de série                 
-                    - property: user
-                      label: utilisateur
                     - property: timeSlot
                       label: Créneau horaire
                       type: time
+                    - property: reservationAt
+                      label:  Date de réservation
+                      type: date                   
             edit:
                 item_permission: 'ROLE_ADMIN'
             new:
@@ -260,65 +223,64 @@ easy_admin:
         Avatar:
             class: App\Entity\Avatar
             label: Avatar
+            list:
+                fields:
+                    - property: title
+                      label: Titre
+                    - property: picture
+                      label: Image
+                      type: image
+                      base_path: '/images/avatar/'
+            form:
+                label: Avatar
+                form_options: { validation_groups: [] }
+                fields:
+                    - property: title
+                      label: Titre                    
+                    - property: pictureFile
+                      label: Image
+                      type: file                               
             edit:
                 item_permission: 'ROLE_ADMIN'
             new:
-                item_permission: 'ROLE_ADMIN'
+                item_permission: 'ROLE_ADMIN'                                                                             
             delete:
                 item_permission: 'ROLE_ADMIN'
 
 
-        
         CardGift:
            class: App\Entity\CardGift
            label: CarteGift
            list:
                fields:
                    - property: serial
-                     label: Numéro de série
-                   - property: credits
-                     label: Crédit
-                   - property: user
-                     label: Utilisateur
+                     label: Numéro de série                   
                    - property: gifts
-                     label: Cadeaux
+                     label: Cadeau
                    - property: cards
-                     label: Cartes
+                     label: Carte
+                   - property: used
+                     label: Utilisé
            form:
-               item_permission: 'ROLE_ADMIN'
                label: CardGift
                form_options: { validation_groups: [] }
                fields:
-
                     - property: gifts
-                      label: Cadeaux
-                    - property: serial
-                      label: Numéro de série
-                    - property: used
-                      label: Utilisée
-                    - property: gifts
-                      label: Cadeaux
+                      label: Cadeau
                     - property: cards
-                      label: Cartes
-                     
-                       
+                      label: Carte                                            
            edit:
-              item_permission: 'ROLE_ADMIN'
-           new:
               item_permission: 'ROLE_ADMIN'
               fields:
                     - property: used
-                      type_options:
-                        mapped: false
-                        disabled: true 
-
+                      label: Utilisé
+           new:
+              item_permission: 'ROLE_ADMIN'
            delete:
               item_permission: 'ROLE_ADMIN'
 
 
-    site_name: 'LaserWars'
-   
-
+    site_name: 'LaserWars'   
     design:
         menu:
           - { entity: 'User', icon: 'user' }
