@@ -30,9 +30,7 @@ easy_admin:
                         disabled: true
                         widget: single_text
                     - property: roles
-                      label: Rôles
-                
-                      
+                      label: Rôles                                      
             form:
                 label: Utilisateur
                 form_options: { validation_groups: [] }
@@ -66,8 +64,7 @@ easy_admin:
                           mapped: true
                           expanded: true
                           multiple: true
-                          choices: { 'Caissière': 'ROLE_CASHIER', 'Client': 'ROLE_USER', 'Administeur': 'ROLE_ADMIN' }
-                    
+                          choices: { 'Caissière': 'ROLE_CASHIER', 'Client': 'ROLE_USER', 'Administeur': 'ROLE_ADMIN' }                    
             edit:
                 item_permission: 'ROLE_ADMIN'        
             new:
@@ -96,8 +93,7 @@ easy_admin:
                         disabled: true
                     - property: used
                       label: Utilisée
-                      type: boolean
-                      
+                      type: boolean                      
             form:
                 label: Billet
                 form_options: { validation_groups: [] }
@@ -135,17 +131,11 @@ easy_admin:
                       label: Titre
                     - property: price
                       label: prix
-                    - property: picture
+                    - property: pictureFile
                       label: Image
-                      type: file_upload
-                      type_options:
-                          upload_dir: public/images/gifts/
-                          
+                      type: file
                     - property: enabled
-                      label: Activé 
-                      
-                      
-                                        
+                      label: activé                                                         
             edit:
                 item_permission: 'ROLE_ADMIN'
             new:
@@ -166,8 +156,7 @@ easy_admin:
                       label: Crédits
                     - property: expireCreditsAt
                       label: Date de expiration de crédit
-                      type: date
-                                      
+                      type: date                                      
             form:
                 label: carte
                 form_options: { validation_groups: [] }
@@ -182,7 +171,6 @@ easy_admin:
                 item_permission: 'ROLE_ADMIN'
             delete:
                 item_permission: 'ROLE_ADMIN'
-
 
         Booking:
             class: App\Entity\Booking
@@ -248,13 +236,10 @@ easy_admin:
                 form_options: { validation_groups: [] }
                 fields:
                     - property: title
-                      label: Titre
-                    - property: picture
+                      label: Titre                    
+                    - property: pictureFile
                       label: Image
-                      type: file_upload
-                      type_options:
-                          upload_dir: public/images/avatar/ 
-                               
+                      type: file                               
             edit:
                 item_permission: 'ROLE_ADMIN'
             new:
@@ -276,7 +261,6 @@ easy_admin:
                      label: Carte
                    - property: used
                      label: Utilisé
-
            form:
                label: CardGift
                form_options: { validation_groups: [] }

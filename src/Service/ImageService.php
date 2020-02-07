@@ -13,10 +13,11 @@ class ImageService
         $this->kernel = $kernel;
     }
 
-    function saveToDisk(UploadedFile $image) {
-        $path = $this->kernel->getProjectDir().'/public/gifts/';
+    function saveToDisk(UploadedFile $image, $dir ) {
+        $path = $this->kernel->getProjectDir() . $dir;
         $imageName = uniqid() . '.' . $image->guessExtension();
         $image->move($path,$imageName);
         return $imageName;
     }
+    
 }

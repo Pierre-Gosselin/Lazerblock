@@ -26,6 +26,17 @@ class Avatar
      */
     private $picture;
 
+    private $pictureFile;
+
+    public function getPictureFile(){
+        return $this->pictureFile;
+    }
+
+    public function setPictureFile( $file ){
+        $this->pictureFile = $file;
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

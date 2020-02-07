@@ -43,6 +43,17 @@ class Gift
      */
     private $enabled;
 
+    private $pictureFile;
+
+    public function getPictureFile(){
+        return $this->pictureFile;
+    }
+
+    public function setPictureFile( $file ){
+        $this->pictureFile = $file;
+        return $this;
+    }
+
     public function __construct()
     {
         $this->cardGifts = new ArrayCollection();
