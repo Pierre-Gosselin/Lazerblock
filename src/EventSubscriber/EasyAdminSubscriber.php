@@ -4,16 +4,13 @@ namespace App\EventSubscriber;
 
 use App\Entity\Card;
 use App\Entity\Gift;
-use App\Entity\User;
 use App\Entity\Avatar;
 use App\Entity\Ticket;
 use App\Entity\Booking;
 use App\Entity\CardGift;
 use App\Service\ImageService;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
@@ -26,9 +23,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'easy_admin.pre_persist' => array('setImage'),
+            'easy_admin.pre_persist' => array('setImage','setAutomatiqueSerialSlug'),
             'easy_admin.pre_update' => array('setImage'),
-            'easy_admin.pre_persist' => array('setAutomatiqueSerialSlug'),         
         );
     }
 
@@ -38,14 +34,26 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         if($entity instanceof Gift)
         {  
-            $url = $this->service->saveToDisk( $entity->getPictureFile(), '/public/images/gifts/' );
-            $entity->setPicture($url);
+            $picture = $entity->getPicture();
+
+            if ($entity->getPictureFile())
+            {
+                $picture = $this->service->saveToDisk($entity->getPictureFile(), '/public/images/gifts/');
+            }
+
+            $entity->setPicture($picture);
         }   
                
         if ($entity instanceof Avatar)
         {
-            $url = $this->service->saveToDisk( $entity->getPictureFile(), '/public/images/avatar/' );
-            $entity->setPicture($url);              
+            $picture = $entity->getPicture();
+
+            if ($entity->getPictureFile())
+            {
+                $picture = $this->service->saveToDisk($entity->getPictureFile(), '/public/images/avatar/');
+            }
+            
+            $entity->setPicture($picture);              
         }       
     }
 
@@ -67,7 +75,4 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $event['entity'] = $entity;
         }   
     }
-}           
-    
-
-    
+}    
