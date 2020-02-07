@@ -11,7 +11,6 @@ class BookingService extends AbstractController
     /**
      * Permet de retourner un tableau qui contient les dates non disponible les 31 prochains jours
      *
-     * @return void
      */
     public function getNotAvailable()
     {
@@ -31,6 +30,11 @@ class BookingService extends AbstractController
         return $notAvailable;
     }
 
+    /**
+     * Permet de vérifier si la date de la réservation correspond bien au critère.
+     *
+     * @param $bookingAt
+     */
     public function notReservableDate($bookingAt)
     {
         $tomorrow = new \Datetime("1 days");
@@ -55,7 +59,7 @@ class BookingService extends AbstractController
     /** 
      * Permet de retourner un tableau des plages horaires disponible
      *
-     * @param [type] $bookingAt
+     * @param $bookingAt
      * @return void
      */
     public function getSlotAvailable($bookingAt)
@@ -92,6 +96,13 @@ class BookingService extends AbstractController
         return json_encode($slot);
     }
 
+    /**
+     * Permet de vérifier si le créneau horraire correspond bien au critère
+     *
+     * @param $bookingAt
+     * @param $time
+     * @param $bookings
+     */
     public function notReservableTime($bookingAt, $time, $bookings)
     {
         $timeArray = json_decode($this->getSlotAvailable($bookingAt->format('d/m/Y')),true);
@@ -114,6 +125,16 @@ class BookingService extends AbstractController
         }
         
         return $notFindTime;
+    }
+
+    /**
+     * Vérifie si l'utilisateur a déjà une réservation en cours
+     *
+     * @return void
+     */
+    public function userBooking()
+    {
+        return $this->getDoctrine()->getRepository(Booking::class)->findByDate($this->getUser());
     }
 
     public function dateToFr($date)

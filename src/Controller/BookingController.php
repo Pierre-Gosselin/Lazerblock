@@ -54,12 +54,10 @@ class BookingController extends AbstractController
      */
     public function booking(BookingService $bookingService)
     {
-        $booking = $this->getDoctrine()->getRepository(Booking::class)->findByDate($this->getUser());
-
-        if ($booking)
+        if ($bookingService->userBooking())
         {
             $this->addFlash('warning', "Vous ne pouvez pas avoir plusieurs réservations simultanément.");
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('booking_show');
         }
 
         $notAvailable = $bookingService->getNotAvailable();
@@ -79,13 +77,19 @@ class BookingController extends AbstractController
      */
     public function confirm(Request $request, BookingService $bookingService)
     {
+        if ($bookingService->userBooking())
+        {
+            $this->addFlash('warning', "Vous ne pouvez pas avoir plusieurs réservations simultanément.");
+            return $this->redirectToRoute('booking_show');
+        }
+
         if ($request->isMethod('POST'))
         {
             $reservedAt = $request->request->get('hiddenDate');
             $time =  $request->request->get('hiddenTime');
             $bookings = $request->request->get('bookings');
 
-            $ticketsToUse = $this->getDoctrine()->getRepository(Ticket::class)->findBy(['user' => $this->getUser(),'used' => 0],[],$bookings,0);
+            $ticketsToUse = $this->getDoctrine()->getRepository(Ticket::class)->findBy(['user' => $this->getUser(),'used' => 0]);
 
             // On s'assure que la date soit bien disponible
             if ($bookingService->notReservableDate(DateTime::createFromFormat('d/m/Y',$reservedAt)))
@@ -105,6 +109,7 @@ class BookingController extends AbstractController
             $this->session->set('bookings', $bookings);
             $this->session->set('reservedAt', $reservedAt);
             $this->session->set('time', $time);
+            $this->session->set('path', "bookings");
             
             return $this->render('booking/confirm.html.twig', [
                 'bookings' => $bookings,
@@ -187,6 +192,7 @@ class BookingController extends AbstractController
             $this->session->remove('bookings');
             $this->session->remove('reservedAt');
             $this->session->remove('time');
+            $this->session->remove('path');
 
             $this->addFlash('success', "La réservation a bien été réalisée, vous avez reçu un email de confirmation.");
         }
