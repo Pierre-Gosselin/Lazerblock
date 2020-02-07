@@ -10,7 +10,7 @@
                 <p>Vous trouverez ici tous vos tickets à réserver, à offrir ou déjà utilisés.</p>
             </div>
             <div class="col text-right">
-                <a href="#" class="btn btn-outline-light btn-lg">Acheter des tickets</a>
+                <a href="{{ path('ticket_buy') }}" class="btn btn-outline-light btn-lg">Acheter des tickets</a>
             </div>
         </div>
         <div class="row">
@@ -22,6 +22,7 @@
                             <th scope="col"><span class="text-light">Serial</span></th>
                             <th scope="col"><span class="text-light">Utilisé</span></th>
                             <th scope="col"><span class="text-light">Date d'achat</span></th>
+                            <th scope="col"><span class="text-light">Heure d'achat</span></th>
                             <th scope="col"><span class="text-light">Action</span></th>
                         </tr>
                     </thead>
@@ -32,6 +33,7 @@
                             <td>{{ ticket.serial }}</td>
                             <td>{{ ticket.used ? "OUI" : "NON"}}</td>
                             <td>{{ ticket.buyAt|date('d/m/Y') }}</td>
+                            <td>{{ ticket.buyAt|date('H') }}H{{ ticket.buyAt|date('i') }}</td>
                             <td>
                                 {% if ticket.used == false %}
                                 <a href="{{ path('ticket_give', {'serial': ticket.serial }) }}" class="btn btn-outline-light btn-sm">Offrir à un amis</a>

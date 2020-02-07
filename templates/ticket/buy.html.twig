@@ -1,0 +1,74 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Mes tickets{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col mt-3">
+                <h3 class="font">Achat de ticket</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-6 mt-3">
+                <div class="card p-2" style="background-color: rgba(0,0,0,0.5);height:250px;">
+                    <p style="font-size:1.3em;">Les tickets achetés n'ont pas de date d'expiration !</p>
+                    <p class="mb-0">En achetant des tickets, vous serez libre de les utiliser à votre convenance.</p>
+                    <ul class="mt-1 ml-5 text-white">
+                        <li>Soit pour une réservation future.</li>
+                        <li>Soit en les offrant à vos amis.</li>
+                    </ul>
+                    <p><i class="fas fa-exclamation-triangle mr-2"></i>Vous ne pourrez acheter que 5 tickets maximun.</p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 mt-3">
+                <div class="card p-2" style="background-color: rgba(0,0,0,0.5);height:250px;">
+                    <p class="mb-0" style="font-size:1.3em;">Rappel des tarifs :</p>
+                    <ul class="mt-1 ml-5 text-white">
+                        <li>Un ticket : 15€</li>
+                        <li>Deux tickets : 28€</li>
+                        <li>Trois tickets : 39€</li>
+                        <li>Quatre tickets : 48€</li>
+                        <li>Cinq tickets : 55€</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mt-3">
+                <div class="card p-2" style="background-color: rgba(0,0,0,0.5);">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col">
+                            <p style="font-size:1.3em;">Combien de ticket souhaitez vous acheter ?</p>
+                            <p style="font-size:1.3em;">Cout total : <span id="sum">0</span> €</p style="font-size:1.3em;">
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <select name="tickets" id="tickets" class="form-control">
+                                    <option value="">Choisissez le nombre de ticket à acheter</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-outline-light btn-lg">Acheter</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $('#tickets').change(function(){
+        $tickets = $('#tickets').val();
+        $('#sum').text((15 - ( $tickets - 1)) * $tickets);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Mes tickets{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mb-3 align-items-center">
+            <div class="col mt-3">
+                <h3 class="font">Félicitations {{ user.firstname  }}</h3>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="card p-2" style="background-color: rgba(0,0,0,0.5);">
+                    <h3>Vous venez d'avoir acheté {{ tickets }} place{{ tickets>1?"s":"" }}.</h3>
+                    <p>Que souhaitez vous en faire ?</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <a href="{{ path('booking_create') }}" class="btn btn-outline-light">Réserver maintenant</a>
+            </div>
+            <div class="col text-center">
+                <a href="{{ path('ticket_show') }}" class="btn btn-outline-light">Offrir à un amis</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
