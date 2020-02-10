@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GiftRepository")
@@ -20,11 +21,20 @@ class Gift
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Vous devez renseigner un titre pour le cadeau.")
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "Le titre doit faire au moins 5 caractères.",
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThan(
+     *      value="199",
+     *      message = "Le prix doit faire minimun 200 crédits.",
+     * )
      */
     private $price;
 
@@ -41,7 +51,7 @@ class Gift
     /**
      * @ORM\Column(type="boolean")
      */
-    private $enabled;
+    private $enabled = true;
 
     private $pictureFile;
 

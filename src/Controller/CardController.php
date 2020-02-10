@@ -42,7 +42,7 @@ class CardController extends AbstractController
             $user->setCard($card);
             $manager->flush();
 
-            $this->addFlash('success', "Votre carte de fidélité a bien été ajoutée à votre compte, vous la trouverez dans votre profil.");
+            $this->addFlash('success', "Votre carte de fidélité a bien été ajoutée à votre compte.");
             return $this->redirectToRoute('account_show');
         }
         
@@ -78,7 +78,7 @@ class CardController extends AbstractController
         $manager->persist($card);
         $manager->flush();
 
-        $this->addFlash('success', "Votre carte de fidélité a bien été créée, Vous avez reçu 200 Credits à utiliser lors de votre prochaine visite. Vous trouverez votre carte de fidélité dans votre profil.");
+        $this->addFlash('success', "Votre carte de fidélité a bien été créée, Vous avez reçu 200 crédits à utiliser dans la boutique pour votre prochaine visite.");
         return $this->redirectToRoute('account_show');
     }
 }

@@ -107,4 +107,12 @@ class MailerService
             'bookings' => $bookings,
         ]);
     }
+
+    public function sendConfirmBuy(User $user, $sum)
+    {
+        $this->send($user->getEmail(), "Confirmation de paiement", "confirm_payment.html.twig", [
+            'user' => $user,
+            'sum' => $sum,
+        ]);
+    }
 }

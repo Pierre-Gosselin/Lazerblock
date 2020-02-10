@@ -5,6 +5,8 @@ namespace App\Controller;
 use Stripe\Charge;
 use Stripe\Stripe;
 use App\Entity\Card;
+use App\Service\MailerService;
+use App\Service\BookingService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -25,9 +27,19 @@ class PaymentController extends AbstractController
     /**
      * @Route("", name="_show")
      */
-    public function index()
+    public function index(BookingService $bookingService)
     {
         $path = $this->session->get('path');
+
+        if ($path == "bookings")
+        {
+            if ($bookingService->userBooking())
+            {
+                $this->addFlash('warning', "Vous ne pouvez pas avoir plusieurs réservations simultanément.");
+                return $this->redirectToRoute('booking_show');
+            }
+        }
+        
         $places = $this->session->get($path);
 
         $sum = (15 - ( $places - 1)) * $places;
@@ -43,9 +55,19 @@ class PaymentController extends AbstractController
      *
      * @param Request $request
      */
-    public function charge(Request $request)
+    public function charge(Request $request, MailerService $mailerService, BookingService $bookingService)
     {
         $path = $this->session->get('path');
+
+        if ($path == "bookings")
+        {
+            if ($bookingService->userBooking())
+            {
+                $this->addFlash('warning', "Vous ne pouvez pas avoir plusieurs réservations simultanément.");
+                return $this->redirectToRoute('booking_show');
+            }
+        }
+
         $places = $this->session->get($path);
 
         $sum = (15 - ( $places - 1)) * $places;
@@ -72,7 +94,8 @@ class PaymentController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
         $manager->flush();
         
-        $this->addFlash('success', "Le paiement a bien été effectué");
+        $this->addFlash('success', "Le paiement a bien été effectué, vous avez reçu un email de confirmation.");
+        $mailerService->sendConfirmBuy($this->getUser(), $sum);
 
         if ($path == "tickets") return $this->redirectToRoute('ticket_confirm');
 
