@@ -3,8 +3,6 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Card;
-use App\Entity\Gift;
-use App\Entity\Avatar;
 use App\Entity\Ticket;
 use App\Entity\Booking;
 use App\Entity\CardGift;
@@ -23,38 +21,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'easy_admin.pre_persist' => array('setImage','setAutomatiqueSerialSlug'),
-            'easy_admin.pre_update' => array('setImage'),
+            'easy_admin.pre_persist' => array('setAutomatiqueSerialSlug'),
         );
-    }
-
-    function setImage(GenericEvent $event)
-    {
-        $entity = $event->getSubject();
-
-        if($entity instanceof Gift)
-        {  
-            $picture = $entity->getPicture();
-
-            if ($entity->getPictureFile())
-            {
-                $picture = $this->service->saveToDisk($entity->getPictureFile(), '/public/images/gifts/');
-            }
-
-            $entity->setPicture($picture);
-        }   
-               
-        if ($entity instanceof Avatar)
-        {
-            $picture = $entity->getPicture();
-
-            if ($entity->getPictureFile())
-            {
-                $picture = $this->service->saveToDisk($entity->getPictureFile(), '/public/images/avatar/');
-            }
-            
-            $entity->setPicture($picture);              
-        }       
     }
 
     function setAutomatiqueSerialSlug(GenericEvent $event)
@@ -63,8 +31,14 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         if ($entity instanceof Card || $entity instanceof Ticket || $entity instanceof Booking)
         {
-            $user = $entity->getUser();
-            $entity->setSerial(str_replace(' ','',$user->getFullname()).uniqid());
+            $serial = "";
+            if ($entity->getUser())
+            {
+                $user = $entity->getUser();
+                $serial = str_replace(' ','',$user->getFullname());
+            }
+
+            $entity->setSerial($serial.uniqid());
             $event['entity'] = $entity;
         }
         
