@@ -29,6 +29,12 @@
                         {{ app.user.fullname }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right border-white mt-3 mr-3" aria-labelledby="accountDropdownLink" style="background-color:rgba(0,0,0,0.8);">
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('easyadmin') }}" class="dropdown-item">
+                            <i class="fas fa-lock mr-2"></i>Admin
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        {% endif %}
                         <a href="{{path('account_show')}}" class="dropdown-item">
                             <i class="fas fa-user mr-2"></i>
                             Mon compte

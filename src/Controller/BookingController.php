@@ -128,8 +128,14 @@ class BookingController extends AbstractController
      * 
      * @return void
      */
-    public function useTicket()
+    public function useTicket(BookingService $bookingService)
     {
+        if ($bookingService->userBooking())
+        {
+            $this->addFlash('warning', "Vous ne pouvez pas avoir plusieurs réservations simultanément.");
+            return $this->redirectToRoute('booking_show');
+        }
+
         // On récupère le nombre de tickets à utiliser
         $bookings = $this->session->get('bookings');
 
@@ -166,8 +172,14 @@ class BookingController extends AbstractController
      * @param Request $request
      * @return void
      */
-    public function save(MailerService $mailerService)
+    public function save(MailerService $mailerService, BookingService $bookingService)
     {
+        if ($bookingService->userBooking())
+        {
+            $this->addFlash('warning', "Vous ne pouvez pas avoir plusieurs réservations simultanément.");
+            return $this->redirectToRoute('booking_show');
+        }
+
         $reservedAt = DateTime::createFromFormat('d/m/Y', $this->session->get('reservedAt'));
         $time = DateTime::createFromFormat('H:i', $this->session->get('time'));
         $bookings = $this->session->get('bookings');

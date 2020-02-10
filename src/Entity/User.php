@@ -25,7 +25,11 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Email(message="Veuillez donner une URL valide pour votre avatar !")
+     * @Assert\Email(message="Veuillez donner une adresse email valide.")
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "Votre adresse email doit faire au moins 5 caractères.",
+     * )
      */
     private $email;
 
@@ -43,12 +47,20 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=40)
      * @Assert\NotBlank(message="Vous devez renseigner votre nom de famille")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Votre nom doit faire au moins 2 caractères.",
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=40)
-     * @Assert\NotBlank(message="Vous devez renseigner votre nom de famille")
+     * @Assert\NotBlank(message="Vous devez renseigner votre prénom")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Votre prénom doit faire au moins 2 caractères.",
+     * )
      */
     private $firstname;
 
@@ -115,7 +127,7 @@ class User implements UserInterface
     }
 
     public function getFullname()
-    {
+    {   
         return $this->firstname . " " . strtoupper($this->lastname[0]);
     }
 

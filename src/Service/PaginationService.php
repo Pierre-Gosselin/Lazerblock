@@ -10,7 +10,7 @@ use Twig\Environment;
 class PaginationService extends AbstractController
 {
     private $entityClass;
-    private $limit = 10;
+    private $limit = 5;
     private $currentPage = 1;
     private $twig;
     private $route;

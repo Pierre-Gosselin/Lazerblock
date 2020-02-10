@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AvatarRepository")
@@ -18,6 +20,11 @@ class Avatar
 
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\NotBlank(message="Vous devez renseigner un titre l'avatar.")
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Le titre de l'avatar doit faire au moins 3 caractères.",
+     * )
      */
     private $title;
 
