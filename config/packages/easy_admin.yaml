@@ -2,13 +2,17 @@ easy_admin:
     formats:
         date: 'd/m/Y'
         time: 'H:i'
-        datetime: 'd/m/Y H:i:s'
-    entities:
-   
+        datetime: 'd/m/Y H:i:s'    
+    entities:       
         User:
             class: App\Entity\User
             label: Utilisateur  
             list:
+                item_permission: ROLE_ADMIN
+                actions:
+                    - { name: 'new', label: 'Ajouter', icon: 'plus' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash' }
                 fields:
                     - property: email
                       label: Email 
@@ -66,13 +70,16 @@ easy_admin:
                           multiple: true
                           choices: { 'Caissière': 'ROLE_CASHIER', 'Client': 'ROLE_USER', 'Administeur': 'ROLE_ADMIN' }                    
             edit:
+                title: Modifier un utilisateur
                 item_permission: 'ROLE_ADMIN'        
             new:
+                title: Ajouter un utilisateur
                 fields:
                     - property: password
                       type: text
                 item_permission: 'ROLE_ADMIN'
             delete:
+                title: Effacer un utilisateur
                 item_permission: 'ROLE_ADMIN'
 
 
@@ -80,6 +87,10 @@ easy_admin:
             class: App\Entity\Ticket
             label: Billet
             list:
+                actions:
+                    - { name: 'new', label: 'Ajouter', icon: 'plus' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash'}                               
                 fields:                    
                     - property: user
                       label: Utilisateur
@@ -101,19 +112,26 @@ easy_admin:
                     - property: user
                       label: Utilisateur    
             edit:
-                item_permission: 'ROLE_ADMIN'
+                title: Modifier un billet
+                item_permission: ['ROLE_ADMIN', 'ROLE_CASHIER']
                 fields: 
                     - property: used
                       label: Utilisée
             new:
-                item_permission: 'ROLE_ADMIN'
+                title: Ajouter un billet
+                item_permission: ['ROLE_ADMIN', 'ROLE_CASHIER']
             delete:
-                item_permission: 'ROLE_ADMIN'
+                title: Effacer un billet
+                item_permission: 'ROLE_ADMIN'                
 
         Gift:
             class: App\Entity\Gift
             label: Cadeau
             list:
+                actions:
+                    - { name: 'new', label: 'Ajouter', icon: 'plus' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash' }
                 fields:
                     - property: title
                       label: Titre
@@ -137,16 +155,24 @@ easy_admin:
                     - property: enabled
                       label: activé                                                         
             edit:
+                title: Modifier un cadeau
                 item_permission: 'ROLE_ADMIN'
             new:
+                title: Ajouter un cadeau
+
                 item_permission: 'ROLE_ADMIN'
             delete:
+                title: Effacer un billet
                 item_permission: 'ROLE_ADMIN'
 
         Card:
             class: App\Entity\Card
             label: Carte
             list:
+                actions:
+                    - { name: 'new', label: 'Ajouter', icon: 'plus' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash' }
                 fields:
                     - property: user
                       label: Utilisateur  
@@ -166,16 +192,23 @@ easy_admin:
                      - property: credits
                        label: Crédits                  
             edit:
-                item_permission: 'ROLE_ADMIN'
+                title: Modifier une carte
+                item_permission: ['ROLE_ADMIN', 'ROLE_CASHIER']
             new:
-                item_permission: 'ROLE_ADMIN'
+                title: Ajouter une carte
+                item_permission: ['ROLE_ADMIN', 'ROLE_CASHIER']
             delete:
-                item_permission: 'ROLE_ADMIN'
+                title: Effacer une carte
+                item_permission: 'ROLE_ADMIN'                
 
         Booking:
             class: App\Entity\Booking
             label: Réservation
             list:
+                actions:
+                    - { name: 'new', label: 'Ajouter', icon: 'plus' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash' }
                 fields:
                     - property: user
                       label: Utilisateur
@@ -213,18 +246,24 @@ easy_admin:
                       label:  Date de réservation
                       type: date                   
             edit:
-                item_permission: 'ROLE_ADMIN'
+                title: Modifier une réservation
+                item_permission:  ['ROLE_ADMIN', 'ROLE_CASHIER']
             new:
-                item_permission: 'ROLE_ADMIN'
+                title: Ajouter une réservation
+                item_permission:  ['ROLE_ADMIN', 'ROLE_CASHIER']
             delete:
+                title: Effacer une réservation
                 item_permission: 'ROLE_ADMIN'
-
 
         Avatar:
             class: App\Entity\Avatar
             label: Avatar
             list:
-                fields:
+               actions:
+                    - { name: 'new', label: 'Ajouter', icon: 'plus' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash' }
+               fields:
                     - property: title
                       label: Titre
                     - property: picture
@@ -241,52 +280,68 @@ easy_admin:
                       label: Image
                       type: file                               
             edit:
+                title: Modifier un avatar
                 item_permission: 'ROLE_ADMIN'
             new:
+                title: Ajouter un avatar
                 item_permission: 'ROLE_ADMIN'                                                                             
             delete:
+                title: Effacer un avatar
                 item_permission: 'ROLE_ADMIN'
 
 
         CardGift:
-           class: App\Entity\CardGift
-           label: CarteGift
-           list:
-               fields:
-                   - property: serial
-                     label: Numéro de série                   
-                   - property: gifts
-                     label: Cadeau
-                   - property: cards
-                     label: Carte
-                   - property: used
-                     label: Utilisé
-           form:
-               label: CardGift
-               form_options: { validation_groups: [] }
-               fields:
+            class: App\Entity\CardGift
+            label: Cadeau des utilisateurs
+            list:
+                actions:
+                    - { name: 'new', label: 'Ajouter', icon: 'plus' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash' }
+                fields:
+                    - property: serial
+                      label: Numéro de série                   
+                    - property: gifts
+                      label: Cadeau
+                    - property: cards
+                      label: Carte
+                    - property: used
+                      label: Utilisé
+            form:
+                label: CardGift
+                form_options: { validation_groups: [] }
+                fields:
                     - property: gifts
                       label: Cadeau
                     - property: cards
                       label: Carte                                            
-           edit:
-              item_permission: 'ROLE_ADMIN'
-              fields:
+            edit:
+                title: Modifier un cadeau 
+                item_permission:  ['ROLE_ADMIN']
+                fields:
                     - property: used
                       label: Utilisé
-           new:
-              item_permission: 'ROLE_ADMIN'
-           delete:
-              item_permission: 'ROLE_ADMIN'
-
-
+            new:
+                title: Ajouter un cadeau
+                item_permission: ['ROLE_ADMIN', 'ROLE_CASHIER']
+            delete:
+                title: Effacer un cadeau
+                item_permission: ['ROLE_ADMIN']
+ 
     site_name: 'LaserWars'   
     design:
         menu:
-          - { entity: 'User', icon: 'user' }
-          - { entity: 'Ticket', icon: 'ticket' }
-          - { entity: 'Gift', icon: 'gift' }
-          - { entity: 'CardGift', icon: 'gift' }
+          - { label: 'Retour sur le site', route: 'home', icon: 'arrow-left'}
+          - { label: 'Utilisateur' }
+          - { entity: 'User', icon: 'user', permission: 'ROLE_ADMIN' }         
+          - { entity: 'Avatar', icon: 'user-circle', permission: 'ROLE_ADMIN' }
           - { entity: 'Card', icon: 'credit-card' }
+          - { label: 'Vente' }
+          - { entity: 'Ticket', icon: 'ticket' }
           - { entity: 'Booking', icon: 'id-card' }
-          - { entity: 'Avatar', icon: 'user-circle' }
+          - { label: 'Fidelité' }
+          - { entity: 'Gift', icon: 'gift', permission: 'ROLE_ADMIN' }
+          - { entity: 'CardGift', icon: 'gifts' }
+          
+          
+          
