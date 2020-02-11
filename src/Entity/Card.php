@@ -91,7 +91,6 @@ class Card
     public function setExpireCreditsAt(): self
     {
         $this->expireCreditsAt = new \DateTime('6 months');
-
         return $this;
     }
 

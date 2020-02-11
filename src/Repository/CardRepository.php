@@ -19,6 +19,30 @@ class CardRepository extends ServiceEntityRepository
         parent::__construct($registry, Card::class);
     }
 
+    public function findByDate()
+    {
+        $now = new \Datetime();
+
+        return $this->createQueryBuilder('b')
+            ->where("date_format(b.expireCreditsAt, '%Y-%m-%d') < :date")
+            ->setParameter('date', $now->format('Y-m-d'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findExpireTwoWeeks()
+    {
+        $twoWeeks = new \Datetime('+2 week');
+
+        return $this->createQueryBuilder('b')
+            ->where("date_format(b.expireCreditsAt, '%Y-%m-%d') = :date")
+            ->setParameter('date', $twoWeeks->format('Y-m-d'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Card[] Returns an array of Card objects
     //  */
