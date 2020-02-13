@@ -20,6 +20,7 @@
         "symfony/mailer": "4.4.*",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
+        "symfony/phpunit-bridge": "^5.0",
         "symfony/process": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/serializer-pack": "*",
@@ -36,7 +37,8 @@
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*"
+        "symfony/test-pack": "*",
+        "symfony/phpunit-bridge": "^5.0"
     },
     "config": {
         "preferred-install": {
