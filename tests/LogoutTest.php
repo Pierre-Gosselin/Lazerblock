@@ -3,10 +3,8 @@
 namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 class LogoutTest extends WebTestCase {
     
-
     function testLogout()
     {
         $client = static::createClient();
@@ -15,6 +13,5 @@ class LogoutTest extends WebTestCase {
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
     }
-
 
 }
