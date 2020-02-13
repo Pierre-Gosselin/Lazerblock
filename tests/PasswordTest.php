@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
 class PasswordTest extends WebTestCase
 {
     public function testCheckPassword(){
