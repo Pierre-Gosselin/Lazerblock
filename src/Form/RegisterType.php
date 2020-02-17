@@ -98,8 +98,8 @@ class RegisterType extends AbstractType
                     'class' => "form-control mb-3",
                 ],
                 'choices' => [
-                    'Jedi' => true,
-                    'Sith' => false,
+                    'Jedi' => "Jedi",
+                    'Sith' => "Sith",
                 ],
             ])
             ->add('newsletter', CheckboxType::class, [

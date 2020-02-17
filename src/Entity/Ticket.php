@@ -3,8 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+ * @ApiResource(
+ *  collectionOperations={"GET", "POST"}, 
+ *  itemOperations={"GET", "PUT"},
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\TicketRepository")
  * @ORM\HasLifecycleCallbacks
  */

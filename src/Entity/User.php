@@ -2,17 +2,27 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * @ApiResource(
+ *  collectionOperations={"GET", "POST"}, 
+ *  itemOperations={"GET", "PUT"},
+ *  normalizationContext={
+ *      "groups"={"users_read"}
+ *  }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
- * @UniqueEntity("email", message="Cette adresse email est déjà utilisée par un autre client.")
+ * @UniqueEntity("email", message="Un utilisateur ayant cette adresse email existe déjà.")
  */
 class User implements UserInterface
 {
@@ -20,6 +30,7 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"users_read"})
      */
     private $id;
 
@@ -30,6 +41,7 @@ class User implements UserInterface
      *      min = 5,
      *      minMessage = "Votre adresse email doit faire au moins 5 caractères.",
      * )
+     * @Groups({"users_read", "bookings_read"})
      */
     private $email;
 
@@ -51,6 +63,7 @@ class User implements UserInterface
      *      min = 2,
      *      minMessage = "Votre nom doit faire au moins 2 caractères.",
      * )
+     * @Groups({"users_read", "bookings_read"})
      */
     private $lastname;
 
@@ -61,12 +74,14 @@ class User implements UserInterface
      *      min = 2,
      *      minMessage = "Votre prénom doit faire au moins 2 caractères.",
      * )
+     * @Groups({"users_read", "bookings_read"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\Date
+     * @Assert\Date(message="Vous devez renseigner une date valide")
+     * @Groups("users_read")
      */
     private $birthdate;
 
@@ -95,8 +110,11 @@ class User implements UserInterface
      */
     private $newsletter;
 
+    const SIDE = ["Jedi", "Sith"];
+
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", columnDefinition="enum('Jedi', 'Sith')")
+     * @Assert\Choice(choices=User::SIDE, message="Le côté de la force doit être Jedi ou Sith")
      */
     private $side;
 
@@ -107,6 +125,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Avatar")
+     * @Groups({"users_read"})
      */
     private $avatar;
 
@@ -117,6 +136,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="user")
+     * @ApiSubresource
      */
     private $bookings;
 
@@ -308,12 +328,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getSide(): ?bool
+    public function getSide(): ?string
     {
         return $this->side;
     }
 
-    public function setSide(bool $side): self
+    public function setSide(string $side): self
     {
         $this->side = $side;
 
