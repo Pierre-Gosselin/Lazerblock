@@ -3,8 +3,35 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
+ * @ApiResource(
+ *  collectionOperations={
+ *      "GET", "POST"
+ *  },
+ *  itemOperations={"GET", "PUT"},
+ *  normalizationContext={
+ *      "groups"={"bookings_read"}
+ *  },
+ *  subresourceOperations={
+ *      "api_users_bookings_get_subresource"={
+ *          "normalization_context"={
+ *              "groups"={"bookings_subresource"}
+ *          }
+ *      },
+ *  },
+ *  attributes={
+ *      "pagination_enabled"=true,
+ *      "pagination_items_per_page"=5,
+ *  }
+ * )
+ * @ApiFilter(SearchFilter::class)
+ * @ApiFilter(OrderFilter::class, properties={"score"})
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
  */
 class Booking
@@ -13,21 +40,25 @@ class Booking
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"bookings_read", "bookings_subresource"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"bookings_subresource"})
      */
     private $reservationAt;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"bookings_read"})
      */
     private $score;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Groups({"bookings_read"})
      */
     private $pseudo;
 
@@ -38,11 +69,13 @@ class Booking
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="bookings")
+     * @Groups({"bookings_read"})
      */
     private $user;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups({"bookings_subresource"})
      */
     private $timeSlot;
 

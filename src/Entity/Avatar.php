@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -25,11 +26,13 @@ class Avatar
      *      min = 3,
      *      minMessage = "Le titre de l'avatar doit faire au moins 3 caractères.",
      * )
+     * @Groups({"users_read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"users_read"})
      */
     private $picture;
 
