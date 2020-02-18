@@ -1,70 +1,70 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}MentionLegal{% endblock %}
+{% block title %}FAQ{% endblock %}
 
 {% block content %}
     <div class="container">
-        <div class="row mt-4 mb-4">
+        <div class="row mt-4">
             <div class="col">
-                <div class="card"style="background-color: rgba(0,0,0,0.5);color:white;">
+                <div class="card ombre" style="background-color: rgba(0,0,0,0.5);color:white;">
                     <div class="card-body">
-                        <h3 class="card-title text-center">FOIRE AUX QUESTIONS</h3>
+                        <h3 class="card-title text-center font">foire aux questions</h3>
                     </div>
                 </div>
             </div>
         </div>
             
         <div id="accordion">
-            <div class="card" style="background-color: rgba(0,0,0,0.5);color:white;">
+            <div class="card mt-4 ombre" style="background-color: rgba(0,0,0,0.5);color:white;">
                 <div class="card-header" id="headingOne">
-                    <h3 class="mb-0">
+                    <h5>1. 
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Est-il obligatoire de réserver ?
                         </button>
-                    </h3>
+                    </h5>
                 </div>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        Ce n’est pas obligatoire mais conseillé. En effet, seule une réservation pourra vous garantir de jouer le jour et à l’horaire qui vous conviennent le mieux. Il est possible de réserver à partir de 4 joueurs. Pour réserver maintenant en ligne, c’est simple, gratuit, sans CB et c’est ici !
+                        Ce n’est pas obligatoire mais conseillé. En effet, seule une réservation pourra vous garantir de jouer le jour et à l’horaire qui vous conviennent le mieux.
                         
                         Attention, votre présence au complet ¼ d’heure avant le début votre partie sera indispensable.
                     </div>
                 </div>
             </div>
             
-            <div class="card mt-4" style="background-color: rgba(0,0,0,0.5);color:white;">
+            <div class="card mt-4 ombre" style="background-color: rgba(0,0,0,0.5);color:white;">
                 <div class="card-header" id="headingTwo">
-                    <h3 class="mb-0">
+                    <h5>2.
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            À combien peut-on jouer ?
+                            Y a-t-il un âge minimum pour jouer ?
                         </button>
-                    </h3>
+                    </h5>
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                        Le minimum pour lancer une partie est 4 participants. Le maximum de joueurs à Lille Centre est de 30 personnes (labyrinthe de 550 m²). Le maximum de joueurs à Lomme est de 42 personnes (labyrinthe de 800 m²).
+                        Comme on le dit communément, 'de 7 à 77 ans'... Mais les enfants seront de préférence accompagnés par des adultes.
                     </div>
                 </div>
             </div>
         
-            <div class="card mt-4" style="background-color: rgba(0,0,0,0.5);color:white;">
+            <div class="card mt-4 ombre" style="background-color: rgba(0,0,0,0.5);color:white;">
                 <div class="card-header" id="headingThree">
-                    <h3 class="mb-0">
+                    <h5>3.
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            À partir de quel âge peut-on jouer ?
+                            Le laser émis par le pistolet est-il dangereux ?
                         </button>
-                    </h3>
+                    </h5>
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
-                        À partir de 9 ans. Il est également nécessaire de mesurer au moins 1m20. Ces 2 conditions doivent êtres réunies.
+                        Le faisceau Laser, de classe 1, est totalement innofensif.
                     </div>
                 </div>
             </div>
         
-            <div class="card mt-4" style="background-color: rgba(0,0,0,0.5);color:white;">
+            <div class="card mt-4 ombre" style="background-color: rgba(0,0,0,0.5);color:white;">
                 <div class="card-header" id="headingfour">
-                    <h5 class="mb-0">
+                    <h5>4.
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
                             Faut-il venir avec une tenue particulière ?
                         </button>
@@ -77,17 +77,34 @@
                 </div>
             </div>
 
-            <div class="card mt-4" style="background-color: rgba(0,0,0,0.5);color:white;">
+            <div class="card mt-4 ombre" style="background-color: rgba(0,0,0,0.5);color:white;">
                 <div class="card-header" id="headingfive">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">  
-                            Les chèques ANCV sont-ils acceptés ?
+                    <h5>5.
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
+                            L'adversaire est-il touchable sur toutes les parties du corps ?
                         </button>
                     </h5>
                 </div>
-                    <div id="collapsefive" class="collapse" aria-labelledby="headingfive" data-parent="#accordion">
+                <div id="collapsefive" class="collapse" aria-labelledby="headingfive" data-parent="#accordion">
+                    <div class="card-body">
+                        On peut toucher ses adversaire sur :<br>
+                        - le gilet (épaules, devant et derrière)<br>
+                        - le pistolet, les capteurs qui y sont installés désactivent le joueur qui touché pendant 2 à 5 secondes.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4 ombre" style="background-color: rgba(0,0,0,0.5);color:white;">
+                <div class="card-header" id="headingsix">
+                    <h5>6.
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsesix" aria-expanded="false" aria-controls="collapsesix">  
+                            Combien de temps dure une partie ?
+                        </button>
+                    </h5>
+                </div>
+                    <div id="collapsesix" class="collapse" aria-labelledby="headingsix" data-parent="#accordion">
                         <div class="card-body">
-                            Tout à fait ! Les 3 centres Starship Laser acceptent les chèques ANCV, dans le respect des dates et conditions d’utilisation imposées par la loi.
+                            45 minutes est la durée d'une partie, mais on vous demande de venir 15 minutes avant le début de la partie afin de pouvoir vous préparer et vous expliquer les règles.
                         </div>
                     </div>
                 </div>
