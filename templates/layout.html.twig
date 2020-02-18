@@ -3,75 +3,85 @@
 {% block body %}
 
 <header>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-primary p-0 m-0">
-        <a class="navbar-brand" href="{{ path('home') }}">
-            <h1 id="siteTitle" class="pl-3">Laserwars</h1>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="fas fa-bars fa-2x text-light"></i></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a href="#" class="nav-link" style="font-size: 1.2em;">Présentation</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" style="font-size: 1.2em;">Les tarifs</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                {% if app.user %}
-                <li class="nav-item dropdown text-center">
-                    <a href="#" class="nav-link dropdown-toggle btn btn-outline-light px-4 mr-3" data-toggle="dropdown" id="accountDropdownLink">
-                        {% if app.user.avatar %}
-                            <img src="{{ asset('images/avatar/'~ app.user.avatar.picture) }}" alt="{{ app.user.avatar.title }}" style="width: 40px; height:40px;">
-                        {% endif %}
-                        {{ app.user.fullname }}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right border-white mt-3 mr-3" aria-labelledby="accountDropdownLink" style="background-color:rgba(0,0,0,0.8);">
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('easyadmin') }}" class="dropdown-item">
-                            <i class="fas fa-lock mr-2"></i>Admin
+    <nav class="navbar fixed-top navbar-expand-lg navbar-primary py-0 my-0 align-items-center">
+        <div class="container">
+            <button class="navbar-toggler order-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="fas fa-bars fa-2x text-light"></i></span>
+            </button>
+            
+            <div class="collapse navbar-collapse order-3" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="{{ path('presentation') }}" class="btn btn-lg nav-link first btn-2">Présentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('price') }}" class="btn btn-lg nav-link btn-1">Les tarifs</a>
+                    </li>
+                </ul>
+            </div>
+
+            <a class="navbar-brand mx-auto order-1 order-lg-3 mb-2" href="{{ path('home') }}">
+                <h1 id="siteTitle">Laserwars</h1>
+            </a>
+
+            <div class="collapse navbar-collapse order-4" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    {% if app.user %}
+                    <li class="nav-item">
+                        <a href="{{ path('booking_create') }}" class="nav-link btn btn-lg first btn-3">Réserver</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle btn p-1 btn-4" data-toggle="dropdown" id="accountDropdownLink">
+                            {% if app.user.avatar %}
+                                <img src="{{ asset('images/avatar/'~ app.user.avatar.picture) }}" alt="{{ app.user.avatar.title }}" style="width: 35px; height:35px;">
+                            {% endif %}
+                            {{ app.user.fullname }}
                         </a>
-                        <div class="dropdown-divider"></div>
-                        {% endif %}
-                        <a href="{{path('account_show')}}" class="dropdown-item">
-                            <i class="fas fa-user mr-2"></i>
-                            Mon compte
-                        </a>
-                        <a href="{{path('new_password')}}" class="dropdown-item">
-                            <i class="fas fa-key mr-2"></i>
-                            Modification de mot de passe
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="{{ path('booking_show') }}" class="dropdown-item">
-                            <i class="fas fa-history mr-2"></i>
-                            Mes réservations
-                        </a>
-                        <a href="{{ path('ticket_show') }} " class="dropdown-item">
-                            <i class="fas fa-ticket-alt mr-2"></i>
-                            Mes tickets
-                        </a>
-                        <a href="{{path('shop_show')}}" class="dropdown-item">
-                            <i class="fas fa-gift mr-2"></i>
-                            Boutique
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="{{path('logout')}}" class="dropdown-item">
-                            <i class="fas fa-arrow-circle-left mr-2"></i>
-                            Déconnexion
-                        </a>
-                    </div>
-                </li>
-                {% else %}     
-                <li class="nav-item mr-2">
-                    <a href="{{path('register')}}" class="nav-link btn btn-outline-light btn-lg">Inscription</a>
-                </li>       
-                <li class="nav-item">
-                    <a href="{{path('login')}}" class="nav-link btn btn-outline-light btn-lg" data-toggle="modal" data-target="#login">Connexion</a>
-                </li>
-                {% endif %}
-            </ul>
+                        <div class="dropdown-menu dropdown-menu-right border-white mt-3" aria-labelledby="accountDropdownLink" style="background-color:rgba(0,0,139,0.8);">
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('easyadmin') }}" class="dropdown-item">
+                                <i class="fas fa-lock mr-2"></i>Admin
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            {% endif %}
+                            <a href="{{path('account_show')}}" class="dropdown-item">
+                                <i class="fas fa-user mr-2"></i>
+                                Mon compte
+                            </a>
+                            <a href="{{path('new_password')}}" class="dropdown-item">
+                                <i class="fas fa-key mr-2"></i>
+                                Modification de mot de passe
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ path('booking_show') }}" class="dropdown-item">
+                                <i class="fas fa-history mr-2"></i>
+                                Mes réservations
+                            </a>
+                            <a href="{{ path('ticket_show') }} " class="dropdown-item">
+                                <i class="fas fa-ticket-alt mr-2"></i>
+                                Mes tickets
+                            </a>
+                            <a href="{{path('shop_show')}}" class="dropdown-item">
+                                <i class="fas fa-gift mr-2"></i>
+                                Boutique
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{path('logout')}}" class="dropdown-item">
+                                <i class="fas fa-arrow-circle-left mr-2"></i>
+                                Déconnexion
+                            </a>
+                        </div>
+                    </li>
+                    {% else %}     
+                    <li class="nav-item">
+                        <a href="{{path('register')}}" class="nav-link btn btn-lg first btn-3">Inscription</a>
+                    </li>       
+                    <li class="nav-item">
+                        <a href="{{path('login')}}" class="nav-link btn btn-lg btn-4" data-toggle="modal" data-target="#login">Connexion</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -128,7 +138,7 @@
     </div>
 </header>
 
-<main>
+<main style="flex:1">
     {% for label, messages in  app.flashes  %}
         <div class="container">
         {% for message in messages %}
@@ -146,21 +156,32 @@
     {% endblock %}
 </main>
 
-<footer>
-    <div class="container mt-5">
+<footer class="mt-5" style="background-color: rgba(0,0,0,0.5);">
+    <div class="container pt-2">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-4">
+                <img class="img-fluid" src="{{ asset('images/saber-luke.png') }}" alt="Sabre de luke" style="opacity:0.7">
+            </div>
+            <div class="col-2 text-center">
+                <h5 class="font">Laser wars</h5>
+            </div>
+            <div class="col-4">
+                <img class="img-fluid" style="margin-top:4px;opacity:0.7" src="{{ asset('images/saber-vador.png') }}" alt="Sabre de luke">
+            </div>
+        </div>
         <div class="row">
             <div class="col">
-                <div class="row border-top border-light mt-3 pt-3">
+                <div class="row pt-3">
                     <div class="col-4">
                         <ul class="list-group text-center" style="list-style:none;">
-                            <li><a href="{{path("home")}}" style=" color:white">Nos tarifs</a></li>
-                            <li><a href="{{path("faq")}}" style=" color:white">FAQ</a></li>
+                            <li><a href="{{path("presentation")}}" style=" color:white">Présentation</a></li>
+                            <li><a href="{{path("price")}}" style=" color:white">Nos tarifs</a></li>
                         </ul>
                     </div>
                     <div class="col-4">
                         <ul class="list-group text-center" style="list-style:none;">
                             <li><a href="{{path("mentionlegal")}}" style=" color:white">Mentions légales</a></li>
-                            <li><a href="#" style=" color:white">Lien 1</a></li>
+                            <li><a href="{{path("faq")}}" style=" color:white">FAQ</a></li>
                         </ul>
                     </div>
                     <div class="col-4">
@@ -172,8 +193,7 @@
                 </div>
             </div>
         </div>
-        <br>
-        <p class="text-center text-light mt-3" style="padding:0;margin-bottom:0;font-size: 0.8em;">Copyright {{ "now"|date('Y')}} LazerBlock - Tous droits réservés</p>
+        <p class="text-center text-light mt-3" style="padding:0;margin-bottom:0;font-size: 0.8em;">Copyright {{ "now"|date('Y')}} LazerWars - Tous droits réservés</p>
         <p class="text-center text-light" style="padding:0;margin:0;font-size: 0.8em;">Fait avec <i class="fas fa-heart" style="color:red"></i> par Shamsia et Pierre</p>
     </div>
 </footer>
