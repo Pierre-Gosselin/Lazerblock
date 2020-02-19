@@ -28,51 +28,60 @@
 
 {% block content %}
     <div class="container">
-        <div class="row mb-3">
-            <div class="col mt-3">
-                <h3 class="font">Réserver ma partie</h3>
-                <form method="POST" action="{{ path('booking_confirm') }}">
+        <form method="POST" action="{{ path('booking_confirm') }}">
+            <div class="row mb-3">
+                <div class="col mt-3">
+                    <h3 class="font">Réserver ma partie</h3>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-lg-6 mb-3">
-                <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);height:500px;">
-                    <h5 class="text-center mb-3">Choisissez une date</h5>
-                    
-                    <div id="datepicker" class="d-flex justify-content-center" style="color:white;"></div>
-    
-                    <p class="font-italic text-muted text-center">Votre réservation est le :</p>
-                    <h4 id="pickedDate" class="font-weight-bold mb-3 text-center"></h4>
-                    <input type="hidden" id="hiddenDate" name="hiddenDate">
+            <div class="row">
+                <div class="col-12 col-lg-6 mb-3">
+                    <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);height:100%;">
+                        <h5 class="text-center mb-3">Choisissez une date</h5>
+                        
+                        <div id="datepicker" class="d-flex justify-content-center" style="color:white;"></div>
+        
+                        <p class="font-italic text-muted text-center">Votre réservation est le :</p>
+                        <h4 id="pickedDate" class="font-weight-bold mb-3 text-center"></h4>
+                        <input type="hidden" id="hiddenDate" name="hiddenDate">
 
-                </div>
-            </div>
-            <div class="col-12 col-lg-6 mb-3">
-                <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);height:500px;">
-                    <div class="row">
-                        <div class="col justify-content-center text-center">
-                            <h5 class="mb-3">Choisissez un créneau horraire</h5>
-                            <div id="timeSlot" style="color:white"></div>
-                            <p class="font-italic text-muted">Votre réservation est à :</p>
-                            <h4 id="pickedTime" class="font-weight-bold mb-3"></h4>
-                            <input type="hidden" id="hiddenTime" name="hiddenTime">
-                            <p class="text-muted" id="availables"></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8 offset-2">
-                            <h5 class="text-center mb-3">Choisissez le nombre de personnes (5 maximun)</h5>
-                            <select class="form-control" name="bookings" id="bookings">
-                            </select>
-                        </div>
-                        <div class="col text-center">
-                            <button type="submit" id="submit" class="d-none btn btn-outline-light btn-lg mt-3" >Confirmer ma réservation</button>
-                            </form>
-                        </div>
                     </div>
                 </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);height:100%;">
+                        <div class="row">
+                            <div class="col justify-content-center text-center">
+                                <h5 class="mb-3">Choisissez un créneau horraire</h5>
+                                <div id="timeSlot" style="color:white"></div>
+                                <p class="font-italic text-muted">Votre réservation est à :</p>
+                                <h4 id="pickedTime" class="font-weight-bold mb-3"></h4>
+                                <input type="hidden" id="hiddenTime" name="hiddenTime">
+                                <p class="text-muted" id="availables"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10 offset-1">
+                                <h5 class="text-center mb-3">Choisissez le nombre de personnes (5 maximun)</h5>
+                                <div id="how_bookings" class="row justify-content-center d-none">
+                                    <div class="col-sm-2 mb-2">
+                                        <button type="button" id="decrement" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                    <div class="col-sm-8 col mb-2">
+                                        <input type="text" name="bookings" id="nb_bookings" value="1" class="btn btn-outline-light btn-lg w-100">
+                                    </div>
+                                    <div class="col-sm-2 mb-2">
+                                        <button type="button" id="increment" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <button type="submit" id="submit" class="d-none btn btn-outline-light btn-lg mt-3" >Confirmer ma réservation</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 {% endblock %}
 
@@ -81,6 +90,7 @@
     
     <script>
         $(document).ready(function(){
+            var maxTicket;
             $('#datepicker').datepicker({
                 language: 'fr',
                 format: 'dd/mm/yyyy',
@@ -104,16 +114,32 @@
                 $('#availables').html("Il reste " + $(this).attr("data-number") + " place(s) disponible(s).");
                 $('#submit').removeClass("d-none");
 
-                var option = "";
-                var maxTicket = ($(this).attr("data-number") > 5)? 5 : $(this).attr("data-number");
-                for (let index = 1; index <= maxTicket; index++) {
-                    option += "<option value=\""+index+"\">"+index+"</option>";
-                    
-                }
-                $('#bookings').html(option);
+                maxTicket = ($(this).attr("data-number") > 5)? 5 : $(this).attr("data-number");
 
+                $('#how_bookings').removeClass("d-none");
             });
 
+            $('#how_bookings').on("click", "#increment", function(event){
+                event.preventDefault();
+                tickets = Number($('#nb_bookings').val());
+
+                if (tickets < maxTicket)
+                {
+                    tickets++;
+                    $('#nb_bookings').val(tickets);
+                }
+            });
+
+            $('#how_bookings').on("click", "#decrement", function(event){
+                event.preventDefault();
+                tickets = Number($('#nb_bookings').val());
+
+                if (tickets > 0)
+                {
+                    tickets--;
+                    $('#nb_bookings').val(tickets);
+                }
+            });
         });
         
         // on clic sur la date choisie
@@ -123,6 +149,7 @@
             $('#pickedDate').html(bookingAt);
             $('#hiddenDate').val(bookingAt);
             $('#timeSlot').html("<i class=\"fas fa-spinner fa-spin\"></i>");
+            $('#how_bookings').addClass("d-none");
             $('#availables').html("");
             $('#pickedTime').html("");
             $('#bookings').html("");
@@ -140,7 +167,7 @@
                 {
                     if (myObj[x]['dispo'] > 0)
                     {
-                        text += "<button class=\"btn btn-outline-light px-2 mx-3 mb-3 choose_date\" data-number=\"" + myObj[x]['dispo'] + "\" data-value=\"" +  myObj[x]['time'] + "\">" + myObj[x]['time'] + "</button>";
+                        text += "<button type=\"button\" class=\"btn btn-outline-light px-2 mx-3 mb-3 choose_date\" data-number=\"" + myObj[x]['dispo'] + "\" data-value=\"" +  myObj[x]['time'] + "\">" + myObj[x]['time'] + "</button>";
                     }
                 }
                 

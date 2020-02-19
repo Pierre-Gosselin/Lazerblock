@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-6 mt-3">
-                <div class="card p-2 ombre" style="background-color: rgba(0,0,0,0.5);height:250px;">
+                <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);height:100%;">
                     <p style="font-size:1.3em;">Les tickets achetés n'ont pas de date d'expiration !</p>
                     <p class="mb-0">En achetant des tickets, vous serez libre de les utiliser à votre convenance.</p>
                     <ul class="mt-1 ml-5 text-white">
@@ -19,11 +19,8 @@
                         <li>Soit en les offrant à vos amis.</li>
                     </ul>
                     <p><i class="fas fa-exclamation-triangle mr-2"></i>Vous ne pourrez acheter que 5 tickets maximun.</p>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6 mt-3">
-                <div class="card p-2 ombre" style="background-color: rgba(0,0,0,0.5);height:250px;">
-                    <p class="mb-0" style="font-size:1.3em;">Rappel des tarifs :</p>
+
+                    <p style="font-size:1.3em;">Rappel des tarifs :</p>
                     <ul class="mt-1 ml-5 text-white">
                         <li>Un ticket : 15€</li>
                         <li>Deux tickets : 28€</li>
@@ -33,31 +30,32 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col mt-3">
-                <div class="card p-2 ombre" style="background-color: rgba(0,0,0,0.5);">
-                <form method="POST">
-                    <div class="row">
-                        <div class="col">
-                            <p style="font-size:1.3em;">Combien de ticket souhaitez vous acheter ?</p>
-                            <p style="font-size:1.3em;">Cout total : <span id="sum">0</span> €</p style="font-size:1.3em;">
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <select name="tickets" id="tickets" class="form-control">
-                                    <option value="">Choisissez le nombre de ticket à acheter</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
+            <div class="col-12 col-lg-6 mt-3">
+                <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);height:100%;">
+                    <p style="font-size:1.3em;">Rappels concernant les crédits :</p>
+                    <p>En achetant des tickets, votre compte sera crédité d'un certain nombre de points.</p>
+                    <p class="mt-2" style="font-size:1.3em;">Combien de ticket souhaitez vous acheter ?</p>
+                    <form method="POST">
+                        <div class="row mt-3 text-center">
+                            <div class="col-sm-2 mb-2">
+                                <button id="decrement" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-minus"></i></button>
                             </div>
-                            <button type="submit" class="btn btn-outline-light btn-lg">Acheter</button>
+                            <div class="col-sm-8 mb-2">
+                                <input type="text" name="tickets" id="tickets" value="1" class="btn btn-outline-light btn-lg w-100">
+                            </div>
+                            <div class="col-sm-2 mb-2">
+                                <button id="increment" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-plus"></i></button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-12 col-md-6">
+                                <p class="btn btn-outline-light btn-lg w-100">Cout total : <span id="sum">0</span> €</p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <button type="submit" class="btn btn-outline-light btn-lg w-100">Acheter</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -66,9 +64,34 @@
 
 {% block javascripts %}
 <script>
-    $('#tickets').change(function(){
-        $tickets = $('#tickets').val();
-        $('#sum').text((15 - ( $tickets - 1)) * $tickets);
+    $( document ).ready(function(){
+        $('#increment').click(function(event){
+            event.preventDefault();
+            $tickets = Number($('#tickets').val());
+
+            if ($tickets < 5)
+            {
+                $tickets++;
+                show();
+            }
+        });
+
+        $('#decrement').click(function(event){
+            event.preventDefault();
+            $tickets = Number($('#tickets').val());
+
+            if ($tickets > 0)
+            {
+                $tickets--;
+                show();
+            }
+        });
+
+        function show()
+        {
+            $('#tickets').val($tickets);
+            $('#sum').text((15 - ( $tickets - 1)) * $tickets);
+        }
     });
 </script>
 {% endblock %}
