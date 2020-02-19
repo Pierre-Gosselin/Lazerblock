@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\EventRepository;
 
 /**
  * @Route("/ticket", name="ticket")
@@ -42,7 +43,7 @@ class TicketController extends AbstractController
     }
 
     /**
-     * Permet de donner un ticket à un amis
+     * Permet de donner un ticket à un ami
      * 
      * @Route("/offrir/{serial}", name="_give")
      *
@@ -81,6 +82,8 @@ class TicketController extends AbstractController
     }
 
     /**
+     * Permet de selectionner le nombre de ticket à acheter
+     * 
      * @Route("/acheter", name="_buy")
      *
      * @param Request $request
@@ -106,17 +109,28 @@ class TicketController extends AbstractController
     }
 
     /**
+     * Permet d'enregistrer le nombre de ticket acheter
+     * 
      * @Route("/confirmation", name="_confirm")
      *
      * @return void
      */
-    public function confirm()
+    public function confirm(EventRepository $eventRepository )
     {
         $tickets = $this->session->get('tickets');
-        
+
         if ($tickets)
         {
-            for ($i=0; $i < $tickets ; $i++)
+            $multiplicator = 1;
+            $event = $eventRepository->findByDate();
+
+            if($event){
+                $multiplicator = $event->getMultiplicator();
+            }
+
+            $nbtickets = floor($tickets * $multiplicator);
+
+            for ($i=0; $i < $nbtickets ; $i++)
             { 
                 $manager = $this->getDoctrine()->getManager();
                 $ticket = new Ticket;
@@ -125,13 +139,15 @@ class TicketController extends AbstractController
     
                 $manager->persist($ticket);
             }
-            //$this->session->remove('tickets');
+            
+            $this->session->remove('tickets');
             $this->session->remove('path');
     
             $manager->flush();
     
             return $this->render('ticket/confirm.html.twig', [
                 'tickets' => $tickets,
+                'event' => $event,
                 'user' => $this->getUser(),
             ]);
         }

@@ -12,8 +12,14 @@
         <div class="row mb-3">
             <div class="col">
                 <div class="card p-2 ombre" style="background-color: rgba(0,0,0,0.5);">
-                    <h3>Vous venez d'avoir acheté {{ tickets }} place{{ tickets>1?"s":"" }}.</h3>
-                    <p>Que souhaitez vous en faire ?</p>
+                    <p style="font-size: 1.2em;">Vous venez d'avoir acheté {{ tickets }} place{{ tickets>1?"s":"" }}.</p>
+                    {% if event %}
+                        {% set ticket_gift = (tickets * event.multiplicator)|round(0,'floor') - tickets  %}
+                        {% if ticket_gift > 0 %}
+                            <p style="font-size: 1.2em;">Et comme c'est {{ event.title }} vous avez eu {{ ticket_gift }} place{{ (ticket_gift >1)?"s":"" }} en cadeau.</p>
+                        {% endif %}
+                    {% endif %}
+                    <p style="font-size: 1.2em;">Que souhaitez vous en faire ?</p>
                 </div>
             </div>
         </div>
@@ -22,7 +28,7 @@
                 <a href="{{ path('booking_create') }}" class="btn btn-outline-light">Réserver maintenant</a>
             </div>
             <div class="col text-center">
-                <a href="{{ path('ticket_show') }}" class="btn btn-outline-light">Offrir à un amis</a>
+                <a href="{{ path('ticket_show') }}" class="btn btn-outline-light">Offrir à un ami</a>
             </div>
         </div>
     </div>

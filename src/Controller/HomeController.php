@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\BookingRepository;
+use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -11,15 +12,17 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(BookingRepository $bookingRepository)
+    public function index(BookingRepository $bookingRepository, EventRepository $eventRepository)
     {
+        $event = $eventRepository->findByDate();
 
         $jedi_score =  $bookingRepository->findByScore("Jedi");
         $sith_score = $bookingRepository->findByScore("Sith");
 
         return $this->render('home/index.html.twig',[
-            'jedi_scores'=> $jedi_score,
-            'sith_scores'=> $sith_score,
+            'event' => $event,
+            'jedi_scores' => $jedi_score,
+            'sith_scores' => $sith_score,
         ]);
     }
 
