@@ -126,7 +126,7 @@ easy_admin:
 
         Gift:
             class: App\Entity\Gift
-            label: Cadeau
+            label: Liste des cadeaux
             list:
                 actions:
                     - { name: 'new', label: 'Ajouter', icon: 'plus' }
@@ -327,6 +327,51 @@ easy_admin:
             delete:
                 title: Effacer un cadeau
                 item_permission: ['ROLE_ADMIN']
+
+        Event:
+            class: App\Entity\Event
+            label: Evènement
+            list:
+                actions:
+                    - { name: 'new', label: 'Ajouter', icon: 'plus' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash' }
+                fields:
+                    - property: title
+                      label: Titre   
+                    - property: description
+                      label: Description                 
+                    - property: startEvent
+                      label: Date de début
+                    - property: endEvent
+                      label: Date de fin
+                    - property: multiplicator
+                      label: Multiplicateur
+            form:
+                label: Event
+                form_options: { validation_groups: [] }
+                fields:
+                    - property: title
+                      label: Titre
+                    - property: description
+                      label: Description                   
+                    - property: startEvent
+                      label: Date de début
+                      type: date
+                    - property: endEvent
+                      label: Date de fin
+                      type: date
+                    - property: multiplicator
+                      label: Multiplicateur
+            edit:
+                title: Modifier un évènement 
+                item_permission:  ['ROLE_ADMIN', 'ROLE_CASHIER']
+            new:
+                title: Ajouter un évènement 
+                item_permission: ['ROLE_ADMIN', 'ROLE_CASHIER']
+            delete:
+                title: Effacer un évènement
+                item_permission: ['ROLE_ADMIN']
  
     site_name: 'LaserWars'   
     design:
@@ -342,6 +387,4 @@ easy_admin:
           - { label: 'Fidelité' }
           - { entity: 'Gift', icon: 'gift', permission: 'ROLE_ADMIN' }
           - { entity: 'CardGift', icon: 'gifts' }
-          
-          
-          
+          - { entity: 'Event', icon: 'calendar-alt' }          
