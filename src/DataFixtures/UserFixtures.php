@@ -29,7 +29,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             ->setFirstName("David")
             ->setLastName("Hasselhoff")
             ->setEnabled(1)
-            ->setSide(1)
+            ->setSide('Jedi')
             ->setRoles(["ROLE_ADMIN"])
             ->setBirthdate(new \Datetime('now'))
             ->setNewsletter(true);
@@ -45,7 +45,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             ->setFirstName("Jeanine")
             ->setLastName("Duval")
             ->setEnabled(1)
-            ->setSide(1)
+            ->setSide('Jedi')
             ->setRoles(["ROLE_CASHIER"])
             ->setBirthdate(new \Datetime('now'))
             ->setNewsletter(true)
@@ -58,8 +58,9 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
         // Fixtures utilisateurs
         $faker = Factory::create('fr-FR');
-        
-        for ($i=0; $i < 50; $i++) { 
+        $side = ['Jedi', 'Sith'];
+        for ($i=0; $i < 50; $i++)
+        { 
             $user = new User;
             $user
                 ->setEmail($faker->email())
@@ -67,7 +68,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 ->setFirstName($faker->firstName())
                 ->setLastName($faker->lastName())
                 ->setEnabled(rand(0,1))
-                ->setSide(rand(0,1))
+                ->setSide($side[rand(0,1)])
                 ->setBirthdate(new \Datetime('now'))
                 ->setNewsletter(true)
                 ->setAvatar($this->getReference("Avatar".rand(0,9)));

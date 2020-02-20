@@ -53,7 +53,7 @@ easy_admin:
                       type: 'choice'
                       type_options:
                           mapped: true
-                          choices: { 'Jedi': 1, 'Sith': 0 }  
+                          choices: { 'Jedi': 'Jedi', 'Sith': 'Sith' }  
                     - property: birthdate
                       type: date
                       label: Date de naissance
@@ -135,6 +135,8 @@ easy_admin:
                 fields:
                     - property: title
                       label: Titre
+                    - property: category
+                      label: Catégorie
                     - property: price
                       label: Prix
                     - property: picture
@@ -147,6 +149,12 @@ easy_admin:
                 fields:
                     - property: title
                       label: Titre
+                    - property: category
+                      label: Catégorie
+                      type: 'choice'
+                      type_options:
+                          mapped: true
+                          choices: { 'Friandises': 'Friandises', 'Costumes': 'Costumes' }  
                     - property: price
                       label: prix
                     - property: pictureFile
@@ -159,7 +167,6 @@ easy_admin:
                 item_permission: 'ROLE_ADMIN'
             new:
                 title: Ajouter un cadeau
-
                 item_permission: 'ROLE_ADMIN'
             delete:
                 title: Effacer un billet
@@ -354,7 +361,7 @@ easy_admin:
                     - property: title
                       label: Titre
                     - property: description
-                      label: Description                   
+                      label: Description                     
                     - property: startEvent
                       label: Date de début
                       type: date

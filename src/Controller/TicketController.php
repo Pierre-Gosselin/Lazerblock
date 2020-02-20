@@ -127,7 +127,7 @@ class TicketController extends AbstractController
             if($event){
                 $multiplicator = $event->getMultiplicator();
             }
-
+            
             $nbtickets = floor($tickets * $multiplicator);
 
             for ($i=0; $i < $nbtickets ; $i++)

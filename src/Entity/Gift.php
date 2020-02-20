@@ -23,7 +23,7 @@ class Gift
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="Vous devez renseigner un titre pour le cadeau.")
      * @Assert\Length(
-     *      min = 5,
+     *      min = 2,
      *      minMessage = "Le titre doit faire au moins 5 caractères.",
      * )
      */
@@ -53,7 +53,21 @@ class Gift
      */
     private $enabled = true;
 
+    /**
+     * @Assert\Expression(
+     *      "this.getPicture() or this.getPictureFile()",
+     *      message="Vous devez renseigner une image pour le cadeau"
+     * )
+     */
     private $pictureFile;
+
+    const CATEGORY = ["Friandises", "Costumes"];
+
+    /**
+     * @ORM\Column(type="string", columnDefinition="enum('Friandises', 'Costumes')")
+     * @Assert\Choice(choices=Gift::CATEGORY, message="La catégorie doit être Friandises ou Costumes")
+     */
+    private $category;
 
     public function getPictureFile(){
         return $this->pictureFile;
@@ -156,6 +170,18 @@ class Gift
     public function __toString()
     {
         return $this->title;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
     
 }

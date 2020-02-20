@@ -64,13 +64,13 @@
                                 <h5 class="text-center mb-3">Choisissez le nombre de personnes (5 maximun)</h5>
                                 <div id="how_bookings" class="row justify-content-center d-none">
                                     <div class="col-sm-2 mb-2">
-                                        <button type="button" id="decrement" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-minus"></i></button>
+                                        <button type="button" id="decrement" class="btn btn-outline-light btn-lg text-center"><i class="fas fa-minus"></i></button>
                                     </div>
-                                    <div class="col-sm-8 col mb-2">
+                                    <div class="col-sm-8 col mb-2 pr-0">
                                         <input type="text" name="bookings" id="nb_bookings" value="1" class="btn btn-outline-light btn-lg w-100">
                                     </div>
                                     <div class="col-sm-2 mb-2">
-                                        <button type="button" id="increment" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-plus"></i></button>
+                                        <button type="button" id="increment" class="btn btn-outline-light btn-lg text-center"><i class="fas fa-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -113,6 +113,7 @@
                 $('#hiddenTime').val($(this).attr("data-value"));
                 $('#availables').html("Il reste " + $(this).attr("data-number") + " place(s) disponible(s).");
                 $('#submit').removeClass("d-none");
+                $('#nb_bookings').val(1);
 
                 maxTicket = ($(this).attr("data-number") > 5)? 5 : $(this).attr("data-number");
 
@@ -152,7 +153,8 @@
             $('#how_bookings').addClass("d-none");
             $('#availables').html("");
             $('#pickedTime').html("");
-            $('#bookings').html("");
+            $('#nb_bookings').val(1);
+            $('#submit').addClass("d-none");
 
             $.ajax({
                 type: 'POST',

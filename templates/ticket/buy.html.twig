@@ -41,7 +41,7 @@
                                 <button id="decrement" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-minus"></i></button>
                             </div>
                             <div class="col-sm-8 mb-2">
-                                <input type="text" name="tickets" id="tickets" value="1" class="btn btn-outline-light btn-lg w-100">
+                                <input type="text" name="tickets" id="tickets" class="btn btn-outline-light btn-lg w-100">
                             </div>
                             <div class="col-sm-2 mb-2">
                                 <button id="increment" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-plus"></i></button>
@@ -65,6 +65,7 @@
 {% block javascripts %}
 <script>
     $( document ).ready(function(){
+        $('#tickets').val(1);
         $('#increment').click(function(event){
             event.preventDefault();
             $tickets = Number($('#tickets').val());
