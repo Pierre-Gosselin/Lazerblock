@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GiftRepository")
@@ -20,11 +21,20 @@ class Gift
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Vous devez renseigner un titre pour le cadeau.")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Le titre doit faire au moins 5 caractères.",
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThan(
+     *      value="199",
+     *      message = "Le prix doit faire minimun 200 crédits.",
+     * )
      */
     private $price;
 
@@ -41,9 +51,23 @@ class Gift
     /**
      * @ORM\Column(type="boolean")
      */
-    private $enabled;
+    private $enabled = true;
 
+    /**
+     * @Assert\Expression(
+     *      "this.getPicture() or this.getPictureFile()",
+     *      message="Vous devez renseigner une image pour le cadeau"
+     * )
+     */
     private $pictureFile;
+
+    const CATEGORY = ["Friandises", "Costumes"];
+
+    /**
+     * @ORM\Column(type="string", columnDefinition="enum('Friandises', 'Costumes')")
+     * @Assert\Choice(choices=Gift::CATEGORY, message="La catégorie doit être Friandises ou Costumes")
+     */
+    private $category;
 
     public function getPictureFile(){
         return $this->pictureFile;
@@ -146,6 +170,18 @@ class Gift
     public function __toString()
     {
         return $this->title;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
     
 }

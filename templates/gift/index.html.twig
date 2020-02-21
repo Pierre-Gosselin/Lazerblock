@@ -4,31 +4,75 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col mt-3 rounded p-2" style="background-color:rgba(0,0,0,0.5);">
-                <p class="h4">
-                    {% if app.user.card %}
-                        {% if app.user.card.credits > 0 %}
-                            Vous avez {{ app.user.card.credits }} crédits à utiliser dans la boutique.<br>
-                            N'hésitez pas à vous faire plaisir !!!
-                        {% else %}
-                            Vous n'avez pas de crédit pour le moment.
-                        {% endif %}
-                    {% else %}
-                        Vous n'avez pas de carte de fidelité rattacher à ce compte.<br>
-                        <span class="h6">Rendez vous sur votre compte pour ajouter votre carte.</span>
-                    {% endif %}   
-                </p>
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card ombre" style="background-color: rgba(0,0,0,0.5);color:white;">
+                    <div class="card-body">
+                        <h3 class="font">Bienvenue dans la boutique</h3>
+                    </div>
+                </div>              
             </div>
         </div>
         <div class="row">
             <div class="col mt-4">
-                <h3 class="font">Les friandises</h3>
+                <div class="card ombre" style="background-color: rgba(0,0,0,0.5);color:white;">
+                    <div class="card-body py-0">
+                        <p class="h5 pt-2">
+                            {% if app.user.card %}
+                                {% if app.user.card.credits > 0 %}
+                                    Vous avez {{ app.user.card.credits }} crédits à utiliser dans la boutique.<br>
+                                    N'hésitez pas à vous faire plaisir !!!
+                                {% else %}
+                                    Vous n'avez pas de crédit pour le moment.
+                                {% endif %}
+                            {% else %}
+                                Vous n'avez pas de carte de fidelité rattacher à ce compte.<br>
+                                <span class="h6">Rendez vous sur votre compte pour ajouter votre carte.</span>
+                            {% endif %}   
+                        </p>
+                    </div>
+                </div>       
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mt-4">
+                <h4 class="font">Les friandises</h4>
             </div>
         </div>
         <div class="row mt-3 justify-content-center">
-            {% for gift in gifts %}
-            <div class="col-12 col-sm-4 col-md-3 col-lg-2 card mb-4 m-0 p-0 mx-4" style="background-color:rgba(0,0,0,0.5); width:130px;">
+            {% for gift in sweetmeats %}
+            <div class="col-12 col-sm-4 col-md-3 col-lg-2 card mb-3 m-0 p-0 mx-2 ombre" style="background-color:rgba(0,0,0,0.5);">
+                <div class="card-body p-0">
+                    <img src="{{ asset('images/gifts/' ~  gift.picture) }}" class="mt-2 mx-auto d-block rounded" style="width: 120px; height:120px" alt="{{ gift.title }}">
+                    <div class="text-center mt-1">
+                        <h5 class="h6 text-white">{{gift.title }}</h5>
+                        <p class="card-text text-white">Crédit : {{ gift.price }}</p>
+                    </div>
+                </div>
+                {% if app.user.card %}
+                    <div class="card-footer">
+                        {% if gift.enabled %}
+                            {% if app.user.card.credits >= gift.price  %}
+                                <a href="{{ path('shop_buy', {'id': gift.id}) }}" class="btn btn-outline-light btn-block btn-sm" onclick="return(confirm('Êtes-vous sûr de votre choix ?'))">Achetez</a>
+                            {% else %}
+                                <button class="btn btn-block btn-sm" style="background-color:darkred;cursor:default;color:white;" disabled>Crédit insuffisant</button>
+                            {% endif %}            
+                        {% else %}
+                            <button class="btn btn-block btn-sm" style="background-color:darkred;cursor:default;color:white;" disabled>Indisponible</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col mt-4">
+                <h4 class="font">Les costumes</h4>
+            </div>
+        </div>
+        <div class="row mt-3 justify-content-center">
+            {% for gift in suits %}
+            <div class="col-12 col-sm-4 col-md-3 col-lg-2 card mb-3 m-0 p-0 mx-2 ombre" style="background-color:rgba(0,0,0,0.5); width:130px;">
                 <div class="card-body p-0">
                     <img src="{{ asset('images/gifts/' ~  gift.picture) }}" class="mt-2 mx-auto d-block rounded" style="width: 120px; height:120px" alt="{{ gift.title }}">
                     <div class="text-center mt-1">
@@ -42,20 +86,15 @@
                             {% if app.user.card.credits >= gift.price  %}
                                 <a href="{{ path('shop_buy', {'id': gift.id}) }}" class="btn btn-outline-light btn-block btn-sm" onclick="return(confirm('Êtes-vous sûr de votre choix ?'))">Achetez</a>
                             {% else %}
-                                <button class="btn btn-outline-danger btn-block btn-sm" style="cursor:default" disabled>Crédit insuffisant</button>
+                                <button class="btn btn-block btn-sm" style="cursor:default;background-color:darkred;color:white;" disabled>Crédit insuffisant</button>
                             {% endif %}            
                         {% else %}
-                            <button class="btn btn-outline-warning btn-block btn-sm" style="cursor:default" disabled>Indisponnible</button>
+                            <button class="btn btn-block btn-sm" style="cursor:default;background-color:darkred;color:white;" disabled>Indisponible</button>
                         {% endif %}
                     </div>
                 {% endif %}
             </div>
             {% endfor %}
-        </div>
-        <div class="row">
-            <div class="col mt-3">
-                <h3 class="font">Les costumes</h3>
-            </div>
         </div>
     </div>
 {% endblock %}

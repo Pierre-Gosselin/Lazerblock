@@ -20,10 +20,12 @@ class GiftController extends AbstractController
      */
     public function index(GiftRepository $giftRepository)
     {
-        $gifts = $giftRepository->findAll();
+        $sweetmeats = $giftRepository->findByCategory("Friandises");
+        $suits = $giftRepository->findByCategory("Costumes");
 
         return $this->render('gift/index.html.twig', [
-            'gifts' => $gifts,
+            'sweetmeats' => $sweetmeats,
+            'suits' => $suits,
         ]);
     }
 

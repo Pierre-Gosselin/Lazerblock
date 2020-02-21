@@ -1,8 +1,13 @@
-
 @font-face
 {
 	font-family: "LogoFont";
 	src: url('Starjedi.ttf');
+}
+
+@font-face
+{
+	font-family: "Captcha";
+	src: url('Helvetica.ttf');
 }
 
 
@@ -20,6 +25,8 @@
 
 body
 {
+    display:flex;
+    flex-direction:column;
     min-height: 100vh;
     background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
@@ -29,6 +36,7 @@ body
     font-family: "LogoFont", Helvetica, Arial, sans-serif;
 
 }
+
 #siteTitle
 {
     font-size: 3em;
@@ -36,14 +44,27 @@ body
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.register{
+    border:2px solid;border-color:darkred;background-color:rgba(0,0,0,0.5);
+}
+.register:hover
+{
+    background-color:darkred;
+    border-color:white;
+    color:white;
+}
 #accountDropdownLink
 {
     font-size: 1.5em;
 }
-.dropdown-item{
+
+.dropdown-item
+{
     color:white;
 }
-.dropdown-item:hover{
+
+.dropdown-item:hover
+{
     color:black;
 }
 
@@ -58,12 +79,74 @@ a, p, h1, h2, h3, h4, h5, label
 
 }
 
-nav{
-    background-color:rgba(0,0,0,0.4);
+.text-link
+{
+    color:lightblue;
+    font-size: 1.1em;
+}
+.ombre{
+    box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7); 
+}
+nav
+{
+    background-color:rgba(0,0,0,0.6);
+}
+.navbar .container
+{
+    transition: all .25s ease-in-out;
 }
 
-main{
-    margin-top: 110px;
+.nav-item .btn
+{
+    height: 50px;
+    border-width:2px;
+    color:white;
+}
+
+.btn-1{
+    border-color:blue;
+}
+.btn-1:hover{
+    background-color: darkblue;
+}
+.btn-2{
+    border-color:#39ff14;
+}
+.btn-2:hover{
+    background-color: darkgreen;
+}
+.btn-3{
+    border-color:#7f00FF;
+}
+.btn-3:hover{
+    background-color: darkviolet;
+}
+.btn-4{
+    border-color:red;
+}
+.btn-4:hover{
+    background-color: darkred;
+}
+
+.btn-4[aria-expanded="true"]
+{
+    border-color:white !important;
+    background-color: darkred !important;
+}
+.nav-item .btn:hover
+{
+    border-color:white;
+    transition: all 0.4s ease;
+}
+
+.first
+{
+    margin-right: 10px;
+}
+
+main
+{
+    margin-top: 130px;
 }
 
 .page-link
@@ -72,19 +155,19 @@ main{
     border-color:black;
     color:white;
     outline:0;
-
 }
 
-.page-link:hover{
+.page-link:hover
+{
     background-color:rgba(0,0,0,1);
     border-color:black;
     color:white;
     text-decoration:none;
     outline:0;
-
 }
 
-.page-item.active .page-link {
+.page-item.active .page-link
+{
     background-color:rgba(0,0,0,0);
     border-color:black;
     color:white;
@@ -92,11 +175,46 @@ main{
     outline:0;
 }
 
-
-.page-item.disabled .page-link{
+.page-item.disabled .page-link
+{
     background-color:rgba(0,0,0,0.5);
     border-color:black;
     color:white;
     text-decoration:none;
     outline:0;
 }
+
+.btn-link
+{
+    color:white;
+    text-decoration:none;
+}
+
+.btn-link:hover
+{
+    color:white;
+    text-decoration:underline; 
+}
+
+#accordion .card-header
+{
+    padding-bottom: 0px;
+}
+
+#accordion .card-body
+{
+    padding-top:5px;
+}
+
+
+@media screen and (max-width: 991px) {
+    .collapse .first
+    {
+        margin-right: 0px;
+    }
+    
+    .collapse ul li
+    {
+        padding-bottom:10px;
+    }
+  }

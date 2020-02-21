@@ -107,4 +107,27 @@ class MailerService
             'bookings' => $bookings,
         ]);
     }
+
+    public function sendConfirmBuy(User $user, $sum)
+    {
+        $this->send($user->getEmail(), "Confirmation de paiement", "confirm_payment.html.twig", [
+            'user' => $user,
+            'sum' => $sum,
+        ]);
+    }
+
+    public function sendAnniversary(User $user)
+    {
+        $this->send($user->getEmail(), "Joyeux anniversaire ".$user->getFirstname(),"anniversary.html.twig", [
+            'user' => $user,
+        ]);
+    }
+
+    public function sendExpireTwoWeeks(User $user)
+    {
+        $this->send($user->getEmail(), "Expiration de vos crédits", "expiration.html.twig", [
+            'user' => $user,
+            'credits' => $user->getCard()->getCredits(),
+        ]);
+    }
 }

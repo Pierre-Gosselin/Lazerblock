@@ -11,7 +11,7 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-                <div class="card p-3" style="background-color: rgba(0,0,0,0.5);">
+                <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);">
                     <p>Vous réservez pour le {{ reservedAt }} à {{ time|date('H') }}h00 pour {{ bookings }} personne{{ bookings>1?"s":"" }}.</p>
                     {% set sum = (15 - ( bookings - 1)) * bookings %}
                     <p>Total à régler : {{ sum }}<span class="font">€</span> ttc</p>
@@ -25,7 +25,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-4 mb-3">
-                <div class="card p-3" style="background-color: rgba(0,0,0,0.5);height: 250px;">
+                <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);height: 250px;">
                     <h4 class="h5 mb-3 pb-2 border-bottom">Je souhaite utiliser les tickets en ma possession.</h4>
                     {% if ticketsToUse|length >0 %}
                         <p>Vous avez {{ticketsToUse|length}} ticket(s) à utiliser.</p>
@@ -39,13 +39,13 @@
                 </div>
             </div>
             <div class="col-12 col-lg-4 mb-3">
-                <div class="card p-3" style="background-color: rgba(0,0,0,0.5);height: 250px;">
+                <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);height: 250px;">
                     <h4 class="h5 mb-3 pb-2 border-bottom">Je souhaite effectuer le réglement par carte bleue.</h4>
                     <a href="{{ path('payment_show') }}" class="btn btn-outline-light">Payer par carte bleue</a>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mb-3">
-                <div class="card p-3" style="background-color: rgba(0,0,0,0.5);height: 250px;">
+                <div class="card p-3 ombre" style="background-color: rgba(0,0,0,0.5);height: 250px;">
                     <h4 class="h5 mb-3 pb-2 border-bottom">Je souhaite payer mes réservations une fois sur place.</h4>
                     {% if app.user.bookings|length>0 %}
                         <a href="{{ path('booking_save') }}" class="btn btn-outline-light">Payer sur place</a>

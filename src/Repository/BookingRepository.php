@@ -62,4 +62,17 @@ class BookingRepository extends ServiceEntityRepository
             ->getQuery();
         return $queryBuilder->getSingleScalarResult();
     }
+
+    public function findByScore($side)
+    {
+        return $this->createQueryBuilder('b')
+            ->leftJoin('b.user', 'bu')
+            ->andWhere('bu.side = :side')
+            ->setParameter('side', $side)
+            ->orderBy('b.score', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
