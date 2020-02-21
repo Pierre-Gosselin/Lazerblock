@@ -3,7 +3,7 @@
 {% block title %}Rejoignez nous !{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
+    <div class="container mt-4">
         <div class="row">
             <img src="{{ asset("images/7 sabre.png") }}"  style="width: 30%;" class="mx-auto" alt="">
         </div>
@@ -69,12 +69,33 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center mt-4">
-                <button type="submit" class="btn btn-outline-light" style="font-size:2em;">Rejoindre la force</button>
-            </div>
-            <div class="row">
-                <div class="col text-center mt-2">
-                    <p class="text-muted">En m'inscrivant, j'accepte les conditions d'utilisations.</p cla>
+            <div class="row justify-content-center mt-2">
+                <div class="col-12 col-lg-6 align-items-center">
+                    <div class="row">
+                        <div class="col-12 col-lg-4">
+                            <img src="{{ path('captcha') }}" alt="captcha" class="rounded">                         
+                        </div>
+                        <div class="col-12 col-lg-8 mt-1">
+                            <p>Saisir le texte de l'image</p>
+                        </div>
+                    </div>
+                    <div class="row mt-lg-2 mb-3">
+                        <div class="col">
+                            <input type="text" class="form-control" name="captcha" placeholder="Tapez le texte de l'image" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <button type="submit" class="btn btn-outline-light w-100 font register" style="font-size:2em;">Rejoindre la force</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center mt-2">
+                            <p class="text-muted">En m'inscrivant, j'accepte les conditions d'utilisations.</p cla>
+                        </div>
+                    </div>
                 </div>
             </div>
         {{ form_end(form) }}
