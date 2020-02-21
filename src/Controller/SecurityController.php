@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -22,12 +23,14 @@ class SecurityController extends AbstractController
     private $encoder;
     private $userService;
     private $mailerService;
+    private $session;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, UserService $userService, MailerService $mailerService)
+    public function __construct(UserPasswordEncoderInterface $encoder, UserService $userService, MailerService $mailerService, SessionInterface $session)
     {
         $this->encoder = $encoder;
         $this->userService = $userService;
         $this->mailerService = $mailerService;
+        $this->session = $session;
     }
 
     /**
@@ -74,6 +77,15 @@ class SecurityController extends AbstractController
         
         if( $form->isSubmitted() && $form->isValid() )
         {
+            // Vérification de captcha
+            if ($this->session->get('captcha') != strtolower($request->request->get('captcha')))
+            {
+                $this->addFlash('warning', 'Le captcha saisi est incorrect.');
+                return $this->redirectToRoute('register');
+            }
+
+            $this->session->remove('captcha');
+            
             // Vérification de l'age de l'utilisateur
             $age = $user->getBirthdate();
             

@@ -4,6 +4,13 @@
 	src: url('Starjedi.ttf');
 }
 
+@font-face
+{
+	font-family: "Captcha";
+	src: url('Helvetica.ttf');
+}
+
+
 *
 {
     padding:0;
@@ -37,7 +44,15 @@ body
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
+.register{
+    border:2px solid;border-color:darkred;background-color:rgba(0,0,0,0.5);
+}
+.register:hover
+{
+    background-color:darkred;
+    border-color:white;
+    color:white;
+}
 #accountDropdownLink
 {
     font-size: 1.5em;
