@@ -92,15 +92,15 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    {% if jedi_scores|length > 3 %}
+                                    {% if jedi_scores|length > 2 %}
                                         <div class="col align-self-end text-center" style="height:125px;border: 2px solid;border-color:red; background-color:rgba(255,0,0,0.5);border-radius: 5px 0 0 0;">
-                                            <span class="font">2</span><br>{{ jedi_scores[0].score }} pts<br> Dark maul
+                                            <span class="font">2</span><br>{{ jedi_scores[1].score }} pts<br>{{ jedi_scores[1].pseudo }}
                                         </div>
                                         <div class="col align-self-end text-center" style="height:150px;border: 2px solid;border-color:#39ff14;;background-color:rgba(0,255,0,0.5);border-radius: 5px 5px 0 0;">
-                                            <span class="font">1</span><br>{{ jedi_scores[1].score }} pts<br> Anakin skywalker
+                                            <span class="font">1</span><br>{{ jedi_scores[0].score }} pts<br>{{ jedi_scores[0].pseudo }}
                                         </div>
                                         <div class="col align-self-end text-center" style="height:100px;border: 2px solid;border-color:blue;background-color:rgba(0,0,255,0.5);border-radius: 0 5px 0 0;">
-                                            <span class="font">3</span><br>{{ jedi_scores[2].score }} pts<br> Dark vador
+                                            <span class="font">3</span><br>{{ jedi_scores[2].score }} pts<br>{{ jedi_scores[2].pseudo }}
                                         </div>
                                     {% endif %}
                                 </div>
@@ -114,15 +114,15 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    {% if sith_scores|length > 3 %}
+                                    {% if sith_scores|length > 2 %}
                                         <div class="col align-self-end text-center" style="height:125px;border: 2px solid;border-color:red; background-color:rgba(255,0,0,0.5);border-radius: 5px 0 0 0;">
-                                            <span class="font">2</span><br>{{ sith_scores[0].score }} pts<br> Dark maul
+                                            <span class="font">2</span><br>{{ sith_scores[1].score }} pts<br>{{ sith_scores[1].pseudo }}
                                         </div>
                                         <div class="col align-self-end text-center" style="height:150px;border: 2px solid;border-color:#39ff14;;background-color:rgba(0,255,0,0.5);border-radius: 5px 5px 0 0;">
-                                            <span class="font">1</span><br>{{ sith_scores[1].score }} pts<br> Anakin skywalker
+                                            <span class="font">1</span><br>{{ sith_scores[0].score }} pts<br>{{ sith_scores[0].pseudo }}
                                         </div>
                                         <div class="col align-self-end text-center" style="height:100px;border: 2px solid;border-color:blue;background-color:rgba(0,0,255,0.5);border-radius: 0 5px 0 0;">
-                                            <span class="font">3</span><br>{{ sith_scores[2].score }} pts<br> Dark vador
+                                            <span class="font">3</span><br>{{ sith_scores[2].score }} pts<br>{{ sith_scores[2].pseudo }}
                                         </div>
                                     {% endif %}
                                 </div>

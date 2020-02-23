@@ -12,21 +12,13 @@ class CardFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        // Carte de fidelité de l'admin
-        $card = new Card;
-        $card->setUser($this->getReference("admin@laserwars.com"));
-        $card->setCredits(100);
-        $card->setSerial(str_replace(' ','',$this->getReference("admin@laserwars.com")->getFullname()).uniqid());
-        $this->addReference("card".$this->getReference("admin@laserwars.com")->getId(), $card);
-
-        $manager->persist($card);
-
         // Carte de fidélité des utilisateures
         for ($i=0; $i < 50; $i++) { 
             $card = new Card;
-            $card->setUser($this->getReference("User".$i));
-            $card->setCredits(rand(0,100));
-            $card->setSerial(str_replace(' ','',$this->getReference("User".$i)->getFullname()).uniqid());
+            $card->setUser($this->getReference("User".$i))
+                 ->setCredits(rand(0,19)*100)
+                 ->setSerial(str_replace(' ','',$this->getReference("User".$i)->getFullname()).uniqid());
+
             $this->addReference("cardUser".$i, $card);
 
             $manager->persist($card);

@@ -10,7 +10,7 @@ class EventFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $title = ['Anniversaire Star wars', 'Anniversaire ouverture'];
+        $title = ['l\'anniversaire de la première sortie de Star wars', 'l\'anniversaire de l\'ouverture de Laser Wars'];
         $startDate = [new \Datetime('2020-10-17'), new \Datetime('2020-02-17')];
         $endDate = [new \Datetime('2020-10-18'), new \Datetime('2020-03-02')];
         $multiplicator = [2,1.5];

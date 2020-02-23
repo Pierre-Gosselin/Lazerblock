@@ -10,7 +10,6 @@ class AvatarFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-
         $picture = ['avatar17.png', 'avatar18.png', 'avatar19.png', 'avatar12.png', 'avatar13.png', 'avatar15.png', 'avatar16.png', 'avatar20.png', 'avatar21.png', 'avatar26.png', ];
         $title = ['R2-D2','BB8','Chewbacca','Yoda','Padme','Boba Fett','Dark Vador','Kylo Ren','Stromtrooper','Dark Maul'];
 
