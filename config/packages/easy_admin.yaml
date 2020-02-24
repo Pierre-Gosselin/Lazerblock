@@ -379,11 +379,31 @@ easy_admin:
             delete:
                 title: Effacer un évènement
                 item_permission: ['ROLE_ADMIN']
+
+        Contact:
+            class: App\Entity\Contact
+            label: Contact
+            list:
+                actions:
+                    - { name: 'delete', label: '', icon: 'trash' }
+                    - { name: '-new'}
+                    - { name: '-edit'} 
+                fields:
+                    - property: email
+                      label: Email   
+                    - property: sujet
+                      label: Sujet                 
+                    - property: message
+                      label: Message
+            delete:
+                title: Effacer un évènement
+                item_permission: ['ROLE_ADMIN']            
  
     site_name: 'LaserWars'   
     design:
         menu:
           - { label: 'Retour sur le site', route: 'home', icon: 'arrow-left'}
+          - { entity: 'Contact', icon: 'envelope'}
           - { label: 'Utilisateur' }
           - { entity: 'User', icon: 'user', permission: 'ROLE_ADMIN' }         
           - { entity: 'Avatar', icon: 'user-circle', permission: 'ROLE_ADMIN' }

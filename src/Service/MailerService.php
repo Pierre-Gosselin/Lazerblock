@@ -32,8 +32,10 @@ class MailerService
      */
     private function send(string $adresse, string $subject, $template, $context)
     {
+        $from = 'laserwars@gosselin.info';
+
         $email = (new TemplatedEmail())
-            ->from('laserwars@gosselin.info')
+            ->from($from)
             ->to(new Address($adresse))
             ->subject("Laser Wars - ".$subject)
             ->htmlTemplate("emails/".$template)
@@ -129,5 +131,15 @@ class MailerService
             'user' => $user,
             'credits' => $user->getCard()->getCredits(),
         ]);
+    }
+
+    public function contact($emailContact, $sujet, $message)
+    {
+        $this->send("laserwars@gosselin.info", "Contact", "contact.html.twig", [
+            'emailContact' => $emailContact,
+            'sujet' => $sujet,
+            'message' => $message,
+        ]);
+        
     }
 }
