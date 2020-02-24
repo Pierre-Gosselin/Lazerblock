@@ -89,12 +89,22 @@ class PaymentController extends AbstractController
         }
         
         $card = $this->getDoctrine()->getRepository(Card::class)->findOneByUser($this->getUser());
+        
+        $manager = $this->getDoctrine()->getManager();
+
         if ($card)
         {
             $card->setCredits($card->getCredits() + $places *100);
-            $manager = $this->getDoctrine()->getManager();
-            $manager->flush();
         }
+        else
+        {
+            $card = new Card;
+            $card->setUser($this->getUser());
+            $card->setCredits(200 + $places *100);
+            $card->setSerial(str_replace(' ','',$this->getUser()->getFullname()).uniqid());
+            $manager->persist($card);
+        }
+        $manager->flush();
         
         $this->addFlash('success', "Le paiement a bien été effectué, vous avez reçu un email de confirmation.");
         $mailerService->sendConfirmBuy($this->getUser(), $sum);

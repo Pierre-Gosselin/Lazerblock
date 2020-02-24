@@ -88,6 +88,7 @@ class BookingController extends AbstractController
             $reservedAt = $request->request->get('hiddenDate');
             $time =  $request->request->get('hiddenTime');
             $bookings = $request->request->get('bookings');
+            dump($bookings);
 
             $ticketsToUse = $this->getDoctrine()->getRepository(Ticket::class)->findBy(['user' => $this->getUser(),'used' => 0]);
 
