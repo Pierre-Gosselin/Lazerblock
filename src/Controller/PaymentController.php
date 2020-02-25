@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use Stripe\Charge;
 use Stripe\Stripe;
 use App\Entity\Card;
@@ -27,7 +28,7 @@ class PaymentController extends AbstractController
     /**
      * @Route("", name="_show")
      */
-    public function index(BookingService $bookingService)
+    public function index(Request $request, BookingService $bookingService)
     {
         $path = $this->session->get('path');
 
@@ -47,6 +48,7 @@ class PaymentController extends AbstractController
         return $this->render('payment/index.html.twig', [
             'sum' => $sum,
             'places' => $places,
+            'publicKey' => $_ENV['PUBLICKEY'],
         ]);
     }
 

@@ -137,6 +137,12 @@ class BookingService extends AbstractController
         return $this->getDoctrine()->getRepository(Booking::class)->findByDate($this->getUser());
     }
 
+    /**
+     * Retourne la date demandée au format désiré
+     *
+     * @param [type] $date
+     * @return void
+     */
     public function dateToFr($date)
     {
         $days = $date->format('D');

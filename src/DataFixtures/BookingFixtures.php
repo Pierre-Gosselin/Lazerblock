@@ -33,6 +33,17 @@ class BookingFixtures extends Fixture implements DependentFixtureInterface
                 }
             }
         }
+
+        // Fixtures réservation passée
+        $booking = new Booking;
+        $booking->setUser($this->getReference("UserBookings"));
+        $booking->setReservationAt(new \Datetime("-3 days"));
+        $booking->setTimeSlot(new \Datetime('10:00'));
+        $booking->setPseudo("Maitre Yoda");
+        $booking->setScore("900");
+        $booking->setSerial(str_replace(' ','',$this->getReference("UserBookings")->getFullname()).uniqid());
+
+        $manager->persist($booking);
         
         // Fixtures score Jedi
         $jediScore = [1600, 1800, 1200];
@@ -41,7 +52,7 @@ class BookingFixtures extends Fixture implements DependentFixtureInterface
         {
             $booking = new Booking;
             $booking->setUser($this->getReference("Jedi".$i));
-            $booking->setReservationAt(new \Datetime("-2 days"));
+            $booking->setReservationAt(new \Datetime("-3 days"));
             $booking->setTimeSlot($time);
             $booking->setSerial(str_replace(' ','',$this->getReference("Jedi".$i)->getFullname()).uniqid());
             $booking->setScore($jediScore[$i]);
@@ -57,7 +68,7 @@ class BookingFixtures extends Fixture implements DependentFixtureInterface
         {
             $booking = new Booking;
             $booking->setUser($this->getReference("Sith".$i));
-            $booking->setReservationAt(new \Datetime("-2 days"));
+            $booking->setReservationAt(new \Datetime("-3 days"));
             $booking->setTimeSlot($time);
             $booking->setSerial(str_replace(' ','',$this->getReference("Sith".$i)->getFullname()).uniqid());
             $booking->setScore($sithScore[$i]);

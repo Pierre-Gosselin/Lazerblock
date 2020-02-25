@@ -18,7 +18,6 @@
                 <table class="table table-borderless mb-4 text-center rounded ombre" style="background-color: rgba(0, 0, 0, 0.5);color:white">
                     <thead>
                         <tr class="text-center" style="font-size:1.2REM;border-bottom:1px solid white;">
-                            <th scope="col"><span class="text-light">#</span></th>
                             <th scope="col"><span class="text-light">Serial</span></th>
                             <th scope="col"><span class="text-light">Utilisé</span></th>
                             <th scope="col"><span class="text-light">Date d'achat</span></th>
@@ -29,7 +28,6 @@
                     <tbody>
                     {% for ticket in pagination.data %}
                         <tr class="text-center">
-                            <th scope="row">{{ (pagination.currentPage -1) * pagination.limit + loop.index }}</th>
                             <td>{{ ticket.serial }}</td>
                             <td>{{ ticket.used ? "OUI" : "NON"}}</td>
                             <td>{{ ticket.buyAt|date('d/m/Y') }}</td>

@@ -43,7 +43,7 @@ class TicketController extends AbstractController
     }
 
     /**
-     * Permet de donner un ticket à un ami
+     * Permet d'offrir un ticket à un ami
      * 
      * @Route("/offrir/{serial}", name="_give")
      *

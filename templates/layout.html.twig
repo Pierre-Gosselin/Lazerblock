@@ -37,7 +37,7 @@
                             {% endif %}
                             {{ app.user.fullname }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right border-white mt-3" aria-labelledby="accountDropdownLink" style="background-color:rgba(108,20,19);">
+                        <div class="dropdown-menu dropdown-menu-right border-white mt-3" aria-labelledby="accountDropdownLink" style="border:2px solid;background-color:darkred;">
                             {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('easyadmin') }}" class="dropdown-item">
                                 <i class="fas fa-lock mr-2"></i>Admin
@@ -159,14 +159,14 @@
 <footer class="mt-5" style="background-color: rgba(0,0,0,0.5);">
     <div class="container pt-2">
         <div class="row justify-content-center align-items-center">
-            <div class="col-4">
-                <img class="img-fluid" src="{{ asset('images/saber-luke.png') }}" alt="Sabre de luke" style="opacity:0.7">
+            <div class="col-sm-12 col-md-4 mb-sm-2 text-center">
+                <img class="img-fluid" src="{{ asset('images/saber-luke.png') }}" alt="Sabre de luke" style="opacity:0.7;">
             </div>
-            <div class="col-2 text-center">
+            <div class="col-sm-12 col-md-2 text-center">
                 <h5 class="font">Laser wars</h5>
             </div>
-            <div class="col-4">
-                <img class="img-fluid" style="margin-top:4px;opacity:0.7" src="{{ asset('images/saber-vador.png') }}" alt="Sabre de luke">
+            <div class="col-sm-12 col-md-4 text-center">
+                <img class="img-fluid" style="margin-top:4px;opacity:0.7;" src="{{ asset('images/saber-vador.png') }}" alt="Sabre de luke">
             </div>
         </div>
         <div class="row">
@@ -193,7 +193,7 @@
                 </div>
             </div>
         </div>
-        <p class="text-center text-light mt-3" style="padding:0;margin-bottom:0;font-size: 0.8em;">Copyright {{ "now"|date('Y')}} LazerWars - Tous droits réservés</p>
+        <p class="text-center text-light mt-3" style="padding:0;margin-bottom:0;font-size: 0.8em;">Copyright {{ "now"|date('Y')}} LaserWars - Tous droits réservés</p>
         <p class="text-center text-light" style="padding:0;margin:0;font-size: 0.8em;">Fait avec <i class="fas fa-heart" style="color:red"></i> par Shamsia et Pierre</p>
     </div>
 </footer>

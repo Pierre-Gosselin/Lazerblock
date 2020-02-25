@@ -69,7 +69,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 ->setLastName($faker->lastName())
                 ->setEnabled(rand(0,1))
                 ->setSide($side[rand(0,1)])
-                ->setBirthdate(new \Datetime('now'))
+                ->setBirthdate(new \Datetime('1985-04-30'))
                 ->setNewsletter(true)
                 ->setAvatar($this->getReference("Avatar".rand(0,9)));
 
@@ -77,6 +77,38 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
             $manager->persist($user);
         }
+
+        // Fixtures utilisateur ayant une réservation passée
+        $user = new User;
+        $user
+            ->setEmail("pierre.gosselin@orange.fr")
+            ->setPassword($this->encoder->encodePassword($user, "12345678"))
+            ->setFirstName("Pierre")
+            ->setLastName("Gosselin")
+            ->setEnabled(1)
+            ->setSide($side[rand(0,1)])
+            ->setBirthdate(new \Datetime('now'))
+            ->setNewsletter(true)
+            ->setAvatar($this->getReference("Avatar".rand(0,9)));
+
+        $this->addReference("UserBookings", $user);    
+
+        $manager->persist($user);
+
+        // Fixtures utilisateur n'ayant pas de réservation
+        $user = new User;
+        $user
+            ->setEmail("samuel.darras@gmail.com")
+            ->setPassword($this->encoder->encodePassword($user, "12345678"))
+            ->setFirstName("Samuel")
+            ->setLastName("Darras")
+            ->setEnabled(1)
+            ->setSide($side[rand(0,1)])
+            ->setBirthdate(new \Datetime('1985-04-30'))
+            ->setNewsletter(true)
+            ->setAvatar($this->getReference("Avatar".rand(0,9)));
+
+        $manager->persist($user);
 
         // Fixtures utilisateur Jedi
         for ($i=0; $i < 3; $i++)

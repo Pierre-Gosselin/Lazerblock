@@ -217,4 +217,26 @@ main
     {
         padding-bottom:10px;
     }
-  }
+}
+@media screen and (max-width: 768px) {
+    table,
+    tbody,
+    tr,
+    td {
+      display: block;
+    }
+}
+@media screen and (max-width: 768px) {
+    thead tr th
+    {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 481px) {
+    .navbar-toggler
+    {
+        margin:auto;
+        margin-bottom:10px;
+    }
+}

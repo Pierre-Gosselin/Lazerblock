@@ -114,7 +114,7 @@
                 $('#availables').html("Il reste " + $(this).attr("data-number") + " place(s) disponible(s).");
                 $('#submit').removeClass("d-none");
                 $('#nb_bookings').val(1);
-                $('hiddenBookings').val(1);
+                $('#hiddenBookings').val(1);
 
                 maxTicket = ($(this).attr("data-number") > 5)? 5 : $(this).attr("data-number");
 
@@ -156,8 +156,6 @@
             $('#how_bookings').addClass("d-none");
             $('#availables').html("");
             $('#pickedTime').html("");
-            $('#nb_bookings').val(1);
-            $('hiddenBookings').val(1);
             $('#submit').addClass("d-none");
 
             $.ajax({
