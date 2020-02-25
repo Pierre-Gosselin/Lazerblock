@@ -81,7 +81,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         // Fixtures utilisateur ayant une réservation passée
         $user = new User;
         $user
-            ->setEmail("pierre.gosselin@orange.fr")
+            ->setEmail("pierre.gosselin2@orange.fr")
             ->setPassword($this->encoder->encodePassword($user, "12345678"))
             ->setFirstName("Pierre")
             ->setLastName("Gosselin")
